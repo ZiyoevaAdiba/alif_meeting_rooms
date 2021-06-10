@@ -5,6 +5,7 @@ import { AuthGuard } from '../shared/components/AuthGuard';
 import { LoadingScreen } from '../shared/components/LoadingScreen';
 import { urls } from './urls';
 
+
 const routesConfig = [
     {
         exact: true,
@@ -14,6 +15,21 @@ const routesConfig = [
         })))
     },
     {
+        exact: true,
+        path: `${urls.signUp}`,
+        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
+            default: module.LoginView
+        })))
+    },
+    {
+        exact: true,
+        path: `${urls.forget}`,
+        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
+            default: module.LoginView
+        })))
+    },
+    
+    {
         path: '/',
         guard: AuthGuard,
         layout: DashboardLayout,
@@ -22,6 +38,34 @@ const routesConfig = [
                 exact: true,
                 path: '/',
                 component: () => <Redirect to={urls.home} />
+            },
+            {
+                exact: true,
+                path: `${urls.users}`,
+                component: lazy(() => import('../shared/components/Users/AllUsers').then(module => ({
+                    default: module.AllUsers
+                })))
+            },
+            {
+                exact: true,
+                path: `${urls.meetingRooms}`,
+                component: lazy(() => import('../shared/components/Rooms/MeetingRooms').then(module => ({
+                    default: module.MeetingRooms
+                })))
+            },
+            {
+                exact: true,
+                path: `${urls.departments}`,
+                component: lazy(() => import('../shared/components/Departments/Departments').then(module => ({
+                    default: module.Departments
+                })))
+            },
+            {
+                exact: true,
+                path: `${urls.reservations}`,
+                component: lazy(() => import('../shared/components/Reservations/ReservationTable').then(module => ({
+                    default: module.ReservationTable
+                })))
             },
             {
                 exact: true,
@@ -53,8 +97,8 @@ const renderRoutes = (routes: any) => (routes ? (
                                 <Layout>
                                     {route.routes ? (
                                         renderRoutes(route.routes)
-                                    ) : (
-                                        <Component {...props} />
+                                    ) :(
+                                         <Component {...props} />
                                     )}
                                 </Layout>
                             </Guard>

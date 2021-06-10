@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-// import { TopBar } from '../shared/components/TopBar';
-// import { NavBar } from '../shared/components/NavBar';
+import { TopBar } from '../shared/components/TopBar';
 import { useState } from 'react';
-// import NavBar from '../shared/components/NavBar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         paddingTop: 70,
         [theme.breakpoints.up('md')]: {
-            paddingLeft: 100
+            padding: '50px 50px'
         }
     },
     contentContainer: {
@@ -41,8 +39,8 @@ export const DashboardLayout = ({ children }: any) => {
 
     return (
         <div className={classes.root}>
-            {/* <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
-            <NavBar
+            <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+            {/* <NavBar
                 openMobile={isMobileNavOpen}
                 onMobileClose={() => setMobileNavOpen(false)}
             /> */}

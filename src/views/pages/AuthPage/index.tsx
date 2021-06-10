@@ -8,9 +8,11 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Page } from '../../../layouts/Page';
-// import { LoginForm } from '../../../shared/components/LoginForm';
+import { SignUpForm } from '../../../shared/components/Auth/SignUpForm';
 import logo from '../../../assets/images/alif_logo.png';
 import { urls } from '../../../routes/urls';
+import { LoginForm } from '../../../shared/components/Auth/LoginForm';
+import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
 // import { removeToken } from '../../../store/actions/Token';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +53,7 @@ export const LoginView = () => {
   const classes = useStyles();
   const history = useHistory();
 
-//   removeToken();
+  //   removeToken();
 
   const handleSubmitSuccess = () => {
     history.push(urls.home);
@@ -71,7 +73,24 @@ export const LoginView = () => {
 
 
             <Box mt={3}>
-              {/* <LoginForm onSubmitSuccess={handleSubmitSuccess} /> */} LoginForm
+                {
+                  (history.location.pathname === urls.login)
+                  &&
+                  <LoginForm />
+                }
+                {
+                  (history.location.pathname === urls.signUp)
+                  &&
+                  <SignUpForm/>
+                }
+                 {
+                  (history.location.pathname === urls.forget)
+                  &&
+                  <ForgetPasswordForm />
+                }
+              {/* <SignUpForm 
+                // onSubmitSuccess={handleSubmitSuccess} 
+              />  */}
             </Box>
 
           </CardContent>
