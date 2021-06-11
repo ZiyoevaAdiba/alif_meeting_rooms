@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { cancelReservationDelete, requestDeleteReservation } from '../../../store/actions/reservations';
 
-export const ConfirmDelReservation = ({pageNumber, history} : any ) => {
+export const ConfirmDelReservation = ({page, history} : any ) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.getReservationsReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const ConfirmDelReservation = ({pageNumber, history} : any ) => {
   };
 
   const handleConfirm = () => {
-    dispatch(requestDeleteReservation(pageNumber, history, showAlert))
+    dispatch(requestDeleteReservation(page, history, showAlert))
     handleClose();
     // handleClose();
   };

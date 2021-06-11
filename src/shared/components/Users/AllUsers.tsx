@@ -180,15 +180,15 @@ export const AllUsers = () => {
             Пользователи
           </Box>
           <AddUser
-            pageNumber={pageCount}
+            page={page}
             history={history}
           />
           <EditUser
-            pageNumber={pageCount}
+            page={page}
             history={history}
           />
           <ConfirmDelUser
-            pageNumber={pageCount}
+            page={page}
             history={history}
           />
           <DataGrid className={classes.table_users}

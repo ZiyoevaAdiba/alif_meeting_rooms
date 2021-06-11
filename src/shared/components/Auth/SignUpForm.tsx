@@ -9,6 +9,7 @@ import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { SignupSchema } from '../../validations/SignUpValidation';
+import { removeToken } from '../../../store/actions/login';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -81,6 +82,7 @@ export const SignUpForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
+  removeToken();
 
   const history = useHistory();
 

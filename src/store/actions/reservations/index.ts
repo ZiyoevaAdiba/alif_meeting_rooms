@@ -55,7 +55,7 @@ export const getAllReservations = (page: number, history: History) => async(disp
   }
 }
 
-export const requestAddReservation = (pageNumber: number, history: History, reservationData: IReservation, userId: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddReservation = (page: number, history: History, reservationData: IReservation, userId: any) => async(dispatch: Dispatch<any>) => {
   try {
     console.log(reservationData);
 
@@ -63,7 +63,7 @@ export const requestAddReservation = (pageNumber: number, history: History, rese
     reservationData.user_id = userId;
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
-    dispatch(getAllReservations(pageNumber, history));
+    dispatch(getAllReservations(page, history));
     
   } catch (error) {
     dispatch(getReservationsFail());
@@ -71,11 +71,11 @@ export const requestAddReservation = (pageNumber: number, history: History, rese
   }
 }
 
-export const requestDeleteReservation = (pageNumber: number, history: History, reservationId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteReservation = (page: number, history: History, reservationId: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getReservationsReq());
     await Axios.delete(`${api.reservations}/${reservationId}`);
-    dispatch(getAllReservations(pageNumber, history));
+    dispatch(getAllReservations(page, history));
     
   } catch (error) {
     dispatch(getReservationsFail());

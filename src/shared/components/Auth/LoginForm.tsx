@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { ILoginData } from '../../../store/actions/login/interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestLogin } from '../../../store/actions/login';
+import { removeToken, requestLogin } from '../../../store/actions/login';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
@@ -83,6 +83,7 @@ export const LoginForm = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: IRootReducer) => state.loginReducer);
 
+  removeToken();
 
   const user: ILoginData = {
     email: '',

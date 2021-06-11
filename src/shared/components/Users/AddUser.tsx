@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => createStyles({
 
 }));
 
-export const AddUser = ({pageNumber, history} : any ) => {
+export const AddUser = ({page, history} : any ) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -61,7 +61,7 @@ export const AddUser = ({pageNumber, history} : any ) => {
             validationSchema={SignupSchema}
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
-              dispatch(requestAddUser(pageNumber, history, values, setSubmitting));
+              dispatch(requestAddUser(page, history, values, setSubmitting));
               handleClose();
             }
             }

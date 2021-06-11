@@ -44,8 +44,8 @@ export const requestLogin = (userData: ILoginData, setSubmitting: any, history: 
     dispatch(loginReqSent());
     const res = await Axios.post(`${api.login}`, userData);
     dispatch(loginReqSuccess(res.data.payload.user_role));
-    history.push(urls.users);
     setToken(res.data.payload.token);
+    history.push(urls.reservations);
 
   } catch (error) {
     dispatch(loginReqFail());

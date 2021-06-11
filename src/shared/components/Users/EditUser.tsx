@@ -32,7 +32,9 @@ const useStyles = makeStyles(() => createStyles({
 
 }));
 
-export const EditUser = ({pageNumber, history} : any) => {
+export const EditUser = ({page, history} : any) => {
+  console.log(page);
+  
   const { user } = useSelector((state: IRootReducer) => state.getUsersReducer)
   const [open, setOpen] = useState(true);
   const classes = useStyles();
@@ -59,7 +61,7 @@ export const EditUser = ({pageNumber, history} : any) => {
           validationSchema={UserSchema}
           onSubmit={(values) => { 
 
-            dispatch(requestEditUser(pageNumber, history, values));
+            dispatch(requestEditUser(page, history, values));
             handleClose();
           }
           }

@@ -9,7 +9,7 @@ import { cancelUserDelete, requestDeleteUser } from '../../../store/actions/getU
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 
-export const ConfirmDelUser = ({pageNumber, history} : any ) => {
+export const ConfirmDelUser = ({page, history} : any ) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.getUsersReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const ConfirmDelUser = ({pageNumber, history} : any ) => {
   };
 
   const handleConfirm = () => {
-    dispatch(requestDeleteUser(pageNumber, history, showAlert))
+    dispatch(requestDeleteUser(page, history, showAlert))
     handleClose();
     // handleClose();
   };

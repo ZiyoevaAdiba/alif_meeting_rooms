@@ -155,7 +155,6 @@ export const ReservationTable = () => {
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
 
-
   useEffect(() => {
     dispatch(getMRsInfo());
     dispatch(getAllReservations(page, history));
@@ -164,7 +163,6 @@ export const ReservationTable = () => {
   // if (!requests?.length) {
   //     return <LoadingScreen />;
   // }
-
 
   return (
     <Page title="Reservations">
@@ -176,13 +174,12 @@ export const ReservationTable = () => {
             Reservations
           </Box>
           <ReserveRoom
-            pageNumber={pageCount}
+            page={page}
             history={history}
-
           />
           {/* user */}
           <ConfirmDelReservation
-            pageNumber={pageCount}
+            page={page}
             history={history}
           />
           <DataGrid

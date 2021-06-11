@@ -70,12 +70,12 @@ export const getAllUsers = (page: number, history: History) => async(dispatch: D
   }
 }
 
-export const requestAddUser = (pageNumber: number, history: History, userData: IUserData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddUser = (page: number, history: History, userData: IUserData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
   try {
     console.log('add',userData)
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
-    dispatch(getAllUsers(pageNumber, history));
+    dispatch(getAllUsers(page, history));
 
   } catch (error) {
     dispatch(getUsersReqFail());
@@ -84,11 +84,11 @@ export const requestAddUser = (pageNumber: number, history: History, userData: I
   }
 }
 
-export const requestDeleteUser = (pageNumber: number, history: History, userId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteUser = (page: number, history: History, userId: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getUsersReq());
     await Axios.delete(`${api.users}/${userId}`);
-    dispatch(getAllUsers(pageNumber, history));
+    dispatch(getAllUsers(page, history));
     
   } catch (error) {
     dispatch(getUsersReqFail());
@@ -96,10 +96,10 @@ export const requestDeleteUser = (pageNumber: number, history: History, userId: 
   }
 }
 
-export const requestEditUser = (pageNumber: number, history: History, userData: any) => async(dispatch: Dispatch<any>) => {
+export const requestEditUser = (page: number, history: History, userData: any) => async(dispatch: Dispatch<any>) => {
   try {
     await Axios.put(`${api.users}/${userData.id}`, userData);
-    dispatch(getAllUsers(pageNumber, history));
+    dispatch(getAllUsers(page, history));
     
   } catch (error) {
     dispatch(getUsersReqFail());

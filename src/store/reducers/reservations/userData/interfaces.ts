@@ -2,6 +2,7 @@ export interface IGetUserData {
   id?: string,
   lastname?: string,
   name?: string,
+  role?: string,
 }
 
 export interface IGetUserDataReducer {
