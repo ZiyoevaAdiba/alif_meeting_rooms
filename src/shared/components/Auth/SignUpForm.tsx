@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { SignupSchema } from '../../validations/SignUpValidation';
 import { removeToken } from '../../../store/actions/login';
+import { getAllDepartments, getDepartments } from '../../../store/actions/departments';
+import { useEffect } from 'react';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -84,6 +86,15 @@ export const SignUpForm = () => {
   const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
   removeToken();
 
+  useEffect(() => {
+    dispatch(getDepartments());
+  }, []);
+
+  const {
+    departments
+  } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+
+
   const history = useHistory();
 
   const loginClick = () => {
@@ -99,6 +110,7 @@ export const SignUpForm = () => {
         onSubmit={(values, { setSubmitting }) => {
           // same shape as initial values
           dispatch(requestRegistration(values, setSubmitting));
+
         }
         }
       >
@@ -110,7 +122,6 @@ export const SignUpForm = () => {
           handleChange,
           handleSubmit,
           isSubmitting,
-
         }: any) => (
           <Form
             className={classes.signUpForm}
@@ -163,18 +174,29 @@ export const SignUpForm = () => {
               onBlur={handleBlur}
               type='text'
             />
-
-            <TextField
-              name={fieldInput.department}
-              label="департамент"
-              fullWidth
-              error={Boolean(touched.department && errors.department)}
-              helperText={touched.department && errors.department}
+            <InputLabel
+              className={classes.signUpForm}
+              style={{ marginTop: '30px' }}
+              id="demo-simple-select-label"
+            >Выбрать отдел
+            </InputLabel>
+            <Select
+              id="demo-simple-select"
+              value={values.meeting_room_id}
               onChange={handleChange}
-              value={values.department}
-              onBlur={handleBlur}
-              type='text'
-            />
+              name={fieldInput.department}
+              fullWidth
+            >
+              {
+                departments.map(
+                  (item) => {
+                    // console.log(item);
+                    return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
+                  }
+                )
+              }
+
+            </Select>
 
             <TextField
               name={fieldInput.tg_account}
@@ -208,7 +230,7 @@ export const SignUpForm = () => {
               variant="contained"
             >
               Зарегистрироваться
-                        {
+              {
                 loading
                 &&
                 <img src={loaderGif} alt="" />
@@ -223,7 +245,7 @@ export const SignUpForm = () => {
               onClick={loginClick}
             >
               Есть аккаунт? Войти
-                      </Button>
+            </Button>
 
           </Form>
         )}

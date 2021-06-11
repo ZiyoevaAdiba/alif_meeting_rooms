@@ -60,23 +60,10 @@ const useStyles = makeStyles(() => createStyles({
 
 }));
 
-
-// const validationError = (errors: any, touched: any, name: any) => {
-//   // console.log(errors[name])
-//   errors[name]
-//     &&
-//     touched[name]
-//     &&
-//     <div>
-//       {errors[name]}
-//     </div>
-// }
-
 const fieldInput: ILoginData = {
   email: 'email',
   password: 'password',
 }
-
 
 export const LoginForm = () => {
   const classes = useStyles();

@@ -53,6 +53,19 @@ export const getAllDepartments = () => async(dispatch: Dispatch<any>) => {
   }
 }
 
+export const getDepartments = () => async(dispatch: Dispatch<any>) => {
+  try {
+    dispatch(getDepartmentsReq());
+    const res = await Axios.get(`${api.departmentsForDropdown}`);
+    dispatch(getDepartmentsSuccess(res.data.payload));
+
+  } catch (error) {
+    dispatch(getDepartmentsFail());
+    console.log(error.response);
+  }
+}
+
+
 export const requestAddDepartment = (depData: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());

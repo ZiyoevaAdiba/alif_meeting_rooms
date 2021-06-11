@@ -29,7 +29,8 @@ interface IApi {
     adminRooms: string,
     departments: string,
     reservations: string,
-    loggedUserData: string
+    loggedUserData: string,
+    departmentsForDropdown: string,
 };
 
 export const api: IApi = {
@@ -42,5 +43,6 @@ export const api: IApi = {
     adminRooms: '/admin/meeting-room',
     departments: '/admin/department',
     reservations: '/api/reservation',
-    loggedUserData: '/api/parse-token'
+    loggedUserData: '/api/parse-token',
+    departmentsForDropdown: '/auth/department',
 };
