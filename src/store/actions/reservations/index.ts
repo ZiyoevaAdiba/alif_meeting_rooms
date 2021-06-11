@@ -57,9 +57,6 @@ export const getAllReservations = (page: number, history: History) => async(disp
 
 export const requestAddReservation = (page: number, history: History, reservationData: IReservation, userId: any) => async(dispatch: Dispatch<any>) => {
   try {
-    console.log(reservationData);
-
-    // console.log(userId);
     reservationData.user_id = userId;
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);

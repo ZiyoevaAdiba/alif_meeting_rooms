@@ -16,7 +16,6 @@ import Select from '@material-ui/core/Select';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,8 +52,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-export const ReserveRoom = ({pageNumber, history} : any ) => {
+export const ReserveRoom = ({page, history} : any ) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -91,6 +89,7 @@ export const ReserveRoom = ({pageNumber, history} : any ) => {
     new Date(),
   );
 
+
   // let mlseconds = date?.getTime();
   //   mlseconds =
   //     mlseconds
@@ -100,8 +99,10 @@ export const ReserveRoom = ({pageNumber, history} : any ) => {
   //   const dat = new Date(mlseconds || 0).toISOString()
   //   console.log(dat);
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDate = (date: Date | null) => {
     setSelectedDate(date);
+    setSelectedStartTime(date);
+    setSelectedEndTime(date);
   };
 
   return (
@@ -126,32 +127,25 @@ export const ReserveRoom = ({pageNumber, history} : any ) => {
           <Formik
             initialValues={booking}
             // validationSchema={RoomSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              values.date = format(selectedDate || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+            onSubmit={(values) => {
               values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
               values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
               console.log(userData.id);
               handleClose();
               delete values.date;
-              dispatch(requestAddReservation(pageNumber, history, values, userData.id))
+              dispatch(requestAddReservation(page, history, values, userData.id))
             }
             }
           >
             {({
               values,
-              errors,
-              touched,
-              handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
-
             }: any) => (
               <Form
                 onSubmit={handleSubmit}
                 className={classes.signUpForm}
               >
-
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid
                     container
@@ -200,7 +194,7 @@ export const ReserveRoom = ({pageNumber, history} : any ) => {
                       label="Выберите дату"
                       value={selectedDate}
                       fullWidth
-                      onChange={(date) => setSelectedDate(date)}
+                      onChange={(date) => handleDate(date)}
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}

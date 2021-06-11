@@ -11,18 +11,17 @@ import {
   GridColumns,
   GridValueGetterParams
 } from '@material-ui/data-grid';
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { IRootReducer } from "../../../store/reducers";
-import { getCurrentUserInfo } from "../../../store/actions/reservations/userData";
-import { getToken } from "../../../store/actions/login";
 import { getMRsInfo } from "../../../store/actions/reservations/meetingRoomsData";
 import { getAllReservations } from "../../../store/actions/reservations";
 import { ButtonDelete } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import { useHistory, useLocation } from "react-router";
 import { PaginationLink } from "../PaginationLink";
+import { addHours } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -55,9 +54,10 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     width: 150,
     valueGetter: (params: GridValueGetterParams) => {
-      const date = new Date(params.row.start_time)
-      const date1 = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-      return date1
+      const date = new Date(params.row.start_time);
+      const tjDate = addHours(date, -5);
+      const reservedDate = `${tjDate.getFullYear()}/${tjDate.getMonth() + 1}/${tjDate.getDate()}`;
+      return reservedDate;
     }
   },
   {
@@ -69,9 +69,10 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     width: 120,
     valueGetter: (params: GridValueGetterParams) => {
-      const date = new Date(params.row.start_time)
-      const date1 = `${date.getHours()}:${date.getMinutes()}`
-      return date1
+      const date = new Date(params.row.start_time);
+      const tjDate = addHours(date, -5);
+      const tjTime = `${tjDate.getHours()}:${tjDate.getMinutes()}`;
+      return tjTime;
     }
   },
   {
@@ -82,9 +83,10 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     width: 120,
     valueGetter: (params: GridValueGetterParams) => {
-      const date = new Date(params.row.end_time)
-      const date1 = `${date.getHours()}:${date.getMinutes()}`
-      return date1
+      const date = new Date(params.row.end_time);
+      const tjDate = addHours(date, -5);
+      const tjTime = `${tjDate.getHours()}:${tjDate.getMinutes()}`;
+      return tjTime;
     }
   },
   {

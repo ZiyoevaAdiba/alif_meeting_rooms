@@ -26,7 +26,6 @@ const getRoomsSuccess = (data?: IRoom[]) => {
 }
 
 export const showRoomData = (data: IRoom) => {
-  console.log(data)
   return {
     type: getRoomsType.SHOW_ROOM,
     payload: data

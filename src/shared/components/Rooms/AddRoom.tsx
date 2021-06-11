@@ -63,9 +63,7 @@ export const AddRoom = () => {
             initialValues={room}
             validationSchema={RoomSchema}
             onSubmit={(values, { setSubmitting }) => {
-              // same shape as initial values
-              // console.log('new', values);
-
+              
               values.status = (values.status === 'true')
                 ? true
                 : false;
@@ -82,8 +80,6 @@ export const AddRoom = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
-
             }: any) => (
               <Form
                 onSubmit={handleSubmit}

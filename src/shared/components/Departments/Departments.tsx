@@ -9,13 +9,12 @@ import {
   GridCellParams,
   GridColumns,
 } from '@material-ui/data-grid';
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { getAllDepartments } from "../../../store/actions/departments/index";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete } from "../ButtonIcons";
-import { PaginationLink } from "../PaginationLink";
 import { AddDepartment } from "./AddDepartment";
 import { ConfirmDelDepart } from "./ConfirmDelDepart";
 

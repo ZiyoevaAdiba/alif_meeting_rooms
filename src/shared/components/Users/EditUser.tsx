@@ -33,7 +33,6 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 export const EditUser = ({page, history} : any) => {
-  console.log(page);
   
   const { user } = useSelector((state: IRootReducer) => state.getUsersReducer)
   const [open, setOpen] = useState(true);

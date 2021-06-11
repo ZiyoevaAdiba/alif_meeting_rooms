@@ -13,7 +13,6 @@ import logo from '../../../assets/images/alif_logo.png';
 import { urls } from '../../../routes/urls';
 import { LoginForm } from '../../../shared/components/Auth/LoginForm';
 import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
-// import { removeToken } from '../../../store/actions/Token';
 
 const useStyles = makeStyles((theme) => ({
   authFormContainer: {
@@ -54,10 +53,6 @@ export const LoginView = () => {
   const history = useHistory();
 
   //   removeToken();
-
-  const handleSubmitSuccess = () => {
-    history.push(urls.home);
-  };
 
   return (
     <Page title="Войти">

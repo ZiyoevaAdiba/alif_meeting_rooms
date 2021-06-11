@@ -4,7 +4,6 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
-import React, * as React$1 from 'react';
 import {
   DataGrid,
   GridCellParams,
@@ -21,7 +20,6 @@ import { EditUser } from "./EditUser";
 import { ConfirmDelUser } from "./ConfirmDelUser";
 import { PaginationLink } from "../PaginationLink";
 import { useHistory, useLocation } from "react-router-dom";
-import { urls } from "../../../routes/urls";
 
 
 const useStyles = makeStyles((theme) => ({

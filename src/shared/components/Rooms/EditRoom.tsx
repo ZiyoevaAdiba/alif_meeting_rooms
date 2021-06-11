@@ -71,7 +71,6 @@ export const EditRoom = () => {
             handleBlur,
             handleChange,
             handleSubmit,
-            isSubmitting,
 
           }: any) => (
             <Form

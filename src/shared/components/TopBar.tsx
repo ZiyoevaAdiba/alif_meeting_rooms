@@ -61,7 +61,6 @@ export const TopBar = ({ onMobileNavOpen, className, ...rest }: any) => {
   const history = useHistory();
 
   const handleExit = () => {
-    console.log(token)
     removeToken();
     history.push(urls.login);
   }

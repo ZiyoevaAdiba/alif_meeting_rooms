@@ -72,7 +72,6 @@ export const getAllUsers = (page: number, history: History) => async(dispatch: D
 
 export const requestAddUser = (page: number, history: History, userData: IUserData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
   try {
-    console.log('add',userData)
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
     dispatch(getAllUsers(page, history));

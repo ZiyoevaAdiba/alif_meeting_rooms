@@ -24,7 +24,6 @@ export const AddDepartment = () => {
 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log('value', e.target.value);
     setDepInput(e.target.value);
     // setOpen(false);
   };
@@ -35,7 +34,6 @@ export const AddDepartment = () => {
     dispatch(requestAddDepartment(depInput));
     handleClose();
   };
- 
 
   return (
     <div>

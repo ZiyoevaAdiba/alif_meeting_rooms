@@ -32,7 +32,7 @@ export const getReservationsReducer = (state = initialState, action: any) => {
         loading: false,
         error: null,
         booking: reserved_meeting_rooms,
-        pageCount: count_page
+        pageCount: count_page,
       };
     
     case getReservationsType.SHOW_WARNING:

@@ -2,7 +2,6 @@ import { Dispatch } from "react";
 import { useHistory } from "react-router";
 import { api, urls } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
-import { getAllUsers } from "../getUsers";
 import { IUserData, signUpType } from "./interfaces";
 
 const requestSent = () => {
