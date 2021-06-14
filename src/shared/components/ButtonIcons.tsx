@@ -77,6 +77,7 @@ export const ButtonEdit = ({ row, btnLocation }: any) => {
   )
 }
 
+
 export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();

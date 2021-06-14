@@ -15,6 +15,7 @@ import { Page } from "../../../layouts/Page"
 import { getAllDepartments } from "../../../store/actions/departments/index";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete } from "../ButtonIcons";
+import { ErrorDiv } from "../ErrorDiv";
 import { AddDepartment } from "./AddDepartment";
 import { ConfirmDelDepart } from "./ConfirmDelDepart";
 
@@ -47,7 +48,7 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     width: 400,
   },
-  
+
   {
     field: 'actions',
     headerName: 'Действие',
@@ -68,7 +69,7 @@ const columns: GridColumns = [
 ];
 
 export const Departments = () => {
-  const { departments } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+  const { departments, error } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -101,7 +102,14 @@ export const Departments = () => {
             hideFooterSelectedRowCount
           />
         </Grid>
-        
+        {
+          (error)
+          &&
+          <ErrorDiv
+            error={error}
+          />
+        }
+
       </Container>
     </Page>
   )

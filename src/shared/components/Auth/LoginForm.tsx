@@ -9,6 +9,7 @@ import { removeToken, requestLogin } from '../../../store/actions/login';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
+import { ErrorDiv } from '../ErrorDiv';
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -68,7 +69,7 @@ const fieldInput: ILoginData = {
 export const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: IRootReducer) => state.loginReducer);
+  const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
 
   removeToken();
 
@@ -109,7 +110,6 @@ export const LoginForm = () => {
           handleChange,
           handleSubmit,
           isSubmitting,
-
         }: any) => (
           <Form
             onSubmit={handleSubmit}>
@@ -151,6 +151,13 @@ export const LoginForm = () => {
                 <img src={loaderGif} alt="" />
               }
             </Button>
+            {
+              (error)
+              &&
+              <ErrorDiv
+              error={error}
+              />
+            }
             <ButtonGroup className={classes.btns}>
               <Button
                 className={classes.btnsText}

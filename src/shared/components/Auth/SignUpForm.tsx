@@ -1,4 +1,4 @@
-import { createStyles, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
+import { Box, createStyles, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { SignupSchema } from '../../validations/SignUpValidation';
 import { removeToken } from '../../../store/actions/login';
 import { getAllDepartments, getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
+import { ErrorDiv } from '../ErrorDiv';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -54,7 +55,7 @@ const useStyles = makeStyles(() => createStyles({
     fontSize: 12,
     fontWeight: 550,
     color: '#39b97f',
-  },
+  }
 
 }));
 
@@ -83,7 +84,7 @@ export const user: IUserData = {
 export const SignUpForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
+  const { loading, error } = useSelector((state: IRootReducer) => state.signUpReducer);
   removeToken();
 
   useEffect(() => {
@@ -109,8 +110,7 @@ export const SignUpForm = () => {
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
           // same shape as initial values
-          dispatch(requestRegistration(values, setSubmitting));
-
+          dispatch(requestRegistration(values, history, setSubmitting));
         }
         }
       >
@@ -178,6 +178,8 @@ export const SignUpForm = () => {
               className={classes.signUpForm}
               style={{ marginTop: '30px' }}
               id="demo-simple-select-label"
+              error={Boolean(touched.department && errors.department)}
+              onBlur={handleBlur}
             >Выбрать отдел
             </InputLabel>
             <Select
@@ -236,21 +238,28 @@ export const SignUpForm = () => {
                 <img src={loaderGif} alt="" />
               }
             </Button>
-            <Button
-              className={classes.btnsText}
-              disabled={isSubmitting}
-              fullWidth
-              type="button"
-              variant="text"
-              onClick={loginClick}
-            >
-              Есть аккаунт? Войти
-            </Button>
+            {
+              (error)
+              &&
+              <ErrorDiv
+              error={error}
+              />
+            }
+                <Button
+                  className={classes.btnsText}
+                  disabled={isSubmitting}
+                  fullWidth
+                  type="button"
+                  variant="text"
+                  onClick={loginClick}
+                >
+                  Есть аккаунт? Войти
+                </Button>
 
           </Form>
         )}
       </Formik>
     </div>
 
-  );
+      );
 }

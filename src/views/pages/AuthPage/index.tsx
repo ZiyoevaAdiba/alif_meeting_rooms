@@ -83,9 +83,6 @@ export const LoginView = () => {
                   &&
                   <ForgetPasswordForm />
                 }
-              {/* <SignUpForm 
-                // onSubmitSuccess={handleSubmitSuccess} 
-              />  */}
             </Box>
 
           </CardContent>

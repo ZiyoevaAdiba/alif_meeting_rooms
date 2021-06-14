@@ -1,17 +1,15 @@
 import { getReservationsType } from "../../actions/reservations/interfaces";
-import { IGetReservationsReducer } from "./interfaces";
+import { IGetMRReservationsReducer } from "./interfaces";
 
-const initialState: IGetReservationsReducer = {
+const initialState: IGetMRReservationsReducer = {
   loading: false,
   error: null ,
   booking: [],
   showAlert: '',
-  pageCount: 1,
 };
 
 
-
-export const getReservationsReducer = (state = initialState, action: any) => {
+export const getMRReservationsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case getReservationsType.GET_RESERVATIONS:
       return {
@@ -23,18 +21,15 @@ export const getReservationsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
     case getReservationsType.GET_RESERVATIONS_SUCCESS:
-      const {count_page, reserved_meeting_rooms } = action.payload
       return {
         ...state,
         loading: false,
         error: null,
-        booking: reserved_meeting_rooms,
-        pageCount: count_page,
+        booking: action.payload,
       };
-    
     case getReservationsType.SHOW_WARNING:
       return{
         ...state,

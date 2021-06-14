@@ -9,6 +9,7 @@ import { requestPassword } from '../../../store/actions/login';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { IForgetData } from '../../../store/actions/forget/interfaces';
+import { ErrorDiv } from '../ErrorDiv';
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -66,7 +67,7 @@ const fieldInput: IForgetData = {
 export const ForgetPasswordForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: IRootReducer) => state.loginReducer);
+  const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
 
 
   const user: IForgetData = {
@@ -90,6 +91,7 @@ export const ForgetPasswordForm = () => {
         onSubmit={(values, { setSubmitting }) => {
           // same shape as initial values
           dispatch(requestPassword(values, setSubmitting));
+          sendPasswordClick();
         }
         }
       >
@@ -131,6 +133,13 @@ export const ForgetPasswordForm = () => {
                 <img src={loaderGif} alt="" />
               }
             </Button>
+            {
+              (error)
+              &&
+              <ErrorDiv
+              error={error}
+              />
+            }
             <Button
               className={classes.btnsText}
               disabled={isSubmitting}

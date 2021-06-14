@@ -7,11 +7,11 @@ import { ILoginReducer } from './login/interfaces';
 import { getUsersReducer } from './getUsers';
 import { getRoomsReducer } from './getRooms';
 import { getDepartmentsReducer } from './departments';
-import { getReservationsReducer } from './reservations';
+import { getMRReservationsReducer } from './reservations';
 import { ISignUpReducer } from './signUp/interfaces';
 import { IGetRoomsReducer } from './getRooms/interfaces';
 import { IGetDepartmentsReducer } from './departments/interfaces';
-import { IGetReservationsReducer } from './reservations/interfaces';
+import { IGetMRReservationsReducer } from './reservations/interfaces';
 import { IGetUserDataReducer } from './reservations/userData/interfaces';
 import { getUserDataReducer } from './reservations/userData'
 import { getMRsDataReducer } from './reservations/meetingRoomsData';
@@ -25,7 +25,7 @@ export interface IRootReducer {
     getDepartmentsReducer: IGetDepartmentsReducer,
     getUserDataReducer: IGetUserDataReducer,
     getMRsDataReducer: IGetMeetingRoomInfoReducer,
-    getReservationsReducer: IGetReservationsReducer,
+    getMRReservationsReducer: IGetMRReservationsReducer,
 }
 
 export const rootReducer = (history: any) => combineReducers({
@@ -37,5 +37,5 @@ export const rootReducer = (history: any) => combineReducers({
     getDepartmentsReducer,
     getUserDataReducer,
     getMRsDataReducer,
-    getReservationsReducer,
+    getMRReservationsReducer,
 });

@@ -1,48 +1,36 @@
-import { ReserveRoom } from "./ReserveRoom"
-import {
-  Box,
-  Container,
-  Grid,
-  makeStyles,
-} from "@material-ui/core"
-import {
-  DataGrid,
-  GridCellParams,
-  GridColumns,
-  GridValueGetterParams
-} from '@material-ui/data-grid';
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Page } from "../../../layouts/Page"
+import { Box, Grid, makeStyles } from "@material-ui/core";
+import { DataGrid, GridCellParams, GridColumns, GridValueGetterParams } from "@material-ui/data-grid";
+import { addHours } from "date-fns";
+import { useSelector } from "react-redux";
+import Popup from "reactjs-popup";
 import { IRootReducer } from "../../../store/reducers";
-import { getMRsInfo } from "../../../store/actions/reservations/meetingRoomsData";
-import { getAllReservations } from "../../../store/actions/reservations";
 import { ButtonDelete } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
-import { useHistory, useLocation } from "react-router";
-import { PaginationLink } from "../PaginationLink";
-import { addHours } from "date-fns";
+import 'reactjs-popup/dist/index.css';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
     '& .MuiDataGrid-columnsContainer': {
       backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
+    }
   },
-
-  CardsContainer: {
+  cardsRoot: {
     marginTop: 30,
+    gap: 30,
+  },
+  CardsContainer: {
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
     height: 700,
     flexDirection: 'column',
     rowGap: 20,
+    margin: 0
   },
   requests_header: {
     fontSize: 40
   },
 }));
-
 
 const columns: GridColumns = [
   {
@@ -89,37 +77,7 @@ const columns: GridColumns = [
       return tjTime;
     }
   },
-  {
-    field: 'meeting_room.number',
-    headerName: 'Meeting Room',
-    type: 'string',
-    align: 'left',
-    headerAlign: 'center',
-    disableColumnMenu: true,
-    width: 230,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.meeting_room.number} ${params.row.meeting_room.name} ${params.row.meeting_room.color}`
-  },
-  {
-    field: 'user.name',
-    headerName: 'Кем забронирован',
-    type: 'string',
-    align: 'left',
-    headerAlign: 'center',
-    disableColumnMenu: true,
-    width: 200,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.user.name}  ${params.row.user.lastname}`
-  },
-  {
-    field: 'purpose',
-    headerName: 'Цель',
-    type: 'text',
-    align: 'center',
-    headerAlign: 'center',
-    disableColumnMenu: true,
-    width: 200,
-  },
+
   {
     field: 'action',
     headerName: 'Действия',
@@ -128,77 +86,71 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     width: 100,
-    renderCell: (params: GridCellParams) => (
-      <>
-        {/* <ButtonEdit
+    renderCell: (params: GridCellParams) => {
+      console.log(params.row.user)
+      return (
+        <>
+          {/* <ButtonEdit
           row={params.row}
           btnLocation={'meeting-rooms'}
         /> */}
-        <ButtonDelete
-          id={params.row.id}
-          columnUserId={params.row.user.id}
-          btnLocation={'reservations'}
-        />
-      </>
-    )
+          <ButtonDelete
+            id={params.row.id}
+            columnUserId={params.row.user.id}
+            btnLocation={'reservations'}
+          />
+          <Popup
+            trigger={<AccountCircleIcon />}
+            on='hover'
+            position='bottom center'
+            nested
+          >
+            {
+              `${params.row.user.lastname} 
+          ${params.row.user.name}
+          @${params.row.user.tg_account}`
+            }
+          </Popup>
+        </>
+      )
+    }
   }
 ];
 
 export const ReservationTable = () => {
   const classes = useStyles();
-  const {
-    booking,
-    pageCount
-  } = useSelector((state: IRootReducer) => state.getReservationsReducer);
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const page = parseInt(query.get('page') || '1', 10);
-
-  useEffect(() => {
-    dispatch(getMRsInfo());
-    dispatch(getAllReservations(page, history));
-  }, [dispatch]);
-
-  // if (!requests?.length) {
-  //     return <LoadingScreen />;
-  // }
+  const { booking } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
 
   return (
-    <Page title="Reservations">
-      <Container maxWidth="xl" >
-        <Grid className={classes.CardsContainer}
-          container spacing={6}
-        >
-          <Box className={classes.requests_header}>
-            Reservations
-          </Box>
-          <ReserveRoom
-            page={page}
-            history={history}
-          />
-          {/* user */}
-          <ConfirmDelReservation
-            page={page}
-            history={history}
-          />
-          <DataGrid
-            className={classes.table_users}
-            rows={booking || []}
-            columns={columns}
-            hideFooterSelectedRowCount
-            hideFooterPagination
-          />
-        </Grid>
-        <PaginationLink
-          pageNumber={pageCount}
-          history={history}
-          page={page}
-          pagLocation={'users'}
+    <>
+      <Grid className={classes.CardsContainer}
+        container spacing={6}
+      >
+        <Box className={classes.requests_header}>
+          Reservations
+        </Box>
+        <ConfirmDelReservation
+          mrID={booking[0]?.meeting_room.id}
         />
-      </Container>
-    </Page>
+        <DataGrid
+          className={classes.table_users}
+          rows={booking || []}
+          columns={columns}
+          hideFooterSelectedRowCount
+          hideFooterPagination
+          disableExtendRowFullWidth
+          autoPageSize
+        />
+      </Grid>
+      {/* // {
+        //   (error)
+        //   &&
+        //   <ErrorDiv
+        //     error={error}
+        //   /> 
+        // } */}
+
+    </>
+
   )
 }

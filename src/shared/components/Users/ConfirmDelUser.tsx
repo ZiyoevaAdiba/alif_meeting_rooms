@@ -48,7 +48,6 @@ export const ConfirmDelUser = ({page, history} : any ) => {
           <Button onClick={handleClose} color="primary">
             Отменить
           </Button>
-        
         </DialogActions>
       </Dialog>
     </>

@@ -20,6 +20,7 @@ import { EditUser } from "./EditUser";
 import { ConfirmDelUser } from "./ConfirmDelUser";
 import { PaginationLink } from "../PaginationLink";
 import { useHistory, useLocation } from "react-router-dom";
+import { ErrorDiv } from "../ErrorDiv";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -152,6 +153,7 @@ export const AllUsers = () => {
   const {
     users,
     pageCount,
+    error,
   } = useSelector((state: IRootReducer) => state.getUsersReducer);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -197,6 +199,13 @@ export const AllUsers = () => {
             hideFooterPagination
           />
         </Grid>
+        {
+          (error)
+          &&
+          <ErrorDiv
+            error={error}
+          />
+        }
         <PaginationLink
           pageNumber={pageCount}
           history={history}

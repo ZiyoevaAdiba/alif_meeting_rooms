@@ -22,7 +22,7 @@ export const getDepartmentsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
     case getDepartmentsType.GET_DEPARTMENTS_SUCCESS:
       const payload = action.payload

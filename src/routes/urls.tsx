@@ -31,6 +31,7 @@ interface IApi {
     reservations: string,
     loggedUserData: string,
     departmentsForDropdown: string,
+    mrReservations: string
 };
 
 export const api: IApi = {
@@ -45,4 +46,5 @@ export const api: IApi = {
     reservations: '/api/reservation',
     loggedUserData: '/api/parse-token',
     departmentsForDropdown: '/auth/department',
+    mrReservations: '/api/reservation'
 };

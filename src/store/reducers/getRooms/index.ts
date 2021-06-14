@@ -22,7 +22,7 @@ export const getRoomsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
     case getRoomsType.GET_ROOMS_SUCCESS:
       const payload = action.payload

@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { useHistory } from "react-router";
+import { History } from "history";
 import { api, urls } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
 import { IUserData, signUpType } from "./interfaces";
@@ -11,7 +11,7 @@ const requestSent = () => {
   }
 }
 
-const requestFail = () => {
+export const requestFail = () => {
   return {
     type: signUpType.SIGNUP_FAIL,
     payload: {}
@@ -25,12 +25,11 @@ const requestSuccess = () => {
   }
 }
 
-export const requestRegistration = (userData: IUserData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
+export const requestRegistration = (userData: IUserData, history: History, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(requestSent());
     await Axios.post(`${api.signUp}`, userData);
     dispatch(requestSuccess());
-    const history = useHistory();
     history.push(urls.login);
 
   } catch (error) {

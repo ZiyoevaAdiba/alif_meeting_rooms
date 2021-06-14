@@ -5,6 +5,7 @@ import { IUser } from '../../reducers/getUsers/interfaces'
 import { Axios } from "../../../shared/axios";
 import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
+import { requestFail } from "../signUp";
 
 const getUsersReq = () => {
   return {
@@ -77,9 +78,9 @@ export const requestAddUser = (page: number, history: History, userData: IUserDa
     dispatch(getAllUsers(page, history));
 
   } catch (error) {
-    dispatch(getUsersReqFail());
+    dispatch(requestFail());
     setSubmitting(false);
-    console.log(error.response);
+    // alert(error.response.data.message);
   }
 }
 

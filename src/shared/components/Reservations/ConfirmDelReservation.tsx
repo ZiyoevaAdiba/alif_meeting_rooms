@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,24 +8,25 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { cancelReservationDelete, requestDeleteReservation } from '../../../store/actions/reservations';
+import { useState } from 'react';
 
-export const ConfirmDelReservation = ({page, history} : any ) => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.getReservationsReducer)
-  const [open, setOpen] = React.useState(true);
+export const ConfirmDelReservation = ({mrID} : any ) => {
+  const { showAlert } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
+  const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setOpen(!open);
-  }, [showAlert])
+  }, [showAlert]);
 
   const handleClose = () => {
-    dispatch(cancelReservationDelete())
+    dispatch(cancelReservationDelete());
   };
+console.log(showAlert);
 
   const handleConfirm = () => {
-    dispatch(requestDeleteReservation(page, history, showAlert))
+    dispatch(requestDeleteReservation(mrID, showAlert));
     handleClose();
-    // handleClose();
   };
 
   return (

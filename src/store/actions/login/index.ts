@@ -12,10 +12,10 @@ const loginReqSent = () => {
   }
 }
 
-const loginReqFail = () => {
+const loginReqFail = (message?: string) => {
   return {
     type: loginType.LOGIN_FAIL,
-    payload: {}
+    payload: message
   }
 }
 
@@ -48,9 +48,9 @@ export const requestLogin = (userData: ILoginData, setSubmitting: any, history: 
     history.push(urls.reservations);
 
   } catch (error) {
-    dispatch(loginReqFail());
+
+    dispatch(loginReqFail(error.response.data.payload.message));
     setSubmitting(false);
-    alert(error.response.data.payload.message);
   }
 }
 
@@ -62,8 +62,7 @@ export const requestPassword = (userData: IForgetData, setSubmitting: any) => as
     alert('новый пароль был отправлен, проверьте почту')
 
   } catch (error) {
-    dispatch(loginReqFail());
+    dispatch(loginReqFail(error.response.data.payload.message));
     setSubmitting(false);
-    alert(error.response.data.payload.message);
   }
 }

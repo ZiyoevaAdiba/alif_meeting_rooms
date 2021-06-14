@@ -20,6 +20,7 @@ import { IRoom } from "../../../store/reducers/getRooms/interfaces";
 import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
+import { ErrorDiv } from "../ErrorDiv";
 
 
 export const room: IRoom = {
@@ -154,7 +155,7 @@ const columns: GridColumns = [
 ];
 
 export const MeetingRooms = () => {
-  const { rooms } = useSelector((state: IRootReducer) => state.getRoomsReducer);
+  const { rooms, error } = useSelector((state: IRootReducer) => state.getRoomsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -191,6 +192,13 @@ export const MeetingRooms = () => {
           // }
           />
         </Grid>
+        {
+          (error)
+          &&
+          <ErrorDiv
+            error={error}
+          />
+        }
       </Container>
     </Page>
   )

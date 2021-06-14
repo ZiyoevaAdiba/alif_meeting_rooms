@@ -43,24 +43,24 @@ export const cancelReservationDelete = () => {
 
 
 export const getAllReservations = (page: number, history: History) => async(dispatch: Dispatch<any>) => {
-  try {
-    dispatch(getReservationsReq());
-    const res = await Axios.get(`${api.reservations}/${page}`);
-    dispatch(getReservationsSuccess(res.data.payload));
-    history.push(`${urls.reservations}?page=${page}`);
+  // try {
+  //   dispatch(getReservationsReq());
+  //   const res = await Axios.get(`${api.reservations}/${page}`);
+  //   dispatch(getReservationsSuccess(res.data.payload));
+  //   history.push(`${urls.reservations}?page=${page}`);
 
-  } catch (error) {
-    dispatch(getReservationsFail());
-    console.log(error.response);
-  }
+  // } catch (error) {
+  //   dispatch(getReservationsFail());
+  //   console.log(error.response);
+  // }
 }
 
-export const requestAddReservation = (page: number, history: History, reservationData: IReservation, userId: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddReservation = (reservationData: IReservation, userId: any, mrID: string) => async(dispatch: Dispatch<any>) => {
   try {
     reservationData.user_id = userId;
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
-    dispatch(getAllReservations(page, history));
+    dispatch(getMRReservations(mrID));
     
   } catch (error) {
     dispatch(getReservationsFail());
@@ -68,14 +68,24 @@ export const requestAddReservation = (page: number, history: History, reservatio
   }
 }
 
-export const requestDeleteReservation = (page: number, history: History, reservationId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteReservation = (mrID: string, reservationId: string) => async(dispatch: Dispatch<any>) => {
   try {
-    dispatch(getReservationsReq());
     await Axios.delete(`${api.reservations}/${reservationId}`);
-    dispatch(getAllReservations(page, history));
+    dispatch(getMRReservations(mrID));
     
   } catch (error) {
-    dispatch(getReservationsFail());
+    // dispatch(getReservationsFail());
+    console.log(error.response);
+  }
+}
+
+
+export const getMRReservations = (mrID: string) => async(dispatch: Dispatch<any>) => {
+  try {
+    const res = await Axios.get(`${api.mrReservations}/${mrID}/meeting`);
+    dispatch(getReservationsSuccess(res.data.payload));
+    
+  } catch (error) {
     console.log(error.response);
   }
 }

@@ -22,8 +22,14 @@ export const getUsersReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
+      case getUsersType.GET_USERS_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: 'Проверьте доступ. Попробуйте снова',
+        };
     case getUsersType.GET_USERS_SUCCESS:
       const { users, count_page } = action.payload
       return {

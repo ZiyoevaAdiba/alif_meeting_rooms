@@ -19,7 +19,7 @@ export const getMRsDataReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
     case getMeetingRoomsDataType.GET_MEETING_ROOMS_INFO_SUCCESS:
       const payload = action.payload

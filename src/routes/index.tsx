@@ -63,8 +63,8 @@ const routesConfig = [
             {
                 exact: true,
                 path: `${urls.reservations}`,
-                component: lazy(() => import('../shared/components/Reservations/ReservationTable').then(module => ({
-                    default: module.ReservationTable
+                component: lazy(() => import('../shared/components/Reservations/ReservationPage').then(module => ({
+                    default: module.ReservationPage
                 })))
             },
             {

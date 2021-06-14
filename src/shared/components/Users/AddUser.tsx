@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,8 +13,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { fieldInput, user } from '../Auth/SignUpForm';
 import { Form, Formik } from 'formik';
 import { requestAddUser } from '../../../store/actions/getUsers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SignupSchema } from '../../validations/SignUpValidation';
+import { ErrorDiv } from '../ErrorDiv';
+import { IRootReducer } from '../../../store/reducers';
+import { getDepartments } from '../../../store/actions/departments';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -31,9 +34,10 @@ const useStyles = makeStyles(() => createStyles({
 
 }));
 
-export const AddUser = ({page, history} : any ) => {
+export const AddUser = ({ page, history }: any) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
+  const { error } = useSelector((state: IRootReducer) => state.signUpReducer)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,6 +46,15 @@ export const AddUser = ({page, history} : any ) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(getDepartments());
+  }, []);
+
+  const {
+    departments
+  } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+
 
   const dispatch = useDispatch();
 
@@ -62,7 +75,7 @@ export const AddUser = ({page, history} : any ) => {
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
               dispatch(requestAddUser(page, history, values, setSubmitting));
-              handleClose();
+
             }
             }
           >
@@ -132,18 +145,31 @@ export const AddUser = ({page, history} : any ) => {
                   type='text'
                 />
 
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldInput.department}
-                  label="департамент"
-                  fullWidth
+                <InputLabel
+                  className={classes.signUpForm}
+                  style={{ marginTop: '30px' }}
+                  id="demo-simple-select-label"
                   error={Boolean(touched.department && errors.department)}
-                  helperText={touched.department && errors.department}
-                  onChange={handleChange}
-                  value={values.department}
                   onBlur={handleBlur}
-                  type='text'
-                />
+                >Выбрать отдел
+                </InputLabel>
+                <Select
+                  id="demo-simple-select"
+                  value={values.meeting_room_id}
+                  onChange={handleChange}
+                  name={fieldInput.department}
+                  fullWidth
+                >
+                  {
+                    departments.map(
+                      (item) => {
+                        // console.log(item);
+                        return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
+                      }
+                    )
+                  }
+
+                </Select>
 
                 <TextField
                   className={classes.inputGap}
@@ -187,6 +213,13 @@ export const AddUser = ({page, history} : any ) => {
                   <MenuItem value={'admin'}>Админ</MenuItem>
                   <MenuItem value={'user'}>Пользователь</MenuItem>
                 </Select>
+                {/* {
+                  (error)
+                    &&
+                    <ErrorDiv
+                      error={error}
+                    />
+                } */}
                 <DialogActions>
                   <Button
                     type='submit'
@@ -207,6 +240,7 @@ export const AddUser = ({page, history} : any ) => {
         </DialogContent>
 
       </Dialog>
+
     </Box>
   );
 }

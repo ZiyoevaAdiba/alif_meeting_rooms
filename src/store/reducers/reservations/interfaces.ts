@@ -22,18 +22,17 @@ export interface IResUser {
 export interface IReservation {
   start_time?: string,
   end_time?: string,
+  meeting_room?: any,
   meeting_room_id?: string,
   purpose?: string,
   user_id?: string,
   date?: string
 } 
 
-export interface IGetReservationsReducer {
+export interface IGetMRReservationsReducer {
   loading: boolean,
   error: null | any,
   booking: IReservation[],
   showAlert: string,
-  pageCount: number,
-
 }
 

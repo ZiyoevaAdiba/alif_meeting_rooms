@@ -1,6 +1,8 @@
 export interface IGetMeetingRoomInfo {
   id?: string,
   number?: string,
+  name?: string,
+  
 }
 
 export interface IGetMeetingRoomInfoReducer {
