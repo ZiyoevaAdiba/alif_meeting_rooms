@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     // paddingTop: 20,
     display:"flex",
-    columnGap: 70
+    columnGap: 70,
   },
 
   inputGap: {
@@ -22,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
 
   CardsContainer: {
     '& .MuiDialog-paperWidthSm': {
-      maxWidth: '1500px',
+      maxWidth: '1000px',
+      minHeight: 500,
+      padding: 20,
     },
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 700,
     flexDirection: 'column',
     width: '100%',
   },
@@ -49,9 +50,8 @@ export const ReserveRoom = ({page, history, open, setOpen} : any ) => {
         onClose={() => setOpen(false)}
         aria-labelledby="form-dialog-title"
         className={classes.CardsContainer}
-
       >
-        <DialogTitle id="form-dialog-title">Чтобы забронировать Meeting Room заполните форму.</DialogTitle>
+        <DialogTitle id="form-dialog-title">Для бронирования заполните форму.</DialogTitle>
         <DialogContent className={classes.content}>
          
           <Form 

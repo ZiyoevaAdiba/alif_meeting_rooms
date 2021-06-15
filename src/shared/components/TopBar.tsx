@@ -18,30 +18,37 @@ import { IRootReducer } from "../../store/reducers";
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 64,
-
   },
+  
   logo: {
     margin: '5px',
     width: '60px',
     height: '60px',
     borderRadius: '50%'
   },
+
   navContent: {
     display: 'flex',
     justifyContent: 'center',
     columnGap: 20,
-    width: '100%',
+    width: '80%',
     '& a': {
       color: 'black',
       textDecoration: 'none',
       padding: '5px 10px',
+      transition: '0.3s',
       '&:hover': {
-        backgroundColor: 'lightGrey',
+        backgroundColor: '#d3d3d37a',
         color: '#423c3c',
-        borderRadius: '50px',
+        borderRadius: '7px',
       },
     },
   },
+
+  btnExit: {
+    marginLeft: '10px',
+    fontWeight: 550,  
+  }
 
 }));
 
@@ -93,13 +100,16 @@ export const TopBar = ({ onMobileNavOpen, className, ...rest }: any) => {
             </>
           }
         </Box>
-        <Box ml={2} >
+        <Box 
+          ml={2} 
+        >
           {
             `${userData.name || ''} ${userData.lastname || ''}`
           }
         </Box>
         <Button
           onClick={handleExit}
+          className={classes.btnExit}
         >
           выход
         </Button>

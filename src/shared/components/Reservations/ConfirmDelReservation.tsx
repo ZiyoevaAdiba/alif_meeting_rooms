@@ -22,7 +22,6 @@ export const ConfirmDelReservation = ({mrID} : any ) => {
   const handleClose = () => {
     dispatch(cancelReservationDelete());
   };
-console.log(showAlert);
 
   const handleConfirm = () => {
     dispatch(requestDeleteReservation(mrID, showAlert));

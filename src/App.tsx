@@ -7,7 +7,8 @@ const useStyles = makeStyles(() => createStyles({
       '-webkit-font-smoothing': 'antialiased',
       '-moz-osx-font-smoothing': 'grayscale',
       height: '100%',
-      width: '100%'
+      width: '100%',
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
     },
     body: {
       height: '100%',
@@ -19,8 +20,13 @@ const useStyles = makeStyles(() => createStyles({
       }
     },
     '#root': {
+      '& .MuiDataGrid-columnsContainer': {
+        backgroundColor: 'rgb(57 185 127)',
+        color: "white",
+        fontSize: '16px'
+      },
       height: '100%',
-      width: '100%'
+      width: '100%',
     }
   }
 }));

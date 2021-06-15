@@ -7,8 +7,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { requestAddDepartment } from '../../../store/actions/departments';
+import { useStyles } from '../Reservations/Form';
+
 
 export const AddDepartment = () => {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [depInput, setDepInput] = React.useState('');
   const dispatch = useDispatch();
@@ -39,8 +42,9 @@ export const AddDepartment = () => {
     <div>
       <Button
         variant="outlined"
-        color="primary"
         onClick={handleClickOpen}
+        className={classes.btnReserve}
+
       >
         Добавить Отдел
       </Button>
@@ -56,16 +60,21 @@ export const AddDepartment = () => {
               label="Наименование"
               type="text"
               onChange={handleChange}
+              required
             />
           </DialogContent>
           <DialogActions>
             <Button
-              color="secondary"
+              variant='outlined'
               type='submit'
+              className={classes.btnReserve}
             >
               Добавить
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button 
+              onClick={handleClose} 
+              className={classes.btnCancel}
+              >
               Отмена
             </Button>
           </DialogActions>

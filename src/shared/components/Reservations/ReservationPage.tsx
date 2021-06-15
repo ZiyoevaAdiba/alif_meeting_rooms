@@ -87,6 +87,7 @@ export const ReservationPage = () => {
         >
           {
             meetingRoomInfo.map(item =>
+              <>
               <MeetingRoomCard
                 key={item.id}
                 name={item.name}
@@ -94,11 +95,10 @@ export const ReservationPage = () => {
                 mrID={item.id}
                 setOpen={setOpen}
               />
+              </>
             )
           }
         </Grid>
-
-      </Container>
 
       <ReserveRoom
         page={page}
@@ -106,6 +106,8 @@ export const ReservationPage = () => {
         open={open}
         setOpen={setOpen}
       />
+      </Container>
+
       
     </Page>
   )

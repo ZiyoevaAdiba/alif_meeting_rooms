@@ -23,13 +23,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { ErrorDiv } from "../ErrorDiv";
 
 
-const useStyles = makeStyles((theme) => ({
-  table_users: {
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-
+const useStyles = makeStyles((theme) => ({  
   CardsContainer: {
     marginTop: 30,
     justifyContent: 'space-evenly',
@@ -47,23 +41,12 @@ const useStyles = makeStyles((theme) => ({
 
 const columns: GridColumns = [
   {
-    field: 'id',
-    headerName: 'id',
-    type: 'number',
-    headerAlign: 'center',
-    align: 'center',
-    disableColumnMenu: true,
-    width: 70,
-  },
-  {
     field: 'name',
     headerName: 'Имя',
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
-    // renderCell: (params: GridCellParams) =>
-    // <Dropdown data={params.row} />
+    flex: 2,
   },
   {
     field: 'lastname',
@@ -72,7 +55,7 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130
+    flex: 2,
   },
   {
     field: 'department',
@@ -81,8 +64,7 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 150,
-    editable: true
+    flex: 2,
   },
   {
     field: 'phone',
@@ -92,9 +74,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
-    // valueGetter: (params: GridValueGetterParams) =>
-    //     ${params.row.price || ''} ${params.row.currency || ''}
+    flex: 2,
   },
   {
     field: 'tg_account',
@@ -103,7 +83,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    flex: 2,
   },
   {
     field: 'email',
@@ -112,9 +92,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
-    // valueGetter: (params: GridValueGetterParams) =>
-    //     ${params.row.sum || ''} ${params.row.currency || ''}
+    flex: 2,
   },
   {
     field: 'role',
@@ -123,7 +101,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    flex: 2,
   },
   {
     field: '',
@@ -132,7 +110,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    flex: 2,
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonEdit
@@ -173,8 +151,10 @@ export const AllUsers = () => {
   return (
     <Page title="Пользователи">
       <Container maxWidth="xl" >
-        <Grid className={classes.CardsContainer}
-          container spacing={6}
+        <Grid
+          className={classes.CardsContainer}
+          container
+          spacing={6}
         >
           <Box className={classes.requests_header}>
             Пользователи
@@ -191,12 +171,17 @@ export const AllUsers = () => {
             page={page}
             history={history}
           />
-          <DataGrid className={classes.table_users}
+          <DataGrid
             rows={users || []}
             columns={columns}
             rowsPerPageOptions={[]}
-            hideFooterSelectedRowCount
-            hideFooterPagination
+            hideFooter
+          />
+          <PaginationLink
+            pageNumber={pageCount}
+            history={history}
+            page={page}
+            pagLocation={'users'}
           />
         </Grid>
         {
@@ -206,12 +191,6 @@ export const AllUsers = () => {
             error={error}
           />
         }
-        <PaginationLink
-          pageNumber={pageCount}
-          history={history}
-          page={page}
-          pagLocation={'users'}
-        />
       </Container>
     </Page>
   )

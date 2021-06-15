@@ -14,6 +14,8 @@ import { showUserData, userWarningDelete } from '../../store/actions/getUsers';
 import { departmentsWarningDelete } from '../../store/actions/departments'
 import { reservationWarningDelete } from '../../store/actions/reservations';
 import { IRootReducer } from '../../store/reducers';
+import Popup from 'reactjs-popup';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -98,3 +100,27 @@ export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
   )
 }
 
+
+export const ButtonPoppup = ({params, btnLocation }: any) => {
+  // id, columnUserId = '',
+
+  const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)
+
+  if (params.user.id === userData.id && btnLocation === 'reservations') {
+    return <></>;
+  }
+  return (
+    <Popup
+      trigger={<AccountCircleIcon />}
+      on='hover'
+      position='bottom center'
+      nested
+    >
+      {
+        `${params.user.lastname} 
+          ${params.user.name}
+          @${params.user.tg_account}`
+      }
+    </Popup>
+  )
+}

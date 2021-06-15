@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         overflow: 'hidden',
         width: '100%',
-        fontFamily: 'Calibri',
         fontSize: 20
     },
     wrapper: {

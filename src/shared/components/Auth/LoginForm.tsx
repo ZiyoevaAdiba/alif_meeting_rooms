@@ -127,7 +127,7 @@ export const LoginForm = () => {
             
             <TextField
               name={fieldInput.password}
-              label="введите пароль"
+              label="Пароль"
               fullWidth
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}

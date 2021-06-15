@@ -71,7 +71,9 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    flex: 1, 
+
+    // width: 130,
     // valueGetter: (params: GridValueGetterParams) =>
     //     ${params.row.price || ''} ${params.row.currency || ''}
   },
@@ -81,7 +83,8 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    // width: 150,
+    flex: 2, 
     // renderCell: (params: GridCellParams) =>
     // <Dropdown data={params.row} />
   },
@@ -92,7 +95,8 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130
+    flex: 2, 
+    // width: 130
   },
   {
     field: 'color',
@@ -101,10 +105,9 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 120,
-    editable: true,
-    // valueGetter: (params: GridValueGetterParams) => 
-    //   params.row.color.ToKno
+    // width: 120,
+    flex: 2, 
+
   },
 
   {
@@ -114,7 +117,9 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 160,
+    // width: 180,
+    flex: 2, 
+
   },
   {
     field: 'status',
@@ -123,7 +128,9 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    // width: 130,
+    flex: 2, 
+
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.status
         ? 'Доступен'
@@ -138,7 +145,8 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    // width: 130,
+    flex: 2, 
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonEdit
@@ -184,12 +192,9 @@ export const MeetingRooms = () => {
             className={classes.table_users}
             rows={rooms || []}
             columns={columns}
-            // pageSize={10}
+            rowsPerPageOptions={[]}
             hideFooterSelectedRowCount
-          // onEditCellChangeCommitted={
-          //   (params: GridEditCellPropsParams) =>
-          //     handleCellValue(params)
-          // }
+            hideFooterPagination
           />
         </Grid>
         {

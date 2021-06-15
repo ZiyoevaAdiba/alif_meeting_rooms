@@ -4,6 +4,7 @@ import { api, urls } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
 import { History } from "history";
 import { IReservation } from "../../reducers/reservations/interfaces";
+import { getMRsInfo } from "./meetingRoomsData";
 
 
 const getReservationsReq = () => {
@@ -55,12 +56,13 @@ export const getAllReservations = (page: number, history: History) => async(disp
   // }
 }
 
-export const requestAddReservation = (reservationData: IReservation, userId: any, mrID: string) => async(dispatch: Dispatch<any>) => {
+export const requestAddReservation = (reservationData: IReservation, mrID: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
-    reservationData.user_id = userId;
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
     dispatch(getMRReservations(mrID));
+    setOpen(false);
+    dispatch(getMRsInfo())
     
   } catch (error) {
     dispatch(getReservationsFail());

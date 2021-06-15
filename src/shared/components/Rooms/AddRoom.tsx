@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, createStyles, makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -15,20 +15,9 @@ import { useDispatch } from 'react-redux';
 import { fieldRoom, room } from './MeetingRooms';
 import { requestAddRoom } from '../../../store/actions/getRooms';
 import { RoomSchema } from '../../validations/RoomValidation';
+import { useStyles } from '../Reservations/Form';
 
-const useStyles = makeStyles(() => createStyles({
 
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
-
-  inputGap: {
-    margin: 5,
-  },
-
-}));
 
 export const AddRoom = () => {
   const [open, setOpen] = React.useState(false);
@@ -48,7 +37,7 @@ export const AddRoom = () => {
     <Box>
       <Button
         variant="outlined"
-        color="primary"
+        className={classes.btnReserve}
         onClick={handleClickOpen}
       >
         Добавить Meeting Room
@@ -63,7 +52,7 @@ export const AddRoom = () => {
             initialValues={room}
             validationSchema={RoomSchema}
             onSubmit={(values, { setSubmitting }) => {
-              
+
               values.status = (values.status === 'true')
                 ? true
                 : false;
@@ -170,13 +159,16 @@ export const AddRoom = () => {
                 <DialogActions>
                   <Button
                     type='submit'
-                    variant='contained'
                     // onClick={handleClose} 
-                    color="secondary"
+                    variant='outlined'
+                    className={classes.btnReserve}
                   >
                     Добавить
                   </Button>
-                  <Button onClick={handleClose} color="primary">
+                  <Button
+                    onClick={handleClose}
+                    className={classes.btnReserve}
+                  >
                     отмена
                   </Button>
                 </DialogActions>

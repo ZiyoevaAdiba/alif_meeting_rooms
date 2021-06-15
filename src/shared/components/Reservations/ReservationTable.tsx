@@ -1,19 +1,20 @@
-import { Box, Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import { DataGrid, GridCellParams, GridColumns, GridValueGetterParams } from "@material-ui/data-grid";
 import { addHours } from "date-fns";
 import { useSelector } from "react-redux";
-import Popup from "reactjs-popup";
 import { IRootReducer } from "../../../store/reducers";
-import { ButtonDelete } from "../ButtonIcons";
+import { ButtonDelete, ButtonPoppup } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import 'reactjs-popup/dist/index.css';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
+    width: 511,
     '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    }
+      backgroundColor: 'rgb(57 185 127)',
+      color: "white",
+      fontSize: '16px'
+    },
   },
   cardsRoot: {
     marginTop: 30,
@@ -22,13 +23,10 @@ const useStyles = makeStyles((theme) => ({
   CardsContainer: {
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 700,
     flexDirection: 'column',
     rowGap: 20,
-    margin: 0
-  },
-  requests_header: {
-    fontSize: 40
+    margin: 0,
+    width: 'fit-content'
   },
 }));
 
@@ -85,9 +83,8 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 100,
+    width: 120,
     renderCell: (params: GridCellParams) => {
-      console.log(params.row.user)
       return (
         <>
           {/* <ButtonEdit
@@ -99,7 +96,13 @@ const columns: GridColumns = [
             columnUserId={params.row.user.id}
             btnLocation={'reservations'}
           />
-          <Popup
+          <ButtonPoppup
+            // id={params.row.id}
+            params={params.row}
+            // columnUserId={params.row.user.id}
+            btnLocation={'reservations'}
+          />
+          {/* <Popup
             trigger={<AccountCircleIcon />}
             on='hover'
             position='bottom center'
@@ -110,7 +113,7 @@ const columns: GridColumns = [
           ${params.row.user.name}
           @${params.row.user.tg_account}`
             }
-          </Popup>
+          </Popup> */}
         </>
       )
     }
@@ -120,26 +123,29 @@ const columns: GridColumns = [
 export const ReservationTable = () => {
   const classes = useStyles();
   const { booking } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
+  // const mrID = (typeof booking === 'string')
+  const mrID = (booking === null)
+    ?
+    '' // set just booking
+    :
+    booking[0]?.meeting_room.id;
 
   return (
     <>
       <Grid className={classes.CardsContainer}
         container spacing={6}
       >
-        <Box className={classes.requests_header}>
-          Reservations
-        </Box>
         <ConfirmDelReservation
-          mrID={booking[0]?.meeting_room.id}
+          mrID={mrID}
         />
         <DataGrid
           className={classes.table_users}
           rows={booking || []}
           columns={columns}
-          hideFooterSelectedRowCount
-          hideFooterPagination
           disableExtendRowFullWidth
           autoPageSize
+          autoHeight
+          hideFooter
         />
       </Grid>
       {/* // {

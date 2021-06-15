@@ -11,9 +11,9 @@ export const AuthGuard = ({ children }: any) => {
 
     const token: string = getToken();
     const expToken = jwt.decode(token, { complete: true })?.payload.exp;
-    const currentDate = new Date().getTime();
-
-    if (expToken < currentDate) {
+    const currentDate = new Date().getSeconds();
+    
+    if (expToken > currentDate) {
         return children;
     }
     removeToken();

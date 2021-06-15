@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -16,21 +15,8 @@ import { fieldRoom } from './MeetingRooms';
 import { requestEditRoom, resetEditing } from '../../../store/actions/getRooms';
 import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
+import { useStyles } from '../Reservations/Form';
 
-
-const useStyles = makeStyles(() => createStyles({
-
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
-
-  inputGap: {
-    margin: 5,
-  },
-
-}));
 
 export const EditRoom = () => {
   const { room } = useSelector((state: IRootReducer) => state.getRoomsReducer)
@@ -53,12 +39,11 @@ export const EditRoom = () => {
       <DialogContent>
         <DialogContentText>
           Чтобы изменить Meeting Room отредактируйте нужные поля.
-          </DialogContentText>
+        </DialogContentText>
         <Formik
           initialValues={room}
           validationSchema={RoomSchema}
           onSubmit={(values) => {
-            
             dispatch(requestEditRoom(values));
             handleClose();
           }
@@ -149,7 +134,7 @@ export const EditRoom = () => {
                 id="demo-simple-select-label"
               >
                 Состояние meeting room-a
-                </InputLabel>
+              </InputLabel>
               <Select
                 id="demo-simple-select"
                 value={values?.status}
@@ -164,16 +149,19 @@ export const EditRoom = () => {
               <DialogActions>
                 <Button
                   type='submit'
-                  variant='contained'
-                  color="secondary"
-                  >
+                  variant='outlined'
+                  className={classes.btnReserve}
+                >
                   Сохранить изменения
                 </Button>
-                <Button onClick={handleClose} color="primary">
+                <Button
+                  onClick={handleClose}
+                  className={classes.btnCancel}
+                >
                   отмена
                 </Button>
               </DialogActions>
-              
+
             </Form>
           )}
         </Formik>

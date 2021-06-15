@@ -37,7 +37,7 @@ const routesConfig = [
             {
                 exact: true,
                 path: '/',
-                component: () => <Redirect to={urls.home} />
+                component: () => <Redirect to={urls.reservations} />
             },
             {
                 exact: true,
@@ -65,13 +65,6 @@ const routesConfig = [
                 path: `${urls.reservations}`,
                 component: lazy(() => import('../shared/components/Reservations/ReservationPage').then(module => ({
                     default: module.ReservationPage
-                })))
-            },
-            {
-                exact: true,
-                path: `${urls.home}`,
-                component: lazy(() => import('../shared/components/HomeView').then(module => ({
-                    default: module.HomeView
                 })))
             }
         ]

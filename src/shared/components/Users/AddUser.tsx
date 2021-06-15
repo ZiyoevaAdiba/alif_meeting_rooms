@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, createStyles, makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,21 +18,8 @@ import { SignupSchema } from '../../validations/SignUpValidation';
 import { ErrorDiv } from '../ErrorDiv';
 import { IRootReducer } from '../../../store/reducers';
 import { getDepartments } from '../../../store/actions/departments';
+import { useStyles } from '../Reservations/Form';
 
-
-const useStyles = makeStyles(() => createStyles({
-
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
-
-  inputGap: {
-    margin: 5,
-  },
-
-}));
 
 export const AddUser = ({ page, history }: any) => {
   const [open, setOpen] = React.useState(false);
@@ -60,7 +47,11 @@ export const AddUser = ({ page, history }: any) => {
 
   return (
     <Box>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        className={classes.btnReserve}
+        onClick={handleClickOpen}
+      >
         Добавить Пользователя
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -155,7 +146,7 @@ export const AddUser = ({ page, history }: any) => {
                 </InputLabel>
                 <Select
                   id="demo-simple-select"
-                  value={values.meeting_room_id}
+                  value={values.department}
                   onChange={handleChange}
                   name={fieldInput.department}
                   fullWidth
@@ -163,8 +154,11 @@ export const AddUser = ({ page, history }: any) => {
                   {
                     departments.map(
                       (item) => {
-                        // console.log(item);
-                        return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
+                        return (
+                          <MenuItem key={item.id} value={item.name}>
+                            {item.name}
+                          </MenuItem>
+                        )
                       }
                     )
                   }
@@ -223,13 +217,16 @@ export const AddUser = ({ page, history }: any) => {
                 <DialogActions>
                   <Button
                     type='submit'
-                    variant='contained'
-                    // onClick={handleClose} 
-                    color="secondary"
+                    variant='outlined'
+                    className={classes.btnReserve}
                   >
                     Добавить
                   </Button>
-                  <Button onClick={handleClose} color="primary">
+                  <Button
+                    onClick={handleClose}
+                    color="primary"
+                    className={classes.btnCancel}
+                  >
                     отмена
                   </Button>
                 </DialogActions>

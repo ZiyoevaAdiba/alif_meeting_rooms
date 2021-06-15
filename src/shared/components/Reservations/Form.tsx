@@ -3,10 +3,7 @@ import {
   Button,
   DialogActions,
   Grid,
-  InputLabel,
   makeStyles,
-  MenuItem,
-  Select,
   TextField
 } from '@material-ui/core';
 import {
@@ -21,31 +18,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestAddReservation } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
 import { IReservation } from '../../../store/reducers/reservations/interfaces';
+import { ReserveSchema } from '../../validations/Reservation';
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   signUpForm: {
     '& input': {
       marginTop: 5,
     }
   },
-
+  
   inputGap: {
     margin: 5,
   },
+  btnReserve: {
+    color: 'rgb(57 185 127)',
+    borderColor: 'rgb(57 185 127)'
+  },
 
+  btnCancel: {
+    color: 'rgb(57 185 127)',
+  }
 }));
 
 
 export const Form = ({ setOpen }: any) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const initBooking: IReservation = {
-    start_time: "",
-    end_time: "",
-    date: "",
-    purpose: "",
-    user_id: "",
-  }
+  
   const {
     userData
   } = useSelector((state: IRootReducer) => state.getUserDataReducer);
@@ -64,6 +63,14 @@ export const Form = ({ setOpen }: any) => {
     new Date(),
   );
 
+  const initBooking: IReservation = {
+    start_time: '',
+    end_time: '',
+    date: '',
+    purpose: '',
+    user_id: '',
+    meeting_room_id: ''
+  }
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
     setSelectedStartTime(date);
@@ -72,23 +79,27 @@ export const Form = ({ setOpen }: any) => {
 
   return (
     <Formik
+      
       initialValues={initBooking}
-      // validationSchema={RoomSchema}
+      // validationSchema={ReserveSchema}
       onSubmit={(values) => {
+        console.log(values);
+        
         values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        console.log(userData.id);
-        setOpen(false);
         delete values.date;
+        values.user_id = userData.id;
         values.meeting_room_id = booking[0]?.meeting_room.id;
-        dispatch(requestAddReservation(values, userData.id, booking[0]?.meeting_room.id));
+        dispatch(requestAddReservation(values, booking[0]?.meeting_room.id, setOpen));
       }
       }
     >
       {({
-        values, 
+        values,
         handleChange,
         handleSubmit,
+        touched,
+        errors,
       }: any) => (
 
         <form
@@ -109,30 +120,9 @@ export const Form = ({ setOpen }: any) => {
                 onChange={handleChange}
                 value={values.purpose}
                 type='text'
-              />
-              {/* <InputLabel
-                className={classes.inputGap}
-                style={{ marginTop: '30px' }}
-                id="demo-simple-select-label"
-              >Выбрать meeting room
-              </InputLabel>
-              <Select
-                id="demo-simple-select"
-                value={values.meeting_room_id}
-                onChange={handleChange}
-                name='meeting_room_id'
-                fullWidth
-              >
-                {
-                  meetingRoomInfo.map(
-                    (item) => {
-                      // console.log(item);
-                      return <MenuItem key={item.id} value={item.id}>{item.number}</MenuItem>
-                    }
-                  )
-                }
+                error={Boolean(touched.purpose && errors.purpose)}
 
-              </Select> */}
+              />
 
               <KeyboardDatePicker
                 disableToolbar
@@ -143,6 +133,7 @@ export const Form = ({ setOpen }: any) => {
                 label="Выберите дату"
                 value={selectedDate}
                 fullWidth
+                error={Boolean(touched.date && errors.date)}
                 onChange={(date) => handleDate(date)}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
@@ -153,6 +144,7 @@ export const Form = ({ setOpen }: any) => {
                 margin="normal"
                 name="start_time"
                 fullWidth
+                error={Boolean(touched.start_time && errors.start_time)}
                 label="Выберите время начала"
                 value={selectedStartTime}
                 onChange={(date) => setSelectedStartTime(date)}
@@ -167,6 +159,7 @@ export const Form = ({ setOpen }: any) => {
                 label="Выберите время завершения"
                 value={selectedEndTime}
                 fullWidth
+                error={Boolean(touched.end_time && errors.end_time)}
                 onChange={(date) => setSelectedEndTime(date)}
                 KeyboardButtonProps={{
                   'aria-label': 'change time',
@@ -178,15 +171,14 @@ export const Form = ({ setOpen }: any) => {
           <DialogActions>
             <Button
               type='submit'
-              variant='contained'
-              // onClick={handleClose} 
-              color="secondary"
+              variant='outlined'
+              className={classes.btnReserve}
             >
               Забронировать
             </Button>
             <Button
               onClick={() => setOpen(false)}
-              color="primary"
+              className={classes.btnCancel}
             >
               отмена
             </Button>

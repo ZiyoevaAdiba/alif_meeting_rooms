@@ -21,6 +21,7 @@ import { ConfirmDelDepart } from "./ConfirmDelDepart";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
+    width: 900,
     '& .MuiDataGrid-columnsContainer': {
       backgroundColor: 'rgba(255, 7, 0, 0.55)',
     },
@@ -46,7 +47,7 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 400,
+    flex: 6, 
   },
 
   {
@@ -56,7 +57,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    width: 130,
+    flex: 2, 
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonDelete
@@ -78,11 +79,9 @@ export const Departments = () => {
 
   const classes = useStyles();
 
-
   // if (!requests?.length) {
   //     return <LoadingScreen />;
   // }
-
 
   return (
     <Page title="Meeting-Rooms">
@@ -99,7 +98,8 @@ export const Departments = () => {
             className={classes.table_users}
             rows={departments || []}
             columns={columns}
-            hideFooterSelectedRowCount
+            rowsPerPageOptions={[]}
+            hideFooter
           />
         </Grid>
         {
