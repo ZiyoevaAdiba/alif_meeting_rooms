@@ -6,5 +6,4 @@ export enum getUsersType {
   RESET_EDITING = 'RESET_EDITING',
   SHOW_WARNING = 'SHOW_WARNING',
   CANCEL_DELETE = 'CANCEL_DELETE',
-
 }

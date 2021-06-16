@@ -2,6 +2,7 @@ export interface IGetMeetingRoomInfo {
   id?: string,
   number?: string,
   name?: string,
+  isBusy?: boolean
   
 }
 

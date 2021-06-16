@@ -5,23 +5,12 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core"
-import {
-  DataGrid,
-  GridCellParams,
-  GridColumns,
-  GridValueGetterParams
-} from '@material-ui/data-grid';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { IRootReducer } from "../../../store/reducers";
 import { getMRsInfo } from "../../../store/actions/reservations/meetingRoomsData";
-import { getMRReservations } from "../../../store/actions/reservations";
-import { ButtonDelete } from "../ButtonIcons";
-import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import { useHistory, useLocation } from "react-router";
-import { PaginationLink } from "../PaginationLink";
-import { addHours } from "date-fns";
 import { ErrorDiv } from "../ErrorDiv";
 import { MeetingRoomCard } from "./MeetingRoomCard";
 import { useState } from "react";
@@ -37,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     gap: 30,
   },
   CardsContainer: {
-    marginTop: 30,
+    marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
     height: 700,
@@ -45,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
     rowGap: 20,
   },
   requests_header: {
-    fontSize: 40
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#444444' 
   },
 }));
-
-
 
 
 export const ReservationPage = () => {
@@ -57,7 +46,7 @@ export const ReservationPage = () => {
   const {
     meetingRoomInfo
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
-  
+
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -75,10 +64,15 @@ export const ReservationPage = () => {
   // }
 
   return (
-    <Page title="Reservations">
+    <Page title="Бронирования">
       <Container
-        maxWidth="xl"
+        maxWidth="xl" 
+        className={classes.CardsContainer}
+
       >
+        <Box className={classes.requests_header}>
+          Забронировать Meeting Room 
+        </Box>
         <Grid
           container
           spacing={4}
@@ -87,28 +81,27 @@ export const ReservationPage = () => {
         >
           {
             meetingRoomInfo.map(item =>
-              <>
               <MeetingRoomCard
                 key={item.id}
                 name={item.name}
                 number={item.number}
                 mrID={item.id}
+                isBusy={item.isBusy}
                 setOpen={setOpen}
               />
-              </>
             )
           }
         </Grid>
 
-      <ReserveRoom
-        page={page}
-        history={history}
-        open={open}
-        setOpen={setOpen}
-      />
+        <ReserveRoom
+          page={page}
+          history={history}
+          open={open}
+          setOpen={setOpen}
+        />
       </Container>
 
-      
+
     </Page>
   )
 }

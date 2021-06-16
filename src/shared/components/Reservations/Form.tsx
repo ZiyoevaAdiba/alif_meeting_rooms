@@ -32,7 +32,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   btnReserve: {
     color: 'rgb(57 185 127)',
-    borderColor: 'rgb(57 185 127)'
+    borderColor: 'rgb(57 185 127)',
   },
 
   btnCancel: {
@@ -144,6 +144,7 @@ export const Form = ({ setOpen }: any) => {
                 margin="normal"
                 name="start_time"
                 fullWidth
+                ampm={false}
                 error={Boolean(touched.start_time && errors.start_time)}
                 label="Выберите время начала"
                 value={selectedStartTime}
@@ -159,6 +160,7 @@ export const Form = ({ setOpen }: any) => {
                 label="Выберите время завершения"
                 value={selectedEndTime}
                 fullWidth
+                ampm={false}
                 error={Boolean(touched.end_time && errors.end_time)}
                 onChange={(date) => setSelectedEndTime(date)}
                 KeyboardButtonProps={{

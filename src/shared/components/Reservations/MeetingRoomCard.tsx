@@ -17,17 +17,24 @@ const useStyles = makeStyles({
   mrRoot: {
     maxWidth: 345,
     minWidth: 280,
+    color: 'white',
     boxShadow: `0px 2px 10px 3px rgb(0 0 0 / 20%), 
                 0px 1px 1px 0px rgb(0 0 0 / 14%), 
                 0px 1px 3px 0px rgb(0 0 0 / 12%)`
   },
-
+  freeMR: {
+    background: 'rgb(57 185 127)',
+  },
+  busyMR: {
+    background: 'rgb(237 255 0 / 83%)',
+    color: 'black'
+  },
   media: {
     height: 140,
   },
 });
 
-export const MeetingRoomCard = ({name, number, mrID, setOpen}: any, ) => {
+export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen }: any,) => {
   const classes = useStyles();
   const titleText: string = name;
   const dispatch = useDispatch();
@@ -38,15 +45,22 @@ export const MeetingRoomCard = ({name, number, mrID, setOpen}: any, ) => {
   }
 
   return (
-    <Card 
-      className={classes.mrRoot}
+    <Card
+      className={
+        isBusy 
+        ? 
+        `${classes.mrRoot} ${classes.busyMR}`
+        : 
+        `${classes.mrRoot} ${classes.freeMR}`
+      }
       onClick={getMRReservationData}
-      >
+    >
       <CardActionArea>
         <CardMedia
           className={classes.media}
           image={logo}
           title={titleText}
+
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

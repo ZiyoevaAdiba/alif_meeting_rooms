@@ -29,6 +29,14 @@ export const getUserDataReducer = (state = initialState, action: any) => {
         error: null,
         userData: payload,
       };
+
+    case getUserDataType.DATA_DELETE:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        userData: {}
+      }
     default:
       return state;
   }

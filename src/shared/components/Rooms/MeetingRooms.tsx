@@ -51,12 +51,18 @@ const useStyles = makeStyles((theme) => ({
   },
 
   CardsContainer: {
-    marginTop: 30,
+    marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 700,
+    height: 800,
     flexDirection: 'column',
     rowGap: 20,
+    marginBottom: 20,
+  },
+  topRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
   requests_header: {
     fontSize: 40
@@ -71,7 +77,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    flex: 1, 
+    flex: 1,
 
     // width: 130,
     // valueGetter: (params: GridValueGetterParams) =>
@@ -84,7 +90,7 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     // width: 150,
-    flex: 2, 
+    flex: 2,
     // renderCell: (params: GridCellParams) =>
     // <Dropdown data={params.row} />
   },
@@ -95,7 +101,7 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    flex: 2, 
+    flex: 2,
     // width: 130
   },
   {
@@ -106,7 +112,7 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     // width: 120,
-    flex: 2, 
+    flex: 2,
 
   },
 
@@ -118,7 +124,7 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     // width: 180,
-    flex: 2, 
+    flex: 2,
 
   },
   {
@@ -129,7 +135,7 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     // width: 130,
-    flex: 2, 
+    flex: 2,
 
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.status
@@ -146,7 +152,7 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     // width: 130,
-    flex: 2, 
+    flex: 2,
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonEdit
@@ -182,10 +188,14 @@ export const MeetingRooms = () => {
         <Grid className={classes.CardsContainer}
           container spacing={6}
         >
-          <Box className={classes.requests_header}>
-            Meeting Rooms
+          <Box
+            className={classes.topRow}
+          >
+            <Box className={classes.requests_header}>
+              Meeting Rooms
+            </Box>
+            <AddRoom />
           </Box>
-          <AddRoom />
           <EditRoom />
           <ConfirmDelRoom />
           <DataGrid
@@ -193,8 +203,7 @@ export const MeetingRooms = () => {
             rows={rooms || []}
             columns={columns}
             rowsPerPageOptions={[]}
-            hideFooterSelectedRowCount
-            hideFooterPagination
+            hideFooter
           />
         </Grid>
         {

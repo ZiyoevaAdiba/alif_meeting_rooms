@@ -13,6 +13,7 @@ import { removeToken } from '../../../store/actions/login';
 import { getAllDepartments, getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
+import { Page } from '../../../layouts/Page';
 
 
 const useStyles = makeStyles(() => createStyles({
@@ -103,7 +104,7 @@ export const SignUpForm = () => {
   }
 
   return (
-    <div>
+    <Page title="Регистрация">
       <h1 style={{ textAlign: 'center' }}>Регистрация</h1>
       <Formik
         initialValues={user}
@@ -242,24 +243,24 @@ export const SignUpForm = () => {
               (error)
               &&
               <ErrorDiv
-              error={error}
+                error={error}
               />
             }
-                <Button
-                  className={classes.btnsText}
-                  disabled={isSubmitting}
-                  fullWidth
-                  type="button"
-                  variant="text"
-                  onClick={loginClick}
-                >
-                  Есть аккаунт? Войти
-                </Button>
+            <Button
+              className={classes.btnsText}
+              disabled={isSubmitting}
+              fullWidth
+              type="button"
+              variant="text"
+              onClick={loginClick}
+            >
+              Есть аккаунт? Войти
+            </Button>
 
           </Form>
         )}
       </Formik>
-    </div>
+    </Page>
 
-      );
+  );
 }

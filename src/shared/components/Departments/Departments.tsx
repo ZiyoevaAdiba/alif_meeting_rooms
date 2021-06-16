@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   CardsContainer: {
-    marginTop: 30,
+    marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 700,
+    height: 800,
     flexDirection: 'column',
     rowGap: 20,
+    marginBottom: 20, 
   },
   requests_header: {
     fontSize: 40
@@ -84,7 +85,7 @@ export const Departments = () => {
   // }
 
   return (
-    <Page title="Meeting-Rooms">
+    <Page title="Отделы">
       <Container maxWidth="xl" >
         <Grid className={classes.CardsContainer}
           container spacing={6}

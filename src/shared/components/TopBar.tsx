@@ -13,11 +13,13 @@ import { urls } from "../../routes/urls";
 import { getToken, removeToken } from "../../store/actions/login";
 import { getCurrentUserInfo } from "../../store/actions/reservations/userData";
 import { IRootReducer } from "../../store/reducers";
+import Account from "./Account";
 
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 64,
+    justifyContent: 'space-evenly',
   },
   
   logo: {
@@ -44,11 +46,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-
-  btnExit: {
-    marginLeft: '10px',
-    fontWeight: 550,  
-  }
 
 }));
 
@@ -103,16 +100,8 @@ export const TopBar = ({ onMobileNavOpen, className, ...rest }: any) => {
         <Box 
           ml={2} 
         >
-          {
-            `${userData.name || ''} ${userData.lastname || ''}`
-          }
+          <Account />
         </Box>
-        <Button
-          onClick={handleExit}
-          className={classes.btnExit}
-        >
-          выход
-        </Button>
 
       </Toolbar>
     </AppBar>

@@ -24,6 +24,12 @@ const getUserInfoSuccess = (data?: any) => {
   }
 }
 
+export const userDataDelete = () => {
+  return {
+    type: getUserDataType.DATA_DELETE,
+    payload: {}
+  }
+}
 
 export const getCurrentUserInfo = (token: string) => async(dispatch: Dispatch<any>) => {
   try {
