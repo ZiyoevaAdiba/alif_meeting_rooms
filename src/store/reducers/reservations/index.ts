@@ -3,7 +3,7 @@ import { IGetMRReservationsReducer } from "./interfaces";
 
 const initialState: IGetMRReservationsReducer = {
   loading: false,
-  error: null ,
+  error: null,
   booking: [],
   showAlert: '',
 };
@@ -24,23 +24,26 @@ export const getMRReservationsReducer = (state = initialState, action: any) => {
         error: 'Проверьте доступ. Попробуйте снова',
       };
     case getReservationsType.GET_RESERVATIONS_SUCCESS:
+      const reservationData = (typeof action.payload.id === 'string')
+        ? action.payload.id
+        : action.payload;
       return {
         ...state,
         loading: false,
         error: null,
-        booking: action.payload,
+        booking: reservationData,
       };
     case getReservationsType.SHOW_WARNING:
-      return{
+      return {
         ...state,
         showAlert: action.payload
       }
     case getReservationsType.CANCEL_DELETE:
-      return{
+      return {
         ...state,
         showAlert: '',
       }
     default:
       return state;
   }
-} 
+}

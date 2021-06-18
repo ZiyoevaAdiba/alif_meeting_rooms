@@ -42,27 +42,13 @@ export const cancelReservationDelete = () => {
   }
 }
 
-
-export const getAllReservations = (page: number, history: History) => async(dispatch: Dispatch<any>) => {
-  // try {
-  //   dispatch(getReservationsReq());
-  //   const res = await Axios.get(`${api.reservations}/${page}`);
-  //   dispatch(getReservationsSuccess(res.data.payload));
-  //   history.push(`${urls.reservations}?page=${page}`);
-
-  // } catch (error) {
-  //   dispatch(getReservationsFail());
-  //   console.log(error.response);
-  // }
-}
-
-export const requestAddReservation = (reservationData: IReservation, mrID: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddReservation = (reservationData: IReservation, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
-    dispatch(getMRReservations(mrID));
+    dispatch(getMRReservations(reservationData.meeting_room_id));
     setOpen(false);
-    dispatch(getMRsInfo())
+    dispatch(getMRsInfo());
     
   } catch (error) {
     dispatch(getReservationsFail());

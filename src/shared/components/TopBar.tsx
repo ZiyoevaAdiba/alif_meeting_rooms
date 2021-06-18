@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   makeStyles,
   Toolbar
 } from "@material-ui/core";
@@ -61,13 +60,6 @@ export const TopBar = ({ onMobileNavOpen, className, ...rest }: any) => {
   useEffect(() => {
     dispatch(getCurrentUserInfo(token));
   }, []);
-
-  const history = useHistory();
-
-  const handleExit = () => {
-    removeToken();
-    history.push(urls.login);
-  }
 
   return (
     <AppBar color="default" position="fixed" {...rest} >

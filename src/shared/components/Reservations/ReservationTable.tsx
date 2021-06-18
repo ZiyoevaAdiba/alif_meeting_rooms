@@ -102,18 +102,6 @@ const columns: GridColumns = [
             // columnUserId={params.row.user.id}
             btnLocation={'reservations'}
           />
-          {/* <Popup
-            trigger={<AccountCircleIcon />}
-            on='hover'
-            position='bottom center'
-            nested
-          >
-            {
-              `${params.row.user.lastname} 
-          ${params.row.user.name}
-          @${params.row.user.tg_account}`
-            }
-          </Popup> */}
         </>
       )
     }
@@ -123,10 +111,9 @@ const columns: GridColumns = [
 export const ReservationTable = () => {
   const classes = useStyles();
   const { booking } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
-  // const mrID = (typeof booking === 'string')
-  const mrID = (booking === null)
+  const mrID = (typeof booking === 'string')
     ?
-    '' // set just booking
+    booking
     :
     booking[0]?.meeting_room.id;
 
@@ -140,7 +127,11 @@ export const ReservationTable = () => {
         />
         <DataGrid
           className={classes.table_users}
-          rows={booking || []}
+          rows={
+            (typeof booking === 'string') 
+            ? []
+            : booking
+          }
           columns={columns}
           disableExtendRowFullWidth
           autoPageSize

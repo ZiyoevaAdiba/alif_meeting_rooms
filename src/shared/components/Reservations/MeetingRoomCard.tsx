@@ -31,10 +31,14 @@ const useStyles = makeStyles({
   },
   media: {
     height: 140,
+    backgroundColor: 'white',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover'
   },
 });
 
-export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen }: any,) => {
+export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen, photo }: any,) => {
   const classes = useStyles();
   const titleText: string = name;
   const dispatch = useDispatch();
@@ -58,7 +62,7 @@ export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen }: any,) =
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={logo}
+          image={photo}
           title={titleText}
 
         />
@@ -68,7 +72,6 @@ export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen }: any,) =
           </Typography>
         </CardContent>
       </CardActionArea>
-
     </Card>
   );
 }

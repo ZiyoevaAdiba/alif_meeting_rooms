@@ -31,7 +31,8 @@ interface IApi {
     reservations: string,
     loggedUserData: string,
     departmentsForDropdown: string,
-    mrReservations: string
+    mrReservations: string,
+    uploadPhoto: string
 };
 
 export const api: IApi = {
@@ -46,5 +47,6 @@ export const api: IApi = {
     reservations: '/api/reservation',
     loggedUserData: '/api/parse-token',
     departmentsForDropdown: '/auth/department',
-    mrReservations: '/api/reservation'
+    mrReservations: '/api/reservation',
+    uploadPhoto: '/admin/photo/meeting-room'
 };

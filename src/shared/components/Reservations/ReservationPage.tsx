@@ -68,7 +68,6 @@ export const ReservationPage = () => {
       <Container
         maxWidth="xl" 
         className={classes.CardsContainer}
-
       >
         <Box className={classes.requests_header}>
           Забронировать Meeting Room 
@@ -86,7 +85,8 @@ export const ReservationPage = () => {
                 name={item.name}
                 number={item.number}
                 mrID={item.id}
-                isBusy={item.isBusy}
+                isBusy={item.is_busy} 
+                photo={item.photo} 
                 setOpen={setOpen}
               />
             )
@@ -100,8 +100,6 @@ export const ReservationPage = () => {
           setOpen={setOpen}
         />
       </Container>
-
-
     </Page>
   )
 }

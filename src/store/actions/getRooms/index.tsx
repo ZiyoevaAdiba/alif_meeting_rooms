@@ -53,12 +53,25 @@ export const cancelRoomDelete = () => {
   }
 }
 
+export const getRoomPicURL = (imgsrc: string) => {
+  return {
+    type: getRoomsType.GET_URL,
+    payload: imgsrc
+  }
+}
+
+export const cancelImgUpload = () => {
+  return {
+    type: getRoomsType.CANCEL_UPLOAD,
+    payload: {}
+  }
+}
 export const getAllRooms = () => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
     const res = await Axios.get(`${api.adminRooms}`);
     dispatch(getRoomsSuccess(res.data.payload));
-    console.log(res.data);
+    // console.log(res.data);
     
   } catch (error) {
     dispatch(getRoomsFail());
@@ -74,6 +87,16 @@ export const requestAddRoom = (roomData: IRoom, setSubmitting: any) => async(dis
     
   } catch (error) {
     dispatch(getRoomsFail());
+    console.log(error.response);
+  }
+}
+export const addMRPhoto = (roomPhoto: any) => async(dispatch: Dispatch<any>) => {
+  try {
+    const res = await Axios.post(api.uploadPhoto, roomPhoto);
+    // console.log(res);
+    dispatch(getRoomPicURL(res.data.payload));
+
+  } catch (error) {
     console.log(error.response);
   }
 }

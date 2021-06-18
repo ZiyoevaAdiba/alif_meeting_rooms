@@ -1,5 +1,6 @@
 import {
   Box,
+  CardMedia,
   Container,
   Grid,
   makeStyles,
@@ -21,26 +22,28 @@ import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
 import { ErrorDiv } from "../ErrorDiv";
+import { classicNameResolver } from "typescript";
 
 
 export const room: IRoom = {
   city: '',
-  color: '',
   name: '',
   number: 0,
+  photo: '',
   place: '',
+  color: '',
+  // photo: new File([], ''),
   status: true,
 };
 
 export const fieldRoom = {
   city: 'city',
-  color: 'color',
   created: 'created',
   id: 'id',
   name: 'name',
   number: 'number',
-  place: 'place',
   status: 'status',
+  photo: 'image',
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   requests_header: {
     fontSize: 40
   },
+
 }));
 
 const columns: GridColumns = [
@@ -78,10 +82,6 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     flex: 1,
-
-    // width: 130,
-    // valueGetter: (params: GridValueGetterParams) =>
-    //     ${params.row.price || ''} ${params.row.currency || ''}
   },
   {
     field: 'name',
@@ -89,11 +89,9 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    // width: 150,
     flex: 2,
-    // renderCell: (params: GridCellParams) =>
-    // <Dropdown data={params.row} />
   },
+
   {
     field: 'city',
     headerName: 'Город',
@@ -102,30 +100,24 @@ const columns: GridColumns = [
     headerAlign: 'center',
     disableColumnMenu: true,
     flex: 2,
-    // width: 130
   },
   {
-    field: 'color',
-    headerName: 'Цвет',
-    type: 'string',
+    field: 'photo',
+    headerName: 'Фото',
+    type: 'image',
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    // width: 120,
-    flex: 2,
-
-  },
-
-  {
-    field: 'place',
-    headerName: 'Расположение',
-    type: 'string',
-    align: 'left',
-    headerAlign: 'center',
-    disableColumnMenu: true,
-    // width: 180,
-    flex: 2,
-
+    flex: 1.5,
+    renderCell: (params: GridValueGetterParams) => {
+      // ()
+      return <CardMedia
+        style={{ width: 'auto', height: '52px' }}
+        component={"img"}
+        src={params.row.photo}
+        alt="photo"
+      />
+    }
   },
   {
     field: 'status',
@@ -134,9 +126,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    // width: 130,
     flex: 2,
-
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.status
         ? 'Доступен'

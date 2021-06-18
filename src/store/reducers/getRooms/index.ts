@@ -7,6 +7,7 @@ const initialState: IGetRoomsReducer = {
   loading: false,
   error: null,
   showAlert: '',
+  imgSrc: '',
 };
 
 
@@ -52,6 +53,18 @@ export const getRoomsReducer = (state = initialState, action: any) => {
         ...state,
         showAlert: '',
       }
+    case getRoomsType.GET_URL: {
+      return{
+        ...state,
+        imgSrc: action.payload 
+      }
+    }
+    case getRoomsType.CANCEL_UPLOAD: {
+      return{
+        ...state,
+        imgSrc: ''
+      }
+    }
     default:
       return state;
   }

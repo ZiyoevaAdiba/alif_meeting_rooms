@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: 5,
     }
   },
-  
+
   inputGap: {
     margin: 5,
   },
@@ -44,7 +44,7 @@ export const useStyles = makeStyles((theme) => ({
 export const Form = ({ setOpen }: any) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  
+
   const {
     userData
   } = useSelector((state: IRootReducer) => state.getUserDataReducer);
@@ -79,18 +79,22 @@ export const Form = ({ setOpen }: any) => {
 
   return (
     <Formik
-      
+
       initialValues={initBooking}
       // validationSchema={ReserveSchema}
       onSubmit={(values) => {
         console.log(values);
-        
+
         values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         delete values.date;
         values.user_id = userData.id;
-        values.meeting_room_id = booking[0]?.meeting_room.id;
-        dispatch(requestAddReservation(values, booking[0]?.meeting_room.id, setOpen));
+        values.meeting_room_id = 
+          (typeof booking === 'string')
+            ? booking
+            : booking[0]?.meeting_room.id;
+        dispatch(requestAddReservation(values,  setOpen));
+        
       }
       }
     >

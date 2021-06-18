@@ -12,10 +12,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom } from './MeetingRooms';
-import { requestEditRoom, resetEditing } from '../../../store/actions/getRooms';
+import { addMRPhoto, cancelImgUpload, requestEditRoom, resetEditing } from '../../../store/actions/getRooms';
 import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 export const EditRoom = () => {
@@ -26,12 +27,26 @@ export const EditRoom = () => {
 
   useEffect(() => {
     setOpen(!open);
-  }, [room])
+  }, [room]);
 
   const handleClose = () => {
     dispatch(resetEditing());
+    dispatch(cancelImgUpload());
   };
 
+  // const a = (room?.id)
+  // ? room?.id
+  // : '';
+
+  const { imgSrc } = useSelector((state: IRootReducer) => state.getRoomsReducer)
+
+  const handleImageUpload = (evt: any) => {
+    const photo = evt.target.files[0];
+    const fd = new FormData();
+    fd.append('image', photo);
+    dispatch(addMRPhoto(fd));
+    
+  }
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -44,6 +59,7 @@ export const EditRoom = () => {
           initialValues={room}
           validationSchema={RoomSchema}
           onSubmit={(values) => {
+            values.photo = imgSrc;
             dispatch(requestEditRoom(values));
             handleClose();
           }
@@ -56,7 +72,7 @@ export const EditRoom = () => {
             handleBlur,
             handleChange,
             handleSubmit,
-
+            setValues
           }: any) => (
             <Form
               onSubmit={handleSubmit}
@@ -87,7 +103,6 @@ export const EditRoom = () => {
                 onBlur={handleBlur}
                 type='text'
               />
-
               <TextField
                 className={classes.inputGap}
                 name={fieldRoom.city}
@@ -103,31 +118,39 @@ export const EditRoom = () => {
 
               <TextField
                 className={classes.inputGap}
-                name={fieldRoom.color}
-                label="Цвет"
-                fullWidth
-                error={Boolean(touched.color && errors.color)}
-                helperText={touched.color && errors.color}
-                onChange={handleChange}
-                value={values?.color}
-                onBlur={handleBlur}
-                type='text'
+                name={fieldRoom.photo}
+                onChange={(evt) => handleImageUpload(evt)}
+                type='file'
+                id="contained-button-file"
+                style={{ display: 'none' }}
               />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldRoom.place}
-                label="Расположение"
-                fullWidth
-                error={Boolean(touched.place && errors.place)}
-                helperText={touched.place && errors.place}
-                onChange={handleChange}
-                value={values?.place}
-                onBlur={handleBlur}
-                type='text'
+              <label htmlFor="contained-button-file">
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  component="span"
+                  startIcon={<CloudUploadIcon />}
+                  style={{ marginTop: '30px', marginBottom: '20px' }}
+                  className={classes.btnReserve}
+                >
+                  Загрузить
+                </Button>
+              </label>
+              <img
+                src={
+                  imgSrc
+                  ? imgSrc
+                  : values?.photo
+                }
+                alt={
+                  fieldRoom.photo
+                    ? "photo"
+                    : ""
+                }
+                width='250px'
+                height='auto'
               />
-
-
               <InputLabel
                 className={classes.inputGap}
                 style={{ marginTop: '30px' }}

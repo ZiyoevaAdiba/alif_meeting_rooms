@@ -11,12 +11,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom, room } from './MeetingRooms';
-import { requestAddRoom } from '../../../store/actions/getRooms';
+import { addMRPhoto, cancelImgUpload, requestAddRoom } from '../../../store/actions/getRooms';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
-
+import { IRootReducer } from '../../../store/reducers';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 export const AddRoom = () => {
@@ -29,9 +30,17 @@ export const AddRoom = () => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(cancelImgUpload());
   };
-
+  const { imgSrc } = useSelector((state: IRootReducer) => state.getRoomsReducer)
   const dispatch = useDispatch();
+
+  const handleImageUpload = (evt: any) => {
+    const photo = evt.target.files[0];
+    const fd = new FormData();
+    fd.append('image', photo);
+    dispatch(addMRPhoto(fd));
+  }
 
   return (
     <Box>
@@ -52,11 +61,13 @@ export const AddRoom = () => {
             initialValues={room}
             validationSchema={RoomSchema}
             onSubmit={(values, { setSubmitting }) => {
-
+              values.photo = imgSrc
               values.status = (values.status === 'true')
                 ? true
                 : false;
               delete values.status;
+              values.place = 'jhsda';
+              values.color = 'blackQ';
               dispatch(requestAddRoom(values, setSubmitting));
               handleClose();
             }
@@ -113,33 +124,6 @@ export const AddRoom = () => {
                   type='text'
                 />
 
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldRoom.color}
-                  label="Цвет"
-                  fullWidth
-                  error={Boolean(touched.color && errors.color)}
-                  helperText={touched.color && errors.color}
-                  onChange={handleChange}
-                  value={values.color}
-                  onBlur={handleBlur}
-                  type='text'
-                />
-
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldRoom.place}
-                  label="Расположение"
-                  fullWidth
-                  error={Boolean(touched.place && errors.place)}
-                  helperText={touched.place && errors.place}
-                  onChange={handleChange}
-                  value={values.place}
-                  onBlur={handleBlur}
-                  type='text'
-                />
-
-
                 <InputLabel
                   className={classes.inputGap}
                   style={{ marginTop: '30px' }}
@@ -156,6 +140,37 @@ export const AddRoom = () => {
                   <MenuItem value={'true'}>Доступен</MenuItem>
                   <MenuItem value={'false'}>Недоступен</MenuItem>
                 </Select>
+                <TextField
+                  className={classes.inputGap}
+                  name={fieldRoom.photo}
+                  onChange={(evt) => handleImageUpload(evt)}
+                  type='file'
+                  id="contained-button-file"
+                  style={{ display: 'none' }}
+                />
+                <label htmlFor="contained-button-file">
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    component="span"
+                    startIcon={<CloudUploadIcon />}
+                    style={{ marginTop: '30px', marginBottom: '20px' }}
+                    className={classes.btnReserve}
+                  >
+                    Загрузить
+                  </Button>
+                </label>
+                <img
+                  src={imgSrc}
+                  alt={
+                    imgSrc
+                      ? "photo"
+                      : ""
+                  }
+                  width='250px'
+                  height='auto'
+                />
                 <DialogActions>
                   <Button
                     type='submit'

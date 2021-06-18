@@ -9,30 +9,19 @@ export interface IResUser {
   name?: string 
 }
 
-// export interface IReservation {
-//   id?: string, 
-//   start_time?: string,
-//   end_time?: string,
-//   meeting_room?: IResRoom | {},
-//   purpose?: string,
-//   status?: boolean | string,
-//   user?: IResUser | {},
-// } 
-
 export interface IReservation {
   start_time?: string,
   end_time?: string,
   meeting_room?: any,
-  meeting_room_id?: string,
+  meeting_room_id?: any,
   purpose?: string,
-  user_id?: string,
+  user_id?: string, 
   date?: string
-} 
+}  
 
 export interface IGetMRReservationsReducer {
   loading: boolean,
   error: null | any,
-  booking: IReservation[],
+  booking: IReservation[] | string,
   showAlert: string,
 }
-

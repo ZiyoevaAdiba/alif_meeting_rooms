@@ -22,7 +22,6 @@ import { PaginationLink } from "../PaginationLink";
 import { useHistory, useLocation } from "react-router-dom";
 import { ErrorDiv } from "../ErrorDiv";
 
-
 const useStyles = makeStyles((theme) => ({
   CardsContainer: {
     marginTop: 15,

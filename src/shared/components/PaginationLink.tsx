@@ -3,18 +3,13 @@ import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/actions/getUsers';
-import { getAllReservations } from '../../store/actions/reservations';
 
 export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) => {
 
   const dispatch = useDispatch();
 
-  const usersPerPage = (page: number, pagLocation: string) => {
-    (pagLocation==='users')
-    ?
+  const usersPerPage = (page: number) => {
     dispatch(getAllUsers(page, history))
-    :
-    dispatch(getAllReservations(page, history))
   }
 
   return (
@@ -23,7 +18,7 @@ export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) 
         <Pagination
           page={page}
           count={pageNumber}
-          onChange={(ev, page) => usersPerPage(page, pagLocation)}
+          onChange={(ev, page) => usersPerPage(page)}
           renderItem={(item) => {
                         
             return (
@@ -32,7 +27,6 @@ export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) 
                 // to={`${urls.users}${`?page=${item.page}`}`}
                 {...item}
               />
-
             )
           }}
         />
