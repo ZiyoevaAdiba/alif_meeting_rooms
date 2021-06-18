@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const ReserveRoom = ({page, history, open, setOpen} : any ) => {
+export const ReserveRoom = ({open, setOpen} : any ) => {
   const classes = useStyles();
   
   return (
