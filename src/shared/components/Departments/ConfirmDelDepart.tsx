@@ -10,7 +10,7 @@ import { IRootReducer } from '../../../store/reducers';
 import { cancelDepartmentsDelete, requestDeleteDepartment } from '../../../store/actions/departments';
 
 export const ConfirmDelDepart = () => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.getDepartmentsReducer)
+  const { showAlert } = useSelector((state: IRootReducer) => state.departmentsReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
 

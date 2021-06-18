@@ -71,7 +71,7 @@ const columns: GridColumns = [
 ];
 
 export const Departments = () => {
-  const { departments, error } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+  const { departments, error } = useSelector((state: IRootReducer) => state.departmentsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {

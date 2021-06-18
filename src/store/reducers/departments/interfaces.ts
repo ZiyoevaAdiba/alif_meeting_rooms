@@ -3,7 +3,7 @@ export interface IDepartment {
   id?: string,
 } 
 
-export interface IGetDepartmentsReducer {
+export interface IdepartmentsReducer {
   loading: boolean,
   error: null | any,
   departments: IDepartment[],

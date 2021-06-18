@@ -1,7 +1,7 @@
 import { getRoomsType } from "../../actions/getRooms/interfaces";
-import { IGetRoomsReducer } from "./interfaces";
+import { IroomsReducer } from "./interfaces";
 
-const initialState: IGetRoomsReducer = {
+const initialState: IroomsReducer = {
   room: {},
   rooms: [],
   loading: false,
@@ -11,7 +11,7 @@ const initialState: IGetRoomsReducer = {
 };
 
 
-export const getRoomsReducer = (state = initialState, action: any) => {
+export const roomsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case getRoomsType.GET_ROOMS:
       return {

@@ -1,7 +1,7 @@
 import { getUsersType } from "../../actions/getUsers/interfaces";
-import { IGetUsersReducer } from "./interfaces";
+import { IusersReducer } from "./interfaces";
 
-const initialState: IGetUsersReducer = {
+const initialState: IusersReducer = {
   user: {},
   users: [],
   pageCount: 1,
@@ -10,7 +10,7 @@ const initialState: IGetUsersReducer = {
   showAlert: '',
 };
 
-export const getUsersReducer = (state = initialState, action: any) => {
+export const usersReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case getUsersType.GET_USERS:
       return {

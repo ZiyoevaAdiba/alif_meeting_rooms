@@ -51,7 +51,7 @@ export const Form = ({ setOpen }: any) => {
 
   const {
     booking
-  } = useSelector((state: IRootReducer) => state.getMRReservationsReducer);
+  } = useSelector((state: IRootReducer) => state.reservationsReducer);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(),
@@ -94,7 +94,7 @@ export const Form = ({ setOpen }: any) => {
             ? booking
             : booking[0]?.meeting_room.id;
         dispatch(requestAddReservation(values,  setOpen));
-        
+
       }
       }
     >

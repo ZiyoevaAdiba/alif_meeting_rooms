@@ -110,7 +110,7 @@ const columns: GridColumns = [
 
 export const ReservationTable = () => {
   const classes = useStyles();
-  const { booking } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
+  const { booking } = useSelector((state: IRootReducer) => state.reservationsReducer)
   const mrID = (typeof booking === 'string')
     ?
     booking

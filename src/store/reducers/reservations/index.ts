@@ -1,7 +1,7 @@
 import { getReservationsType } from "../../actions/reservations/interfaces";
-import { IGetMRReservationsReducer } from "./interfaces";
+import { IreservationsReducer } from "./interfaces";
 
-const initialState: IGetMRReservationsReducer = {
+const initialState: IreservationsReducer = {
   loading: false,
   error: null,
   booking: [],
@@ -9,7 +9,7 @@ const initialState: IGetMRReservationsReducer = {
 };
 
 
-export const getMRReservationsReducer = (state = initialState, action: any) => {
+export const reservationsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case getReservationsType.GET_RESERVATIONS:
       return {

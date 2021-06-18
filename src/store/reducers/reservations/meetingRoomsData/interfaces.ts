@@ -1,4 +1,4 @@
-export interface IGetMeetingRoomInfo {
+export interface IMeetingRoomsInfo {
   id?: string,
   number?: string,
   name?: string,
@@ -7,10 +7,10 @@ export interface IGetMeetingRoomInfo {
   
 }
 
-export interface IGetMeetingRoomInfoReducer {
+export interface IMeetingRoomsInfoReducer {
   loading: boolean,
   error: null | any,
-  meetingRoomInfo: IGetMeetingRoomInfo[],
+  meetingRoomsInfo: IMeetingRoomsInfo[],
 }
 
 

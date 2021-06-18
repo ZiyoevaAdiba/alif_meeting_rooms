@@ -1,10 +1,10 @@
 import { getMeetingRoomsDataType } from "../../../actions/reservations/meetingRoomsData/interfaces";
-import { IGetMeetingRoomInfoReducer } from "./interfaces";
+import { IMeetingRoomsInfoReducer } from "./interfaces";
 
-const initialState: IGetMeetingRoomInfoReducer = {
+const initialState: IMeetingRoomsInfoReducer = {
   loading: false,
   error: null ,
-  meetingRoomInfo: [],
+  meetingRoomsInfo: [],
 };
 
 export const getMRsDataReducer = (state = initialState, action: any) => {
@@ -27,7 +27,7 @@ export const getMRsDataReducer = (state = initialState, action: any) => {
         ...state,
         loading: false,
         error: null,
-        meetingRoomInfo: payload,
+        meetingRoomsInfo: payload,
       };
     default:
       return state;

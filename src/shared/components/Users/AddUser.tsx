@@ -40,7 +40,7 @@ export const AddUser = ({ page, history }: any) => {
 
   const {
     departments
-  } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+  } = useSelector((state: IRootReducer) => state.departmentsReducer);
 
 
   const dispatch = useDispatch();

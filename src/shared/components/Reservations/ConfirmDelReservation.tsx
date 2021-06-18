@@ -11,7 +11,7 @@ import { cancelReservationDelete, requestDeleteReservation } from '../../../stor
 import { useState } from 'react';
 
 export const ConfirmDelReservation = ({mrID} : any ) => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.getMRReservationsReducer)
+  const { showAlert } = useSelector((state: IRootReducer) => state.reservationsReducer)
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
 

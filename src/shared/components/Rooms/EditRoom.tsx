@@ -20,7 +20,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 export const EditRoom = () => {
-  const { room } = useSelector((state: IRootReducer) => state.getRoomsReducer)
+  const { room } = useSelector((state: IRootReducer) => state.roomsReducer)
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export const EditRoom = () => {
   // ? room?.id
   // : '';
 
-  const { imgSrc } = useSelector((state: IRootReducer) => state.getRoomsReducer)
+  const { imgSrc } = useSelector((state: IRootReducer) => state.roomsReducer)
 
   const handleImageUpload = (evt: any) => {
     const photo = evt.target.files[0];

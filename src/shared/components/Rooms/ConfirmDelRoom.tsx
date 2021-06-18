@@ -10,7 +10,7 @@ import { IRootReducer } from '../../../store/reducers';
 import { cancelRoomDelete, requestDeleteRoom } from '../../../store/actions/getRooms';
 
 export const ConfirmDelRoom = () => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.getUsersReducer)
+  const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
 
@@ -25,6 +25,7 @@ export const ConfirmDelRoom = () => {
   const handleConfirm = () => {
     dispatch(requestDeleteRoom(showAlert))
     handleClose();
+  
     // handleClose();
   };
 

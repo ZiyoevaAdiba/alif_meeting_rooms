@@ -11,7 +11,7 @@ export interface IUser {
   role?: string,
 }
 
-export interface IGetUsersReducer {
+export interface IusersReducer {
   loading: boolean,
   error: null | any,
   users: IUser[],

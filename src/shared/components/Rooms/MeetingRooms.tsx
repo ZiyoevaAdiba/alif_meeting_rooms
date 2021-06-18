@@ -17,7 +17,7 @@ import { Page } from "../../../layouts/Page"
 import { getAllRooms } from "../../../store/actions/getRooms";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
-import { IRoom } from "../../../store/reducers/getRooms/interfaces";
+import { IRoom } from "../../../store/reducers/rooms/interfaces";
 import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
@@ -159,7 +159,7 @@ const columns: GridColumns = [
 ];
 
 export const MeetingRooms = () => {
-  const { rooms, error } = useSelector((state: IRootReducer) => state.getRoomsReducer);
+  const { rooms, error } = useSelector((state: IRootReducer) => state.roomsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {

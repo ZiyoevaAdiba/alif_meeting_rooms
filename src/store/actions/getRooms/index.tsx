@@ -2,7 +2,7 @@ import { getRoomsType } from "./interfaces";
 import { Dispatch } from "react";
 import { api } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
-import { IRoom } from "../../reducers/getRooms/interfaces";
+import { IRoom } from "../../reducers/rooms/interfaces";
 
 const getRoomsReq = () => {
   return {

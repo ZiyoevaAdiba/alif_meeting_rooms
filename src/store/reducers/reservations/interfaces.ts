@@ -19,7 +19,7 @@ export interface IReservation {
   date?: string
 }  
 
-export interface IGetMRReservationsReducer {
+export interface IreservationsReducer {
   loading: boolean,
   error: null | any,
   booking: IReservation[] | string,

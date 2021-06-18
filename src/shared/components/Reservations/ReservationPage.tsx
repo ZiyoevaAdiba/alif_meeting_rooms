@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
   cardsRoot: {
     marginTop: 30,
     gap: 30,
+    marginBottom: 20,
   },
   CardsContainer: {
     marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 700,
     flexDirection: 'column',
     rowGap: 20,
   },
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export const ReservationPage = () => {
   const classes = useStyles();
   const {
-    meetingRoomInfo
+    meetingRoomsInfo
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
 
   const [open, setOpen] = useState(false);
@@ -79,7 +79,7 @@ export const ReservationPage = () => {
           justify='center'
         >
           {
-            meetingRoomInfo.map(item =>
+            meetingRoomsInfo.map(item =>
               <MeetingRoomCard
                 key={item.id}
                 name={item.name}

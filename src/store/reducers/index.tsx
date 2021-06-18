@@ -1,41 +1,41 @@
 import { connectRouter } from 'connected-react-router';
 import { combineReducers } from 'redux';
 import { signUpReducer } from '../reducers/signUp'
-import { IGetUsersReducer } from './getUsers/interfaces';
+import { IusersReducer } from './users/interfaces';
 import { loginReducer } from './login';
 import { ILoginReducer } from './login/interfaces';
-import { getUsersReducer } from './getUsers';
-import { getRoomsReducer } from './getRooms';
-import { getDepartmentsReducer } from './departments';
-import { getMRReservationsReducer } from './reservations';
+import { usersReducer } from './users';
+import { roomsReducer } from './rooms';
+import { departmentsReducer } from './departments';
+import { reservationsReducer } from './reservations';
 import { ISignUpReducer } from './signUp/interfaces';
-import { IGetRoomsReducer } from './getRooms/interfaces';
-import { IGetDepartmentsReducer } from './departments/interfaces';
-import { IGetMRReservationsReducer } from './reservations/interfaces';
+import { IroomsReducer } from './rooms/interfaces';
+import { IdepartmentsReducer } from './departments/interfaces';
+import { IreservationsReducer } from './reservations/interfaces';
 import { IGetUserDataReducer } from './reservations/userData/interfaces';
 import { getUserDataReducer } from './reservations/userData'
 import { getMRsDataReducer } from './reservations/meetingRoomsData';
-import { IGetMeetingRoomInfoReducer } from './reservations/meetingRoomsData/interfaces';
+import { IMeetingRoomsInfoReducer } from './reservations/meetingRoomsData/interfaces';
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
     loginReducer: ILoginReducer,
-    getUsersReducer: IGetUsersReducer,
-    getRoomsReducer: IGetRoomsReducer,
-    getDepartmentsReducer: IGetDepartmentsReducer,
+    usersReducer: IusersReducer,
+    roomsReducer: IroomsReducer,
+    departmentsReducer: IdepartmentsReducer,
     getUserDataReducer: IGetUserDataReducer,
-    getMRsDataReducer: IGetMeetingRoomInfoReducer,
-    getMRReservationsReducer: IGetMRReservationsReducer,
+    getMRsDataReducer: IMeetingRoomsInfoReducer,
+    reservationsReducer: IreservationsReducer,
 }
 
 export const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
     signUpReducer,
     loginReducer,
-    getUsersReducer,
-    getRoomsReducer,
-    getDepartmentsReducer,
+    usersReducer,
+    roomsReducer,
+    departmentsReducer,
     getUserDataReducer,
     getMRsDataReducer,
-    getMRReservationsReducer,
+    reservationsReducer,
 });

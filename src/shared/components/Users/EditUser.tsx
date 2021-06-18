@@ -20,7 +20,7 @@ import { useStyles } from '../Reservations/Form';
 
 export const EditUser = ({ page, history }: any) => {
 
-  const { user } = useSelector((state: IRootReducer) => state.getUsersReducer)
+  const { user } = useSelector((state: IRootReducer) => state.usersReducer)
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const dispatch = useDispatch();

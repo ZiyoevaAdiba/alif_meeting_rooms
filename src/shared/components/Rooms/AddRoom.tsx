@@ -32,7 +32,7 @@ export const AddRoom = () => {
     setOpen(false);
     dispatch(cancelImgUpload());
   };
-  const { imgSrc } = useSelector((state: IRootReducer) => state.getRoomsReducer)
+  const { imgSrc } = useSelector((state: IRootReducer) => state.roomsReducer)
   const dispatch = useDispatch();
 
   const handleImageUpload = (evt: any) => {

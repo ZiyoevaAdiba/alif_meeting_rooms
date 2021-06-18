@@ -94,7 +94,7 @@ export const SignUpForm = () => {
 
   const {
     departments
-  } = useSelector((state: IRootReducer) => state.getDepartmentsReducer);
+  } = useSelector((state: IRootReducer) => state.departmentsReducer);
 
 
   const history = useHistory();

@@ -8,7 +8,7 @@ export interface IRoom {
   status?: boolean | string,
 } 
 
-export interface IGetRoomsReducer {
+export interface IroomsReducer {
   loading: boolean,
   error: null | any,
   rooms: IRoom[],

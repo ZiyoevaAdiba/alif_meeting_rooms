@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 
 export const ConfirmDelUser = ({page, history} : any ) => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.getUsersReducer)
+  const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
 

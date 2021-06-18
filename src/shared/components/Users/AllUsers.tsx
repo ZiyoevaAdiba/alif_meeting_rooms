@@ -144,7 +144,7 @@ export const AllUsers = () => {
     users,
     pageCount,
     error,
-  } = useSelector((state: IRootReducer) => state.getUsersReducer);
+  } = useSelector((state: IRootReducer) => state.usersReducer);
   const dispatch = useDispatch();
   const history = useHistory();
 

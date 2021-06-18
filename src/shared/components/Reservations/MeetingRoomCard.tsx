@@ -49,29 +49,30 @@ export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen, photo }: 
   }
 
   return (
-    <Card
-      className={
-        isBusy 
-        ? 
-        `${classes.mrRoot} ${classes.busyMR}`
-        : 
-        `${classes.mrRoot} ${classes.freeMR}`
-      }
-      onClick={getMRReservationData}
-    >
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={photo}
-          title={titleText}
-
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {name} № {number}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Grid item>
+      <Card
+        className={
+          isBusy
+            ?
+            `${classes.mrRoot} ${classes.busyMR}`
+            :
+            `${classes.mrRoot} ${classes.freeMR}`
+        }
+        onClick={getMRReservationData}
+      >
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={photo}
+            title={titleText}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {name} № {number}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 }

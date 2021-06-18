@@ -51,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export const LoginView = () => {
   const classes = useStyles();
   const history = useHistory();
-
   //   removeToken();
-
   return (
     <Page title="Войти">
       <Container maxWidth="md" className={classes.authFormContainer}>

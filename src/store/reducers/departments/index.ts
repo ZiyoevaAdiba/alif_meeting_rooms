@@ -1,7 +1,7 @@
 import { getDepartmentsType } from "../../actions/departments/interfaces";
-import { IGetDepartmentsReducer } from "./interfaces";
+import { IdepartmentsReducer } from "./interfaces";
 
-const initialState: IGetDepartmentsReducer = {
+const initialState: IdepartmentsReducer = {
   department: {},
   departments: [],
   loading: false,
@@ -10,7 +10,7 @@ const initialState: IGetDepartmentsReducer = {
 };
 
 
-export const getDepartmentsReducer = (state = initialState, action: any) => {
+export const departmentsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case getDepartmentsType.GET_DEPARTMENTS:
       return {

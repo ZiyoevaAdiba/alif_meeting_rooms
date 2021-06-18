@@ -6,9 +6,7 @@ const useStyles = makeStyles(() => createStyles({
     html: {
       '-webkit-font-smoothing': 'antialiased',
       '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%',
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     },
     body: {
       height: '100%',

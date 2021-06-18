@@ -1,7 +1,7 @@
 import { getUsersType } from "../getUsers/interfaces";
 import { Dispatch } from "react";
 import { api, urls } from "../../../routes/urls";
-import { IUser } from '../../reducers/getUsers/interfaces'
+import { IUser } from '../../reducers/users/interfaces'
 import { Axios } from "../../../shared/axios";
 import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
