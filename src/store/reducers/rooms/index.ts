@@ -1,11 +1,13 @@
-import { getRoomsType } from "../../actions/getRooms/interfaces";
+import { getRoomsType } from "../../actions/rooms/interfaces";
 import { IroomsReducer } from "./interfaces";
 
 const initialState: IroomsReducer = {
   room: {},
   rooms: [],
   loading: false,
-  error: null,
+  roomsError: null,
+  editError: null,
+  addError: null,
   showAlert: '',
   imgSrc: '',
 };
@@ -17,13 +19,13 @@ export const roomsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: true,
-        error: null,
+        roomsError: null,
       };
     case getRoomsType.GET_ROOMS_FAIL:
       return {
         ...state,
         loading: false,
-        error: 'Проверьте доступ. Попробуйте снова',
+        roomsError: 'Проверьте доступ. Попробуйте снова',
       };
     case getRoomsType.GET_ROOMS_SUCCESS:
       const payload = action.payload
@@ -34,37 +36,58 @@ export const roomsReducer = (state = initialState, action: any) => {
         rooms: payload,
       };
     case getRoomsType.SHOW_ROOM:
-      return{
+      return {
         ...state,
         room: action.payload,
       };
     case getRoomsType.RESET_EDITING:
-      return{
+      return {
         ...state,
-        room: {}
+        room: {},
+        editError: null,
       };
     case getRoomsType.SHOW_WARNING:
-      return{
+      return {
         ...state,
         showAlert: action.payload
       }
     case getRoomsType.CANCEL_DELETE:
-      return{
+      return {
         ...state,
         showAlert: '',
       }
     case getRoomsType.GET_URL: {
-      return{
+      return {
         ...state,
-        imgSrc: action.payload 
+        imgSrc: action.payload
       }
     }
     case getRoomsType.CANCEL_UPLOAD: {
-      return{
+      return {
         ...state,
         imgSrc: ''
       }
     }
+    case getRoomsType.EDIT_ROOM_FAIL:
+      return {
+        ...state,
+        editError: action.payload,
+      };
+    case getRoomsType.EDIT_ROOM_SUCCESS:
+      return {
+        ...state,
+        editError: null,
+      };
+    case getRoomsType.ADD_ROOM_FAIL:
+      return {
+        ...state,
+        addError: action.payload,
+      };
+    case getRoomsType.ADD_ROOM_SUCCESS:
+      return {
+        ...state,
+        addError: null,
+      };
     default:
       return state;
   }

@@ -53,16 +53,3 @@ export const requestLogin = (userData: ILoginData, setSubmitting: any, history: 
     setSubmitting(false);
   }
 }
-
-export const requestPassword = (userData: IForgetData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
-  try {
-    dispatch(loginReqSent());
-    await Axios.post(`${api.forget}`, userData);
-    dispatch(loginReqSuccess());
-    alert('новый пароль был отправлен, проверьте почту')
-
-  } catch (error) {
-    dispatch(loginReqFail(error.response.data.payload.message));
-    setSubmitting(false);
-  }
-}

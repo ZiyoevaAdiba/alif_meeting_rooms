@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     height: 800,
     flexDirection: 'column',
     rowGap: 20,
-    marginBottom: 20, 
+    marginBottom: 20,
   },
   requests_header: {
     fontSize: 40
@@ -48,7 +48,7 @@ const columns: GridColumns = [
     align: 'left',
     headerAlign: 'center',
     disableColumnMenu: true,
-    flex: 6, 
+    flex: 6,
   },
 
   {
@@ -58,7 +58,7 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    flex: 2, 
+    flex: 2,
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonDelete
@@ -87,31 +87,33 @@ export const Departments = () => {
   return (
     <Page title="Отделы">
       <Container maxWidth="xl" >
-        <Grid className={classes.CardsContainer}
-          container spacing={6}
-        >
-          <Box className={classes.requests_header}>
-            Отделы
-          </Box>
-          <AddDepartment />
-          <ConfirmDelDepart />
-          <DataGrid
-            className={classes.table_users}
-            rows={departments || []}
-            columns={columns}
-            rowsPerPageOptions={[]}
-            hideFooter
-          />
-        </Grid>
         {
           (error)
-          &&
-          <ErrorDiv
-            error={error}
-          />
+            ?
+            <ErrorDiv
+              error={error}
+            />
+            :
+              <Grid className={classes.CardsContainer}
+                container spacing={6}
+              >
+                <Box className={classes.requests_header}>
+                  Отделы
+                </Box>
+
+                <AddDepartment />
+                <ConfirmDelDepart />
+                <DataGrid
+                  className={classes.table_users}
+                  rows={departments || []}
+                  columns={columns}
+                  rowsPerPageOptions={[]}
+                  hideFooter
+                />
+              </Grid>
         }
 
       </Container>
-    </Page>
+    </Page >
   )
 }

@@ -10,7 +10,9 @@ export interface IRoom {
 
 export interface IroomsReducer {
   loading: boolean,
-  error: null | any,
+  roomsError: null | any,
+  editError: null | any,
+  addError: null | any,
   rooms: IRoom[],
   room: IRoom, 
   showAlert: string,

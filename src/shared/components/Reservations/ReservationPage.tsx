@@ -36,15 +36,15 @@ const useStyles = makeStyles((theme) => ({
   requests_header: {
     fontSize: 30,
     textAlign: 'center',
-    color: '#444444' 
+    color: '#444444'
   },
 }));
-
 
 export const ReservationPage = () => {
   const classes = useStyles();
   const {
-    meetingRoomsInfo
+    meetingRoomsInfo,
+    error
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
 
   const [open, setOpen] = useState(false);
@@ -66,39 +66,49 @@ export const ReservationPage = () => {
   return (
     <Page title="Бронирования">
       <Container
-        maxWidth="xl" 
+        maxWidth="xl"
         className={classes.CardsContainer}
       >
-        <Box className={classes.requests_header}>
-          Забронировать Meeting Room 
-        </Box>
-        <Grid
-          container
-          spacing={4}
-          className={classes.cardsRoot}
-          justify='center'
-        >
-          {
-            meetingRoomsInfo.map(item =>
-              <MeetingRoomCard
-                key={item.id}
-                name={item.name}
-                number={item.number}
-                mrID={item.id}
-                isBusy={item.is_busy} 
-                photo={item.photo} 
+        {
+          (error)
+            ?
+            <ErrorDiv
+              error={error}
+            />
+            :
+            <>
+              <Box className={classes.requests_header}>
+                Забронировать Meeting Room
+              </Box>
+              <Grid
+                container
+                spacing={4}
+                className={classes.cardsRoot}
+                justify='center'
+              >
+                {
+                  meetingRoomsInfo.map(item =>
+                    <MeetingRoomCard
+                      key={item.id}
+                      name={item.name}
+                      number={item.number}
+                      mrID={item.id}
+                      isBusy={item.is_busy}
+                      photo={item.photo}
+                      setOpen={setOpen}
+                    />
+                  )
+                }
+              </Grid>
+
+              <ReserveRoom
+                page={page}
+                history={history}
+                open={open}
                 setOpen={setOpen}
               />
-            )
-          }
-        </Grid>
-
-        <ReserveRoom
-          page={page}
-          history={history}
-          open={open}
-          setOpen={setOpen}
-        />
+            </>
+        }
       </Container>
     </Page>
   )

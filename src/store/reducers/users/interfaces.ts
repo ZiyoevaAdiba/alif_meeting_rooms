@@ -13,7 +13,8 @@ export interface IUser {
 
 export interface IusersReducer {
   loading: boolean,
-  error: null | any,
+  userError: null | any,
+  usersError: null | any,
   users: IUser[],
   user: IUser | {},
   showAlert: string,

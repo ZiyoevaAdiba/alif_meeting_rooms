@@ -6,6 +6,7 @@ import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonPoppup } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import 'reactjs-popup/dist/index.css';
+import { ErrorDiv } from "../ErrorDiv";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -110,7 +111,7 @@ const columns: GridColumns = [
 
 export const ReservationTable = () => {
   const classes = useStyles();
-  const { booking } = useSelector((state: IRootReducer) => state.reservationsReducer)
+  const { booking, error } = useSelector((state: IRootReducer) => state.reservationsReducer)
   const mrID = (typeof booking === 'string')
     ?
     booking
@@ -118,36 +119,32 @@ export const ReservationTable = () => {
     booking[0]?.meeting_room.id;
 
   return (
-    <>
-      <Grid className={classes.CardsContainer}
-        container spacing={6}
-      >
-        <ConfirmDelReservation
-          mrID={mrID}
-        />
-        <DataGrid
-          className={classes.table_users}
-          rows={
-            (typeof booking === 'string') 
-            ? []
-            : booking
-          }
-          columns={columns}
-          disableExtendRowFullWidth
-          autoPageSize
-          autoHeight
-          hideFooter
-        />
-      </Grid>
-      {/* // {
-        //   (error)
-        //   &&
-        //   <ErrorDiv
-        //     error={error}
-        //   /> 
-        // } */}
-
-    </>
-
+    (error)
+      ?
+      <ErrorDiv
+        error={error} />
+      :
+      <>
+        <Grid className={classes.CardsContainer}
+          container spacing={6}
+        >
+          <ConfirmDelReservation
+            mrID={mrID}
+          />
+          <DataGrid
+            className={classes.table_users}
+            rows={
+              (typeof booking === 'string')
+                ? []
+                : booking
+            }
+            columns={columns}
+            disableExtendRowFullWidth
+            autoPageSize
+            autoHeight
+            hideFooter
+          />
+        </Grid>
+      </>
   )
 }

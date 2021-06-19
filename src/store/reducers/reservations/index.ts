@@ -4,6 +4,7 @@ import { IreservationsReducer } from "./interfaces";
 const initialState: IreservationsReducer = {
   loading: false,
   error: null,
+  addError: null,
   booking: [],
   showAlert: '',
 };
@@ -21,7 +22,7 @@ export const reservationsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'Проверьте доступ. Попробуйте снова',
+        error: 'Проверьте доступ. Попробуйте снова.',
       };
     case getReservationsType.GET_RESERVATIONS_SUCCESS:
       const reservationData = (typeof action.payload.id === 'string')
@@ -43,6 +44,16 @@ export const reservationsReducer = (state = initialState, action: any) => {
         ...state,
         showAlert: '',
       }
+    case getReservationsType.ADD_RESERVATION_FAIL:
+      return {
+        ...state,
+        addError: action.payload,
+      };
+    case getReservationsType.ADD_RESERVATION_SUCCESS:
+      return {
+        ...state,
+        addError: null,
+      };
     default:
       return state;
   }

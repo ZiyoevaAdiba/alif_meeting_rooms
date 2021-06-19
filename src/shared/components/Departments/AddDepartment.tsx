@@ -9,13 +9,11 @@ import { useDispatch } from 'react-redux';
 import { requestAddDepartment } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
 
-
 export const AddDepartment = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [depInput, setDepInput] = React.useState('');
   const dispatch = useDispatch();
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,12 +23,10 @@ export const AddDepartment = () => {
     setOpen(false);
   };
 
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDepInput(e.target.value);
     // setOpen(false);
   };
-
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +40,6 @@ export const AddDepartment = () => {
         variant="outlined"
         onClick={handleClickOpen}
         className={classes.btnReserve}
-
       >
         Добавить Отдел
       </Button>

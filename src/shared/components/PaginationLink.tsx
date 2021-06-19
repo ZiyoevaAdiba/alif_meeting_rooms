@@ -2,7 +2,7 @@ import { MemoryRouter, Route } from 'react-router';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import { useDispatch } from 'react-redux';
-import { getAllUsers } from '../../store/actions/getUsers';
+import { getAllUsers } from '../../store/actions/users';
 
 export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) => {
 

@@ -1,4 +1,4 @@
-import { getUsersType } from "../../actions/getUsers/interfaces";
+import { getUsersType } from "../../actions/users/interfaces";
 import { IusersReducer } from "./interfaces";
 
 const initialState: IusersReducer = {
@@ -6,7 +6,8 @@ const initialState: IusersReducer = {
   users: [],
   pageCount: 1,
   loading: false,
-  error: null,
+  usersError: null,
+  userError: null,
   showAlert: '',
 };
 
@@ -16,26 +17,20 @@ export const usersReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: true,
-        error: null,
+        usersError: null,
       };
     case getUsersType.GET_USERS_FAIL:
       return {
         ...state,
         loading: false,
-        error: 'Проверьте доступ. Попробуйте снова',
+        usersError: 'Проверьте доступ. Попробуйте снова',
       };
-      case getUsersType.GET_USERS_FAIL:
-        return {
-          ...state,
-          loading: false,
-          error: 'Проверьте доступ. Попробуйте снова',
-        };
     case getUsersType.GET_USERS_SUCCESS:
       const { users, count_page } = action.payload
       return {
         ...state,
         loading: false,
-        error: null,
+        usersError: null,
         users,
         pageCount: count_page
       };
@@ -47,7 +42,8 @@ export const usersReducer = (state = initialState, action: any) => {
     case getUsersType.RESET_EDITING:
       return {
         ...state,
-        user: {}
+        user: {},
+        userError: null,
       };
     case getUsersType.SHOW_WARNING:
       return {
@@ -58,7 +54,17 @@ export const usersReducer = (state = initialState, action: any) => {
       return {
         ...state,
         showAlert: '',
-      }
+      };
+    case getUsersType.EDIT_USER_FAIL:
+      return {
+        ...state,
+        userError: action.payload,
+      };
+    case getUsersType.EDIT_USER_SUCCESS:
+      return {
+        ...state,
+        userError: null,
+      };
     default:
       return state;
   }

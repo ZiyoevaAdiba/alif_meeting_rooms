@@ -1,4 +1,4 @@
-import { getUsersType } from "../getUsers/interfaces";
+import { getUsersType } from "./interfaces";
 import { Dispatch } from "react";
 import { api, urls } from "../../../routes/urls";
 import { IUser } from '../../reducers/users/interfaces'
@@ -55,7 +55,20 @@ export const cancelUserDelete = () => {
     payload: {}
   }
 }
- 
+
+export const editUserReqFail = (message: string) => {
+  return {
+    type: getUsersType.EDIT_USER_FAIL,
+    payload: message
+  }
+}
+
+export const editUserReqSuccess = () => {
+  return {
+    type: getUsersType.EDIT_USER_SUCCESS,
+    payload: {}
+  }
+}
 
 export const getAllUsers = (page: number, history: History) => async(dispatch: Dispatch<any>) => {
   
@@ -71,12 +84,14 @@ export const getAllUsers = (page: number, history: History) => async(dispatch: D
   }
 }
 
-export const requestAddUser = (page: number, history: History, userData: IUserData, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddUser = (page: number, history: History, userData: IUserData, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
+    setOpen(false);
+    alert('Пользователь успешно добавлен. Проверьте почту для подтверждения регистрации!');
     dispatch(getAllUsers(page, history));
-
+    
   } catch (error) {
     dispatch(requestFail());
     setSubmitting(false);
@@ -99,10 +114,12 @@ export const requestDeleteUser = (page: number, history: History, userId: string
 export const requestEditUser = (page: number, history: History, userData: any) => async(dispatch: Dispatch<any>) => {
   try {
     await Axios.put(`${api.users}/${userData.id}`, userData);
+    dispatch(editUserReqSuccess());
+    dispatch(resetUserEditing());
     dispatch(getAllUsers(page, history));
     
   } catch (error) {
-    dispatch(getUsersReqFail());
+    dispatch(editUserReqFail(error.response.data.payload.message));
     console.log(error.response);
   }
 }

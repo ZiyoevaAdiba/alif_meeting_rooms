@@ -12,7 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { fieldInput, user } from '../Auth/SignUpForm';
 import { Form, Formik } from 'formik';
-import { requestAddUser } from '../../../store/actions/getUsers';
+import { requestAddUser } from '../../../store/actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignupSchema } from '../../validations/SignUpValidation';
 import { ErrorDiv } from '../ErrorDiv';
@@ -65,7 +65,7 @@ export const AddUser = ({ page, history }: any) => {
             validationSchema={SignupSchema}
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
-              dispatch(requestAddUser(page, history, values, setSubmitting));
+              dispatch(requestAddUser(page, history, values, setSubmitting, setOpen));
 
             }
             }
@@ -207,13 +207,13 @@ export const AddUser = ({ page, history }: any) => {
                   <MenuItem value={'admin'}>Админ</MenuItem>
                   <MenuItem value={'user'}>Пользователь</MenuItem>
                 </Select>
-                {/* {
+                {
                   (error)
                     &&
                     <ErrorDiv
                       error={error}
                     />
-                } */}
+                }
                 <DialogActions>
                   <Button
                     type='submit'

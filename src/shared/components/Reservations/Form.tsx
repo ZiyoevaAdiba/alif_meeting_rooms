@@ -46,7 +46,7 @@ export const Form = ({ setOpen }: any) => {
   const classes = useStyles();
 
   const {
-    userData
+    userData,
   } = useSelector((state: IRootReducer) => state.getUserDataReducer);
 
   const {

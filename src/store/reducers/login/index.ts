@@ -20,7 +20,7 @@ export const loginReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: 'Неправильный пароль или логин. Попробуйте снова.',
       };
     case loginType.LOGIN_SUCCESS:
       return {

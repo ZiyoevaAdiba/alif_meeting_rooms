@@ -5,7 +5,7 @@ import { TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestPassword } from '../../../store/actions/login';
+import { requestPassword } from '../../../store/actions/forget';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { IForgetData } from '../../../store/actions/forget/interfaces';
@@ -63,22 +63,22 @@ const fieldInput: IForgetData = {
   email: 'email',
 }
 
-
 export const ForgetPasswordForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
+  const { loading, error } = useSelector((state: IRootReducer) => state.forgetReducer);
+  const history = useHistory();
 
 
   const user: IForgetData = {
     email: '',
   };
 
-  const history = useHistory();
+  // const history = useHistory();
   // const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
 
 
-  const sendPasswordClick = () => {
+  const cancelPasswordBtn = () => {
     history.push(urls.login);
   }
 
@@ -90,8 +90,7 @@ export const ForgetPasswordForm = () => {
         validationSchema={ForgetSchema}
         onSubmit={(values, { setSubmitting }) => {
           // same shape as initial values
-          dispatch(requestPassword(values, setSubmitting));
-          sendPasswordClick();
+          dispatch(requestPassword(values, setSubmitting, history));
         }
         }
       >
@@ -146,7 +145,7 @@ export const ForgetPasswordForm = () => {
               fullWidth
               type="button"
               variant="text"
-              onClick={sendPasswordClick}
+              onClick={cancelPasswordBtn}
             >
               отмена
             </Button>

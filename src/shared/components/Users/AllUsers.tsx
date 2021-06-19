@@ -12,7 +12,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
-import { getAllUsers } from "../../../store/actions/getUsers";
+import { getAllUsers } from "../../../store/actions/users";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { AddUser } from "./AddUser";
@@ -143,7 +143,7 @@ export const AllUsers = () => {
   const {
     users,
     pageCount,
-    error,
+    usersError,
   } = useSelector((state: IRootReducer) => state.usersReducer);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -163,49 +163,50 @@ export const AllUsers = () => {
   return (
     <Page title="Пользователи">
       <Container maxWidth="xl" >
-        <Grid
-          className={classes.CardsContainer}
-          container
-          spacing={6}
-        >
-          <Box
-            className={classes.topRow}
-          >
-            <Box className={classes.requests_header}>
-              Пользователи
-            </Box>
-            <AddUser
-              page={page}
-              history={history}
-            />
-          </Box>
-          <EditUser
-            page={page}
-            history={history}
-          />
-          <ConfirmDelUser
-            page={page}
-            history={history}
-          />
-          <DataGrid
-            rows={users || []}
-            columns={columns}
-            rowsPerPageOptions={[]}
-            hideFooter
-          />
-          <PaginationLink
-            pageNumber={pageCount}
-            history={history}
-            page={page}
-            pagLocation={'users'}
-          />
-        </Grid>
         {
-          (error)
-          &&
-          <ErrorDiv
-            error={error}
-          />
+          (usersError)
+            ?
+            <ErrorDiv
+              error={usersError}
+            />
+            :
+            <Grid
+              className={classes.CardsContainer}
+              container
+              spacing={6}
+            >
+              <Box
+                className={classes.topRow}
+              >
+                <Box className={classes.requests_header}>
+                  Пользователи
+                </Box>
+                <AddUser
+                  page={page}
+                  history={history}
+                />
+              </Box>
+              <EditUser
+                page={page}
+                history={history}
+              />
+              <ConfirmDelUser
+                page={page}
+                history={history}
+              />
+              <DataGrid
+                rows={users || []}
+                columns={columns}
+                rowsPerPageOptions={[]}
+                hideFooter
+              />
+              <PaginationLink
+                pageNumber={pageCount}
+                history={history}
+                page={page}
+                pagLocation={'users'}
+              />
+            </Grid>
         }
       </Container>
     </Page>

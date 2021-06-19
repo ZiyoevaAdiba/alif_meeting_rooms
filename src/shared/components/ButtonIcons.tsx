@@ -8,9 +8,9 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import {
   roomWarningDelete,
   showRoomData
-} from '../../store/actions/getRooms';
+} from '../../store/actions/rooms';
 import { useDispatch, useSelector } from 'react-redux';
-import { showUserData, userWarningDelete } from '../../store/actions/getUsers';
+import { showUserData, userWarningDelete } from '../../store/actions/users';
 import { departmentsWarningDelete } from '../../store/actions/departments'
 import { reservationWarningDelete } from '../../store/actions/reservations';
 import { IRootReducer } from '../../store/reducers';

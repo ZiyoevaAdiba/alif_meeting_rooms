@@ -5,7 +5,6 @@ import { AuthGuard } from '../shared/components/AuthGuard';
 import { LoadingScreen } from '../shared/components/LoadingScreen';
 import { urls } from './urls';
 
-
 const routesConfig = [
     {
         exact: true,
@@ -37,7 +36,7 @@ const routesConfig = [
             {
                 exact: true,
                 path: '/',
-                component: () => <Redirect to={urls.reservations} />
+                component: () => <Redirect to={urls.reservations} /> 
             },
             {
                 exact: true,

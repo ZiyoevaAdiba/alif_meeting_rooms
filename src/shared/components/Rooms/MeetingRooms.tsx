@@ -14,7 +14,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
-import { getAllRooms } from "../../../store/actions/getRooms";
+import { getAllRooms, getRoomsSuccess } from "../../../store/actions/rooms";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { IRoom } from "../../../store/reducers/rooms/interfaces";
@@ -22,8 +22,6 @@ import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
 import { ErrorDiv } from "../ErrorDiv";
-import { classicNameResolver } from "typescript";
-
 
 export const room: IRoom = {
   city: '',
@@ -159,7 +157,10 @@ const columns: GridColumns = [
 ];
 
 export const MeetingRooms = () => {
-  const { rooms, error } = useSelector((state: IRootReducer) => state.roomsReducer);
+  const { 
+    rooms, 
+    roomsError 
+  } = useSelector((state: IRootReducer) => state.roomsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -175,33 +176,34 @@ export const MeetingRooms = () => {
   return (
     <Page title="Meeting-Rooms">
       <Container maxWidth="xl" >
-        <Grid className={classes.CardsContainer}
-          container spacing={6}
-        >
-          <Box
-            className={classes.topRow}
-          >
-            <Box className={classes.requests_header}>
-              Meeting Rooms
-            </Box>
-            <AddRoom />
-          </Box>
-          <EditRoom />
-          <ConfirmDelRoom />
-          <DataGrid
-            className={classes.table_users}
-            rows={rooms || []}
-            columns={columns}
-            rowsPerPageOptions={[]}
-            hideFooter
-          />
-        </Grid>
         {
-          (error)
-          &&
-          <ErrorDiv
-            error={error}
-          />
+          (roomsError)
+            ?
+            <ErrorDiv
+              error={roomsError}
+            />
+            :
+            <Grid className={classes.CardsContainer}
+              container spacing={6}
+            >
+              <Box
+                className={classes.topRow}
+              >
+                <Box className={classes.requests_header}>
+                  Meeting Rooms
+                </Box>
+                <AddRoom />
+              </Box>
+              <EditRoom />
+              <ConfirmDelRoom />
+              <DataGrid
+                className={classes.table_users}
+                rows={rooms || []}
+                columns={columns}
+                rowsPerPageOptions={[]}
+                hideFooter
+              />
+            </Grid>
         }
       </Container>
     </Page>

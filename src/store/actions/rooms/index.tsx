@@ -18,7 +18,7 @@ const getRoomsFail = () => {
   }
 }
 
-const getRoomsSuccess = (data?: IRoom[]) => {
+export const getRoomsSuccess = (data?: IRoom[]) => {
   return {
     type: getRoomsType.GET_ROOMS_SUCCESS,
     payload: data
@@ -32,7 +32,7 @@ export const showRoomData = (data: IRoom) => {
   }
 }
 
-export const resetEditing = () => {
+export const resetRoomEditing = () => {
   return {
     type: getRoomsType.RESET_EDITING,
     payload: {}
@@ -66,12 +66,40 @@ export const cancelImgUpload = () => {
     payload: {}
   }
 }
+
+export const editRoomReqFail = (message: string) => {
+  return {
+    type: getRoomsType.EDIT_ROOM_FAIL,
+    payload: message
+  }
+}
+
+export const editRoomReqSuccess = () => {
+  return {
+    type: getRoomsType.EDIT_ROOM_SUCCESS,
+    payload: {}
+  }
+}
+
+export const addRoomReqFail = (message: string) => {
+  return {
+    type: getRoomsType.ADD_ROOM_FAIL,
+    payload: message
+  }
+}
+
+export const addRoomReqSuccess = () => {
+  return {
+    type: getRoomsType.ADD_ROOM_SUCCESS,
+    payload: {}
+  }
+}
+
 export const getAllRooms = () => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
     const res = await Axios.get(`${api.adminRooms}`);
     dispatch(getRoomsSuccess(res.data.payload));
-    // console.log(res.data);
     
   } catch (error) {
     dispatch(getRoomsFail());
@@ -79,14 +107,17 @@ export const getAllRooms = () => async(dispatch: Dispatch<any>) => {
   }
 }
 
-export const requestAddRoom = (roomData: IRoom, setSubmitting: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddRoom = (roomData: IRoom, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
-    await Axios.post(`${api.adminRooms}`, roomData);
+    await Axios.post(`${api.adminRooms}`, roomData); 
+    dispatch(addRoomReqSuccess())
+    setOpen(false);
+    alert('Миттинг рум успешно добавлен.');
     dispatch(getAllRooms());
     
   } catch (error) {
-    dispatch(getRoomsFail());
+    dispatch(addRoomReqFail(error.response.data.payload.message));
     console.log(error.response);
   }
 }
@@ -120,10 +151,14 @@ export const requestEditRoom = (roomData: any) => async(dispatch: Dispatch<any>)
     : false;
 
     await Axios.put(`${api.adminRooms}/${roomData.id}`, roomData);
+    dispatch(editRoomReqSuccess());
+    dispatch(resetRoomEditing());
+    dispatch(cancelImgUpload());
+
     dispatch(getAllRooms());
     
   } catch (error) {
-    dispatch(getRoomsFail());
+    dispatch(editRoomReqFail(error.response.data.payload.message));
     console.log(error.response);
   }
 }

@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom } from './MeetingRooms';
-import { addMRPhoto, cancelImgUpload, requestEditRoom, resetEditing } from '../../../store/actions/getRooms';
+import { addMRPhoto, cancelImgUpload, requestEditRoom, resetRoomEditing } from '../../../store/actions/rooms';
 import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
@@ -30,7 +30,7 @@ export const EditRoom = () => {
   }, [room]);
 
   const handleClose = () => {
-    dispatch(resetEditing());
+    dispatch(resetRoomEditing());
     dispatch(cancelImgUpload());
   };
 
@@ -61,7 +61,6 @@ export const EditRoom = () => {
           onSubmit={(values) => {
             values.photo = imgSrc;
             dispatch(requestEditRoom(values));
-            handleClose();
           }
           }
         >

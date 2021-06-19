@@ -22,6 +22,7 @@ export interface IReservation {
 export interface IreservationsReducer {
   loading: boolean,
   error: null | any,
+  addError: null | any,
   booking: IReservation[] | string,
   showAlert: string,
 }

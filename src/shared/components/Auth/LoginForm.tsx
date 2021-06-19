@@ -70,7 +70,7 @@ export const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
-
+ 
   removeToken();
 
   const user: ILoginData = {

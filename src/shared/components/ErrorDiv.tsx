@@ -5,7 +5,8 @@ export const ErrorDiv = ({ error }: any) => {
   return (
     <Box
       style={{ marginTop: '20px', color: 'red' }}
-    >{error}
+    >
+      { error }
     </Box>
   )
 }

@@ -42,16 +42,32 @@ export const cancelReservationDelete = () => {
   }
 }
 
+
+export const addReservationFail = (message: string) => {
+  return {
+    type: getReservationsType.GET_RESERVATIONS_FAIL,
+    payload: message
+  }
+}
+
+export const addReservationSuccess = () => {
+  return {
+    type: getReservationsType.ADD_RESERVATION_SUCCESS,
+    payload: {}
+  }
+}
+
 export const requestAddReservation = (reservationData: IReservation, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
+    dispatch(addReservationSuccess());
     dispatch(getMRReservations(reservationData.meeting_room_id));
     setOpen(false);
     dispatch(getMRsInfo());
     
   } catch (error) {
-    dispatch(getReservationsFail());
+    dispatch(addReservationFail(error.response.data.payload.message));
     console.log(error.response);
   }
 }

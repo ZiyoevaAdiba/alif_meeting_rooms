@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
-import { cancelRoomDelete, requestDeleteRoom } from '../../../store/actions/getRooms';
+import { cancelRoomDelete, requestDeleteRoom } from '../../../store/actions/rooms';
 
 export const ConfirmDelRoom = () => {
   const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)

@@ -16,10 +16,14 @@ import { IGetUserDataReducer } from './reservations/userData/interfaces';
 import { getUserDataReducer } from './reservations/userData'
 import { getMRsDataReducer } from './reservations/meetingRoomsData';
 import { IMeetingRoomsInfoReducer } from './reservations/meetingRoomsData/interfaces';
+import { IForgetReducer } from './forget/interfaces';
+import { forgetReducer } from './forget';
+
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
     loginReducer: ILoginReducer,
+    forgetReducer: IForgetReducer,
     usersReducer: IusersReducer,
     roomsReducer: IroomsReducer,
     departmentsReducer: IdepartmentsReducer,
@@ -32,6 +36,7 @@ export const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
     signUpReducer,
     loginReducer,
+    forgetReducer,
     usersReducer,
     roomsReducer,
     departmentsReducer,

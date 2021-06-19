@@ -13,22 +13,26 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { fieldInput } from '../Auth/SignUpForm';
-import { requestEditUser, resetUserEditing } from '../../../store/actions/getUsers';
+import { requestEditUser, resetUserEditing } from '../../../store/actions/users';
 import { UserSchema } from '../../validations/UserValidation';
 import { useStyles } from '../Reservations/Form';
+import { ErrorDiv } from '../ErrorDiv';
 
 
 export const EditUser = ({ page, history }: any) => {
 
-  const { user } = useSelector((state: IRootReducer) => state.usersReducer)
+  const {
+    user,
+    userError
+  } = useSelector((state: IRootReducer) => state.usersReducer)
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
     setOpen(!open);
-  }, [user])
-
+  }, [user]);
+  
   const handleClose = () => {
     dispatch(resetUserEditing());
   };
@@ -45,9 +49,7 @@ export const EditUser = ({ page, history }: any) => {
           initialValues={user}
           validationSchema={UserSchema}
           onSubmit={(values) => {
-
             dispatch(requestEditUser(page, history, values));
-            handleClose();
           }
           }
         >
@@ -157,7 +159,13 @@ export const EditUser = ({ page, history }: any) => {
                 <MenuItem value={'admin'}>Админ</MenuItem>
                 <MenuItem value={'user'}>Пользователь</MenuItem>
               </Select>
-
+              {
+                (userError)
+                &&
+                <ErrorDiv
+                  error={userError}
+                />
+              }
               <DialogActions>
                 <Button
                   type='submit'

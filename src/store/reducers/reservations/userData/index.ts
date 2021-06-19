@@ -19,7 +19,7 @@ export const getUserDataReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'true',
+        error: 'Данные пользователя не найдены. Попробуйте снова.',
       };
     case getUserDataType.GET_USERS_INFO_SUCCESS:
       const payload = action.payload
