@@ -15,7 +15,7 @@ import { format } from 'date-fns';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestAddReservation } from '../../../store/actions/reservations';
+import { addReservationSuccess, requestAddReservation } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
 import { IReservation } from '../../../store/reducers/reservations/interfaces';
 import { ReserveSchema } from '../../validations/Reservation';
@@ -73,6 +73,10 @@ export const Form = ({ setOpen, booking, addError }: any) => {
     setSelectedEndTime(date);
   };
 
+  const handleClose = () => {
+    dispatch(addReservationSuccess());
+    setOpen(false)
+  }
   return (
     <Formik
 
@@ -178,7 +182,7 @@ export const Form = ({ setOpen, booking, addError }: any) => {
               Забронировать
             </Button>
             <Button
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
               className={classes.btnCancel}
             >
               отмена
