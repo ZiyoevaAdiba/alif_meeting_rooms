@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom, room } from './MeetingRooms';
-import { addMRPhoto, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
+import { addMRPhoto, addRoomReqSuccess, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
@@ -35,9 +35,13 @@ export const AddRoom = () => {
     showOverflow();
     setOpen(false);
     dispatch(cancelImgUpload());
+    dispatch(addRoomReqSuccess());
   };
 
-  const { imgSrc, addError } = useSelector((state: IRootReducer) => state.roomsReducer)
+  const {
+    imgSrc,
+    addError
+  } = useSelector((state: IRootReducer) => state.roomsReducer)
   const dispatch = useDispatch();
 
   const handleImageUpload = (evt: any) => {
@@ -75,7 +79,7 @@ export const AddRoom = () => {
               values.place = 'jhsda';
               values.color = 'blackQ';
               dispatch(requestAddRoom(values, setSubmitting, setOpen));
-              handleClose();
+              // handleClose();
             }
             }
           >
@@ -177,6 +181,13 @@ export const AddRoom = () => {
                   width='250px'
                   height='auto'
                 />
+                {
+                  addError
+                  &&
+                  <ErrorDiv
+                    error={addError}
+                  />
+                }
                 <DialogActions>
                   <Button
                     type='submit'
@@ -193,14 +204,6 @@ export const AddRoom = () => {
                     отмена
                   </Button>
                 </DialogActions>
-                {
-                  (addError)
-                  &&
-                  <ErrorDiv
-                    error={addError}
-                  />
-                }
-
               </Form>
             )}
           </Formik>

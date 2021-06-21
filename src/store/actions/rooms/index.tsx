@@ -90,7 +90,7 @@ export const addRoomReqFail = (message: string) => {
 
 export const addRoomReqSuccess = () => {
   return {
-    type: getRoomsType.ADD_ROOM_SUCCESS,
+    type: getRoomsType.RESET_ROOMS_ERRORS,
     payload: {}
   }
 }

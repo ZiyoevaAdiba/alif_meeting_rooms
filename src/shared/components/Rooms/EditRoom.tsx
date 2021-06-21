@@ -18,6 +18,7 @@ import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { showOverflow } from '../../handlerStyle/bodyOverflow';
+import { ErrorDiv } from '../ErrorDiv';
 
 
 export const EditRoom = () => {
@@ -41,7 +42,7 @@ export const EditRoom = () => {
   // ? room?.id
   // : '';
 
-  const { imgSrc } = useSelector((state: IRootReducer) => state.roomsReducer)
+  const { imgSrc, editError } = useSelector((state: IRootReducer) => state.roomsReducer)
 
   const handleImageUpload = (evt: any) => {
     const photo = evt.target.files[0];
@@ -168,7 +169,13 @@ export const EditRoom = () => {
                 <MenuItem value={'true'}>Доступен</MenuItem>
                 <MenuItem value={'false'}>Недоступен</MenuItem>
               </Select>
-
+              {
+                editError
+                &&
+                <ErrorDiv
+                  error={editError}
+                />
+              }
               <DialogActions>
                 <Button
                   type='submit'

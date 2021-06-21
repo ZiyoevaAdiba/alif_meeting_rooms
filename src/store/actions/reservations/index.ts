@@ -44,7 +44,7 @@ export const addReservationFail = (message: string) => {
 
 export const addReservationSuccess = () => {
   return {
-    type: getReservationsType.ADD_RESERVATION_SUCCESS,
+    type: getReservationsType.RESET_RESERVATION_ERRORS,
     payload: {}
   }
 }

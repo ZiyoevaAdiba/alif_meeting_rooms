@@ -17,6 +17,7 @@ export const reservationsReducer = (state = initialState, action: any) => {
         ...state,
         loading: true,
         error: null,
+        addError: null,
       };
     case getReservationsType.GET_RESERVATIONS_FAIL:
       return {
@@ -49,10 +50,11 @@ export const reservationsReducer = (state = initialState, action: any) => {
         ...state,
         addError: action.payload,
       };
-    case getReservationsType.ADD_RESERVATION_SUCCESS:
+    case getReservationsType.RESET_RESERVATION_ERRORS:
       return {
         ...state,
         addError: null,
+        error: null,
       };
     default:
       return state;

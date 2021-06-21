@@ -85,19 +85,13 @@ const columns: GridColumns = [
     renderCell: (params: GridCellParams) => {
       return (
         <>
-          {/* <ButtonEdit
-          row={params.row}
-          btnLocation={'meeting-rooms'}
-        /> */}
           <ButtonDelete
             id={params.row.id}
             columnUserId={params.row.user.id}
             btnLocation={'reservations'}
           />
           <ButtonPoppup
-            // id={params.row.id}
             params={params.row}
-            // columnUserId={params.row.user.id}
             btnLocation={'reservations'}
           />
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -22,7 +22,7 @@ import { useStyles } from '../Reservations/Form';
 import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 
 export const AddUser = ({ page, history }: any) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const { error } = useSelector((state: IRootReducer) => state.signUpReducer)
 

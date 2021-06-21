@@ -50,7 +50,7 @@ export const addDepFail = (message: string) => {
 
 export const addDepSuccess = () => {
   return {
-    type: getDepartmentsType.ADD_DEP_SUCCESS,
+    type: getDepartmentsType.RESET_DEPARTMENTS_ERRORS,
     payload: {}
   }
 }

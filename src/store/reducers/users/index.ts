@@ -18,6 +18,7 @@ export const usersReducer = (state = initialState, action: any) => {
         ...state,
         loading: true,
         usersError: null,
+        userError: null
       };
     case getUsersType.GET_USERS_FAIL:
       return {
@@ -64,6 +65,7 @@ export const usersReducer = (state = initialState, action: any) => {
       return {
         ...state,
         userError: null,
+        usersError: null,
       };
     default:
       return state;

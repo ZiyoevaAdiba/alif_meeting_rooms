@@ -20,6 +20,8 @@ export const roomsReducer = (state = initialState, action: any) => {
         ...state,
         loading: true,
         roomsError: null,
+        editError: null,
+        addError: null,      
       };
     case getRoomsType.GET_ROOMS_FAIL:
       return {
@@ -32,8 +34,10 @@ export const roomsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: null,
+        roomsError: null,
         rooms: payload,
+        editError: null,
+        addError: null,      
       };
     case getRoomsType.SHOW_ROOM:
       return {
@@ -71,7 +75,7 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.EDIT_ROOM_FAIL:
       return {
         ...state,
-        editError: action.payload,
+        editError: 'Такой миттинг рум уже есть в системе',
       };
     case getRoomsType.EDIT_ROOM_SUCCESS:
       return {
@@ -83,10 +87,12 @@ export const roomsReducer = (state = initialState, action: any) => {
         ...state,
         addError: action.payload,
       };
-    case getRoomsType.ADD_ROOM_SUCCESS:
+    case getRoomsType.RESET_ROOMS_ERRORS:
       return {
         ...state,
-        addError: null,
+        roomsError: null,
+        editError: null,
+        addError: null,      
       };
     default:
       return state;

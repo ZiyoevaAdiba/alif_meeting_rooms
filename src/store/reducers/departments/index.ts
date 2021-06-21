@@ -18,6 +18,7 @@ export const departmentsReducer = (state = initialState, action: any) => {
         ...state,
         loading: true,
         error: null,
+        addError: null,
       };
     case getDepartmentsType.GET_DEPARTMENTS_FAIL:
       return {
@@ -48,10 +49,11 @@ export const departmentsReducer = (state = initialState, action: any) => {
         ...state,
         addError: action.payload,
       };
-    case getDepartmentsType.ADD_DEP_SUCCESS:
+    case getDepartmentsType.RESET_DEPARTMENTS_ERRORS:
       return {
         ...state,
         addError: null,
+        error: null,
       };
     default:
       return state;
