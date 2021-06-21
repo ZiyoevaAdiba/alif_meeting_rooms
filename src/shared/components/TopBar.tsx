@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     '& a': {
       color: 'black',
       textDecoration: 'none',
-      padding: '5px 10px',
+      padding: '5px 20px',
       transition: '0.3s',
       '&:hover': {
         backgroundColor: '#d3d3d37a',

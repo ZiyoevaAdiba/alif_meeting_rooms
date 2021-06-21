@@ -22,7 +22,6 @@ import { ConfirmDelDepart } from "./ConfirmDelDepart";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
-    width: 900,
     '& .MuiDataGrid-columnsContainer': {
       backgroundColor: 'rgba(255, 7, 0, 0.55)',
     },
@@ -32,10 +31,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 800,
+    height: 'auto',
+    width: 900,
     flexDirection: 'column',
     rowGap: 20,
     marginBottom: 20,
+  },
+  topRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
   requests_header: {
     fontSize: 40
@@ -72,9 +77,9 @@ const columns: GridColumns = [
 ];
 
 export const Departments = () => {
-  const { 
-    departments, 
-    error 
+  const {
+    departments,
+    error
   } = useSelector((state: IRootReducer) => state.departmentsReducer);
   const dispatch = useDispatch();
 
@@ -102,11 +107,13 @@ export const Departments = () => {
             <Grid className={classes.CardsContainer}
               container spacing={6}
             >
-              <Box className={classes.requests_header}>
-                Отделы
-              </Box>
+              <Box className={classes.topRow}>
+                <Box className={classes.requests_header}>
+                  Отделы
+                </Box>
 
-              <AddDepartment />
+                <AddDepartment />
+              </Box>
               <ConfirmDelDepart />
               <DataGrid
                 className={classes.table_users}
@@ -114,6 +121,7 @@ export const Departments = () => {
                 columns={columns}
                 rowsPerPageOptions={[]}
                 hideFooter
+                autoHeight
               />
             </Grid>
         }

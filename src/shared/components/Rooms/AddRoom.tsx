@@ -18,6 +18,7 @@ import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 
 
 export const AddRoom = () => {
@@ -25,10 +26,12 @@ export const AddRoom = () => {
   const classes = useStyles();
 
   const handleClickOpen = () => {
+    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
+    showOverflow();
     setOpen(false);
     dispatch(cancelImgUpload());
   };
@@ -154,11 +157,11 @@ export const AddRoom = () => {
                   <Button
                     fullWidth
                     variant="outlined"
-                    color="primary"
+                    color="inherit"
                     component="span"
                     startIcon={<CloudUploadIcon />}
                     style={{ marginTop: '30px', marginBottom: '20px' }}
-                    className={classes.btnReserve}
+                    // className={classes.btnReserve}
                   >
                     Загрузить
                   </Button>
@@ -177,14 +180,14 @@ export const AddRoom = () => {
                   <Button
                     type='submit'
                     // onClick={handleClose} 
-                    variant='outlined'
+                    variant='contained'
                     className={classes.btnReserve}
                   >
                     Добавить
                   </Button>
                   <Button
                     onClick={handleClose}
-                    className={classes.btnReserve}
+                    className={classes.btnCancel}
                   >
                     отмена
                   </Button>

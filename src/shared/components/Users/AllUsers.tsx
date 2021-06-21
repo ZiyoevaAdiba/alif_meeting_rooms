@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
   CardsContainer: {
     marginTop: 15,
     justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    height: 800,
+    // flexWrap: 'wrap', 
+    height: 'auto',
     flexDirection: 'column',
     rowGap: 20,
     marginBottom: 20,
@@ -202,6 +202,7 @@ export const AllUsers = () => {
                 columns={columns}
                 rowsPerPageOptions={[]}
                 hideFooter
+                autoHeight
               />
               <PaginationLink
                 pageNumber={pageCount}

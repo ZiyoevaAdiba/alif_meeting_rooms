@@ -6,6 +6,7 @@ import { Axios } from "../../../shared/axios";
 import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
 import { requestFail } from "../signUp";
+import { showOverflow } from "../../../shared/handlerStyle/bodyOverflow";
 
 const getUsersReq = () => {
   return {
@@ -117,7 +118,7 @@ export const requestEditUser = (page: number, history: History, userData: any) =
     dispatch(editUserReqSuccess());
     dispatch(resetUserEditing());
     dispatch(getAllUsers(page, history));
-    
+    showOverflow();
   } catch (error) {
     dispatch(editUserReqFail(error.response.data.payload.message));
     console.log(error.response);

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     margin: '0 auto',
-    overflow: 'visible',
+    // overflow: 'visible',
     display: 'flex',
     maxWidth: '500px',
     position: 'relative',

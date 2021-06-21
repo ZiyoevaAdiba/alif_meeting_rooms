@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         width: '100%',
         fontSize: 20,
-
+        // overflow: 'hidden',
         '& .MuiPaper-elevation4': {
             boxShadow: 'none',
             borderBottom: '2px solid #EBEBEB'
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     wrapper: {
         display: 'flex',
         flex: '1 1 auto',
+        // overflow: 'hidden',
         paddingTop: 70,
         [theme.breakpoints.up('lg')]: {
             padding: '80px 50px 0'
@@ -26,10 +27,12 @@ const useStyles = makeStyles((theme) => ({
     contentContainer: {
         display: 'flex',
         flex: '1 1 auto',
+        // overflow: 'hidden',
     },
     content: {
         flex: '1 1 auto',
         height: '100%',
+        // overflow: 'auto',
     }
 }));
 

@@ -37,7 +37,7 @@ export const cancelReservationDelete = () => {
 
 export const addReservationFail = (message: string) => {
   return {
-    type: getReservationsType.GET_RESERVATIONS_FAIL,
+    type: getReservationsType.ADD_RESERVATION_FAIL,
     payload: message
   }
 }
@@ -67,6 +67,7 @@ export const requestDeleteReservation = (mrID: string, reservationId: string) =>
   try {
     await Axios.delete(`${api.reservations}/${reservationId}`);
     dispatch(getMRReservations(mrID));
+    dispatch(getMRsInfo());
 
   } catch (error) {
     // dispatch(getReservationsFail());

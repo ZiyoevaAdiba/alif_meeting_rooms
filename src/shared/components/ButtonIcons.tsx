@@ -16,6 +16,7 @@ import { reservationWarningDelete } from '../../store/actions/reservations';
 import { IRootReducer } from '../../store/reducers';
 import Popup from 'reactjs-popup';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { hideOverflow } from '../handlerStyle/bodyOverflow';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any>) => {
+  hideOverflow();
 
   (btnLocation === 'users')
     ?
@@ -55,7 +57,7 @@ const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any
 }
 
 const handleEdit = (row: any, btnLocation: string, dispatch: Dispatch<any>) => {
-
+  hideOverflow();
   (btnLocation === 'users')
     ?
     dispatch(showUserData(row))
@@ -101,7 +103,7 @@ export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
 }
 
 
-export const ButtonPoppup = ({params, btnLocation }: any) => {
+export const ButtonPoppup = ({ params, btnLocation }: any) => {
   // id, columnUserId = '',
 
   const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)

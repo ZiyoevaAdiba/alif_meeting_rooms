@@ -17,10 +17,15 @@ import { IRootReducer } from '../../store/reducers';
 import { removeToken } from '../../store/actions/login';
 import { urls } from '../../routes/urls';
 import { userDataDelete } from '../../store/actions/reservations/userData';
+import PersonIcon from '@material-ui/icons/Person';
+import { hideOverflow, showOverflow } from '../handlerStyle/bodyOverflow';
 
 const useStyles = makeStyles((theme) => ({
   popover: {
     width: 200
+  },
+  userIcon: {
+    fontSize: 40
   }
 }));
 
@@ -35,10 +40,12 @@ export const Account = () => {
   const dispatch = useDispatch()
 
   const handleOpen = () => {
+    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
+    showOverflow();
     setOpen(false);
   };
 
@@ -57,14 +64,12 @@ export const Account = () => {
         onClick={handleOpen}
         {...{ ref: ref } as any}
       >
-        <Hidden smDown>
-          <Typography
-            variant="h6"
-            color="textPrimary"
-          >
-            {`${userData.lastname || ''} ${userData.name || ''}`}
-          </Typography>
-        </Hidden>
+        <Typography
+          variant="inherit"
+          color="textPrimary"
+        >
+          <PersonIcon className={classes.userIcon} />
+        </Typography>
       </Box>
       <Menu
         onClose={handleClose}
@@ -78,6 +83,9 @@ export const Account = () => {
         anchorEl={ref.current}
         open={isOpen}
       >
+        <MenuItem disabled>
+          {`${userData.lastname || ''} ${userData.name || ''}`}
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           Выйти
         </MenuItem>

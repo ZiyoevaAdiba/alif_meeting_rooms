@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    height: 800,
+    height: 'auto',
     flexDirection: 'column',
     rowGap: 20,
     marginBottom: 20,
@@ -201,8 +201,8 @@ export const MeetingRooms = () => {
                 className={classes.table_users}
                 rows={rooms || []}
                 columns={columns}
-                rowsPerPageOptions={[]}
-                hideFooter
+                hideFooter 
+                autoHeight
               />
             </Grid>
         }

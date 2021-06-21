@@ -27,13 +27,12 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: 5,
     }
   },
-
   inputGap: {
     margin: 5,
   },
   btnReserve: {
     color: 'white',
-    backgroundColor: 'rgb(57 185 127)'
+    backgroundColor: 'rgb(57 185 127)',
   },
 
   btnCancel: {
@@ -42,7 +41,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const Form = ({ setOpen, booking, error }: any) => {
+export const Form = ({ setOpen, booking, addError }: any) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -173,7 +172,7 @@ export const Form = ({ setOpen, booking, error }: any) => {
           <DialogActions>
             <Button
               type='submit'
-              variant='outlined'
+              variant='contained'
               className={classes.btnReserve}
             >
               Забронировать
@@ -186,9 +185,9 @@ export const Form = ({ setOpen, booking, error }: any) => {
             </Button>
           </DialogActions>
           {
-            error
+            addError
             &&
-            <ErrorDiv error={error} />
+            <ErrorDiv error={addError} />
           }
         </form>
 

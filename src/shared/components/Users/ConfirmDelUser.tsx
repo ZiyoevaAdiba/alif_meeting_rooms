@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { cancelUserDelete, requestDeleteUser } from '../../../store/actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
+import { showOverflow } from '../../handlerStyle/bodyOverflow';
 
 export const ConfirmDelUser = ({page, history} : any ) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
@@ -20,13 +21,13 @@ export const ConfirmDelUser = ({page, history} : any ) => {
   }, [showAlert])
 
   const handleClose = () => {
-    dispatch(cancelUserDelete())
+    showOverflow();
+    dispatch(cancelUserDelete());
   };
-
+  
   const handleConfirm = () => {
-    dispatch(requestDeleteUser(page, history, showAlert))
     handleClose();
-    // handleClose();
+    dispatch(requestDeleteUser(page, history, showAlert));
   };
   return (
     <>
@@ -36,12 +37,16 @@ export const ConfirmDelUser = ({page, history} : any ) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Предупреждение"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          Предупреждение
+        </DialogTitle>
+        
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Вы уверены, что вы хотите удалить пользователя?
           </DialogContentText>
         </DialogContent>
+        
         <DialogActions>
           <Button onClick={handleConfirm} color="primary" autoFocus>
             Подтвердить

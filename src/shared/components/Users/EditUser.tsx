@@ -17,6 +17,7 @@ import { requestEditUser, resetUserEditing } from '../../../store/actions/users'
 import { UserSchema } from '../../validations/UserValidation';
 import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
+import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 
 
 export const EditUser = ({ page, history }: any) => {
@@ -35,6 +36,7 @@ export const EditUser = ({ page, history }: any) => {
   }, [user]);
   
   const handleClose = () => {
+    showOverflow();
     dispatch(resetUserEditing());
   };
 
@@ -170,7 +172,7 @@ export const EditUser = ({ page, history }: any) => {
               <DialogActions>
                 <Button
                   type='submit'
-                  variant='outlined'
+                  variant='contained'
                   className={classes.btnReserve}
                 >
                   Сохранить изменения

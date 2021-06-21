@@ -4,6 +4,8 @@ import { Routes } from './routes';
 const useStyles = makeStyles(() => createStyles({
   '@global': {
     html: {
+      overflowX: 'hidden',
+      overflowY: 'auto',
       '-webkit-font-smoothing': 'antialiased',
       '-moz-osx-font-smoothing': 'grayscale',
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -15,7 +17,7 @@ const useStyles = makeStyles(() => createStyles({
       padding: 0,
       '& .popup-content': {
         zIndex: '9999 !important'
-      }
+      } 
     },
     '#root': {
       '& .MuiDataGrid-columnsContainer': {

@@ -4,6 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
+import { showOverflow } from '../../handlerStyle/bodyOverflow';
 import { Form } from './Form';
 import { ReservationTable } from './ReservationTable';
 
@@ -43,14 +44,19 @@ export const ReserveRoom = ({ open, setOpen }: any) => {
   const classes = useStyles();
   const {
     booking,
-    error
+    addError
   } = useSelector((state: IRootReducer) => state.reservationsReducer)
 
+  const handleClose = () => {
+    showOverflow();
+    setOpen(false);
+  }
+  
   return (
     <Box>
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleClose}
         aria-labelledby="form-dialog-title"
         className={classes.CardsContainer}
       >
@@ -64,7 +70,7 @@ export const ReserveRoom = ({ open, setOpen }: any) => {
             className={classes.form}
             setOpen={setOpen}
             booking={booking}
-            error={error}
+            addError={addError}
           />
 
           <ReservationTable

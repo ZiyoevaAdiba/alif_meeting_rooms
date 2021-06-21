@@ -17,6 +17,7 @@ import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { showOverflow } from '../../handlerStyle/bodyOverflow';
 
 
 export const EditRoom = () => {
@@ -27,10 +28,11 @@ export const EditRoom = () => {
 
   useEffect(() => {
     setOpen(!open);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);
 
   const handleClose = () => {
+    showOverflow();
     dispatch(resetRoomEditing());
     dispatch(cancelImgUpload());
   };
@@ -46,7 +48,6 @@ export const EditRoom = () => {
     const fd = new FormData();
     fd.append('image', photo);
     dispatch(addMRPhoto(fd));
-    
   }
 
   return (
@@ -128,11 +129,10 @@ export const EditRoom = () => {
                 <Button
                   fullWidth
                   variant="outlined"
-                  color="primary"
+                  color="inherit"
                   component="span"
                   startIcon={<CloudUploadIcon />}
                   style={{ marginTop: '30px', marginBottom: '20px' }}
-                  className={classes.btnReserve}
                 >
                   Загрузить
                 </Button>
@@ -140,8 +140,8 @@ export const EditRoom = () => {
               <img
                 src={
                   imgSrc
-                  ? imgSrc
-                  : values?.photo
+                    ? imgSrc
+                    : values?.photo
                 }
                 alt={
                   fieldRoom.photo
@@ -172,7 +172,7 @@ export const EditRoom = () => {
               <DialogActions>
                 <Button
                   type='submit'
-                  variant='outlined'
+                  variant='contained'
                   className={classes.btnReserve}
                 >
                   Сохранить изменения

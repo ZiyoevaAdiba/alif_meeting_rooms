@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { requestAddDepartment } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
+import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 
 export const AddDepartment = () => {
   const classes = useStyles();
@@ -16,10 +17,12 @@ export const AddDepartment = () => {
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
+    showOverflow();
     setOpen(false);
   };
 
@@ -60,7 +63,7 @@ export const AddDepartment = () => {
           </DialogContent>
           <DialogActions>
             <Button
-              variant='outlined'
+              variant='contained'
               type='submit'
               className={classes.btnReserve}
             >

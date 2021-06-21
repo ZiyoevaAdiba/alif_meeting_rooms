@@ -19,6 +19,7 @@ import { ErrorDiv } from '../ErrorDiv';
 import { IRootReducer } from '../../../store/reducers';
 import { getDepartments } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
+import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 
 export const AddUser = ({ page, history }: any) => {
   const [open, setOpen] = React.useState(false);
@@ -26,10 +27,12 @@ export const AddUser = ({ page, history }: any) => {
   const { error } = useSelector((state: IRootReducer) => state.signUpReducer)
 
   const handleClickOpen = () => {
+    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
+    showOverflow();
     setOpen(false);
   };
 
@@ -217,7 +220,7 @@ export const AddUser = ({ page, history }: any) => {
                 <DialogActions>
                   <Button
                     type='submit'
-                    variant='outlined'
+                    variant='contained'
                     className={classes.btnReserve}
                   >
                     Добавить
