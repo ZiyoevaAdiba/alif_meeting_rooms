@@ -14,7 +14,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
-import { getAllRooms, getRoomsSuccess } from "../../../store/actions/rooms";
+import { getAllRooms } from "../../../store/actions/rooms";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { IRoom } from "../../../store/reducers/rooms/interfaces";
@@ -22,6 +22,7 @@ import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
 import { ErrorDiv } from "../ErrorDiv";
+import { LoadingScreen } from "../LoadingScreen";
 
 export const room: IRoom = {
   city: '',
@@ -157,9 +158,9 @@ const columns: GridColumns = [
 ];
 
 export const MeetingRooms = () => {
-  const { 
-    rooms, 
-    roomsError 
+  const {
+    rooms,
+    roomsError
   } = useSelector((state: IRootReducer) => state.roomsReducer);
   const dispatch = useDispatch();
 
@@ -169,9 +170,9 @@ export const MeetingRooms = () => {
 
   const classes = useStyles();
 
-  // if (!requests?.length) {
-  //     return <LoadingScreen />;
-  // }
+  if (!rooms.length && !roomsError) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Page title="Meeting-Rooms">

@@ -14,6 +14,7 @@ import { useHistory, useLocation } from "react-router";
 import { ErrorDiv } from "../ErrorDiv";
 import { MeetingRoomCard } from "./MeetingRoomCard";
 import { useState } from "react";
+import { LoadingScreen } from "../LoadingScreen";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -59,9 +60,9 @@ export const ReservationPage = () => {
     dispatch(getMRsInfo());
   }, [dispatch]);
 
-  // if (!requests?.length) {
-  //     return <LoadingScreen />;
-  // }
+  if (!meetingRoomsInfo.length && !error) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Page title="Бронирования">

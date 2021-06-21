@@ -1,12 +1,9 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import { DataGrid, GridCellParams, GridColumns, GridValueGetterParams } from "@material-ui/data-grid";
 import { addHours } from "date-fns";
-import { useSelector } from "react-redux";
-import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonPoppup } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import 'reactjs-popup/dist/index.css';
-import { ErrorDiv } from "../ErrorDiv";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -109,9 +106,9 @@ const columns: GridColumns = [
   }
 ];
 
-export const ReservationTable = () => {
+export const ReservationTable = ({ booking }: any) => {
   const classes = useStyles();
-  const { booking, error } = useSelector((state: IRootReducer) => state.reservationsReducer)
+
   const mrID = (typeof booking === 'string')
     ?
     booking
@@ -119,32 +116,26 @@ export const ReservationTable = () => {
     booking[0]?.meeting_room.id;
 
   return (
-    (error)
-      ?
-      <ErrorDiv
-        error={error} />
-      :
-      <>
-        <Grid className={classes.CardsContainer}
-          container spacing={6}
-        >
-          <ConfirmDelReservation
-            mrID={mrID}
-          />
-          <DataGrid
-            className={classes.table_users}
-            rows={
-              (typeof booking === 'string')
-                ? []
-                : booking
-            }
-            columns={columns}
-            disableExtendRowFullWidth
-            autoPageSize
-            autoHeight
-            hideFooter
-          />
-        </Grid>
-      </>
+    <Grid className={classes.CardsContainer}
+      container spacing={6}
+    >
+      <ConfirmDelReservation
+        mrID={mrID}
+      />
+      
+      <DataGrid
+        className={classes.table_users}
+        rows={
+          (typeof booking === 'string')
+            ? []
+            : booking
+        }
+        columns={columns}
+        disableExtendRowFullWidth
+        autoPageSize
+        autoHeight
+        hideFooter
+      />
+    </Grid>
   )
 }

@@ -16,6 +16,7 @@ export const ConfirmDelDepart = () => {
 
   useEffect(() => {
     setOpen(!open);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAlert])
 
   const handleClose = () => {

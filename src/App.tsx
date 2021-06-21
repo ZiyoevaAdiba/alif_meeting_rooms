@@ -19,8 +19,8 @@ const useStyles = makeStyles(() => createStyles({
     },
     '#root': {
       '& .MuiDataGrid-columnsContainer': {
-        backgroundColor: 'rgb(57 185 127)',
-        color: "white",
+        backgroundColor: 'rgba(167, 167, 167, 0.6)',
+        color: "#474747",
         fontSize: '16px'
       },
       height: '100%',

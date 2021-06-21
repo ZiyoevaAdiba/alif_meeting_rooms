@@ -20,7 +20,6 @@ import { IRootReducer } from '../../../store/reducers';
 import { getDepartments } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
 
-
 export const AddUser = ({ page, history }: any) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -36,6 +35,7 @@ export const AddUser = ({ page, history }: any) => {
 
   useEffect(() => {
     dispatch(getDepartments());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -48,7 +48,7 @@ export const AddUser = ({ page, history }: any) => {
   return (
     <Box>
       <Button
-        variant="outlined"
+        variant="contained"
         className={classes.btnReserve}
         onClick={handleClickOpen}
       >

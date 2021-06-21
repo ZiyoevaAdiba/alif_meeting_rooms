@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { Form } from './Form';
 import { ReservationTable } from './ReservationTable';
@@ -12,7 +11,7 @@ import { ReservationTable } from './ReservationTable';
 const useStyles = makeStyles((theme) => ({
   content: {
     // paddingTop: 20,
-    display:"flex",
+    display: "flex",
     columnGap: 70,
   },
 
@@ -36,13 +35,17 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 40
   },
   form: {
-    background:"green"
+    background: "green"
   }
 }));
 
-export const ReserveRoom = ({open, setOpen} : any ) => {
+export const ReserveRoom = ({ open, setOpen }: any) => {
   const classes = useStyles();
-  
+  const {
+    booking,
+    error
+  } = useSelector((state: IRootReducer) => state.reservationsReducer)
+
   return (
     <Box>
       <Dialog
@@ -51,15 +54,22 @@ export const ReserveRoom = ({open, setOpen} : any ) => {
         aria-labelledby="form-dialog-title"
         className={classes.CardsContainer}
       >
-        <DialogTitle id="form-dialog-title">Для бронирования заполните форму.</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          Для бронирования заполните форму.
+        </DialogTitle>
+
         <DialogContent className={classes.content}>
-         
-          <Form 
+
+          <Form
             className={classes.form}
             setOpen={setOpen}
+            booking={booking}
+            error={error}
           />
-        
-          <ReservationTable />
+
+          <ReservationTable
+            booking={booking}
+          />
         </DialogContent>
 
       </Dialog>

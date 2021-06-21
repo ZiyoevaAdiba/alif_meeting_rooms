@@ -46,12 +46,13 @@ export const AddRoom = () => {
   return (
     <Box>
       <Button
-        variant="outlined"
+        variant="contained"
         className={classes.btnReserve}
         onClick={handleClickOpen}
       >
         Добавить Meeting Room
       </Button>
+      
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Добавление Meeting Room-а</DialogTitle>
         <DialogContent>

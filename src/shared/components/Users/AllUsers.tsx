@@ -21,6 +21,7 @@ import { ConfirmDelUser } from "./ConfirmDelUser";
 import { PaginationLink } from "../PaginationLink";
 import { useHistory, useLocation } from "react-router-dom";
 import { ErrorDiv } from "../ErrorDiv";
+import { LoadingScreen } from "../LoadingScreen";
 
 const useStyles = makeStyles((theme) => ({
   CardsContainer: {
@@ -155,10 +156,11 @@ export const AllUsers = () => {
 
   useEffect(() => {
     dispatch(getAllUsers(page, history));
-  }, [dispatch]);
-  // if (!requests?.length) {
-  //     return <LoadingScreen />;
-  // }
+  }, [page, history, dispatch]);
+
+  if (!users.length && !usersError) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Page title="Пользователи">
@@ -181,6 +183,7 @@ export const AllUsers = () => {
                 <Box className={classes.requests_header}>
                   Пользователи
                 </Box>
+
                 <AddUser
                   page={page}
                   history={history}

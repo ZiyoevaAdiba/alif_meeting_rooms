@@ -19,6 +19,7 @@ import { requestAddReservation } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
 import { IReservation } from '../../../store/reducers/reservations/interfaces';
 import { ReserveSchema } from '../../validations/Reservation';
+import { ErrorDiv } from '../ErrorDiv';
 
 export const useStyles = makeStyles((theme) => ({
   signUpForm: {
@@ -31,8 +32,8 @@ export const useStyles = makeStyles((theme) => ({
     margin: 5,
   },
   btnReserve: {
-    color: 'rgb(57 185 127)',
-    borderColor: 'rgb(57 185 127)',
+    color: 'white',
+    backgroundColor: 'rgb(57 185 127)'
   },
 
   btnCancel: {
@@ -41,17 +42,13 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const Form = ({ setOpen }: any) => {
+export const Form = ({ setOpen, booking, error }: any) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const {
     userData,
   } = useSelector((state: IRootReducer) => state.getUserDataReducer);
-
-  const {
-    booking
-  } = useSelector((state: IRootReducer) => state.reservationsReducer);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(),
@@ -64,9 +61,9 @@ export const Form = ({ setOpen }: any) => {
   );
 
   const initBooking: IReservation = {
-    start_time: '',
-    end_time: '',
-    date: '',
+    start_time: selectedStartTime,
+    end_time: selectedEndTime,
+    date: selectedDate,
     purpose: '',
     user_id: '',
     meeting_room_id: ''
@@ -81,20 +78,20 @@ export const Form = ({ setOpen }: any) => {
     <Formik
 
       initialValues={initBooking}
-      // validationSchema={ReserveSchema}
+      validationSchema={ReserveSchema}
       onSubmit={(values) => {
-        console.log(values);
+
+        delete values.date;
 
         values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        delete values.date;
         values.user_id = userData.id;
-        values.meeting_room_id = 
+        values.meeting_room_id =
           (typeof booking === 'string')
             ? booking
             : booking[0]?.meeting_room.id;
-        dispatch(requestAddReservation(values,  setOpen));
 
+        dispatch(requestAddReservation(values, setOpen));
       }
       }
     >
@@ -114,7 +111,6 @@ export const Form = ({ setOpen }: any) => {
             <Grid
               container
               justify="space-around"
-            // className={classes.CardsContainer}
             >
               <TextField
                 className={classes.inputGap}
@@ -189,6 +185,11 @@ export const Form = ({ setOpen }: any) => {
               отмена
             </Button>
           </DialogActions>
+          {
+            error
+            &&
+            <ErrorDiv error={error} />
+          }
         </form>
 
       )}

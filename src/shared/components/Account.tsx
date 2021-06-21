@@ -1,9 +1,7 @@
 import {
-  Fragment,
   useRef,
   useState
 } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Account() {
+export const Account = () => {
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -58,7 +56,6 @@ function Account() {
         component={ButtonBase}
         onClick={handleOpen}
         {...{ ref: ref } as any}
-        // ref={ref}
       >
         <Hidden smDown>
           <Typography
@@ -87,6 +84,4 @@ function Account() {
       </Menu>
     </>
   );
-}
-
-export default Account;
+};

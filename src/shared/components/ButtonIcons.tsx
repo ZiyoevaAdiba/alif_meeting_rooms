@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   iconEdit: {
-    color: 'darkblue',
+    color: '#39B980',
   },
 
   iconDelete: {
-    color: 'darkred',
+    color: '#EC7272',
   },
 
 }));

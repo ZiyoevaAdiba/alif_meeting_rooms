@@ -10,13 +10,13 @@ export interface IResUser {
 }
 
 export interface IReservation {
-  start_time?: string,
-  end_time?: string,
+  start_time?: string | Date | null,
+  end_time?: string | Date | null,
   meeting_room?: any,
   meeting_room_id?: any,
   purpose?: string,
   user_id?: string, 
-  date?: string
+  date?: string | Date | null
 }  
 
 export interface IreservationsReducer {

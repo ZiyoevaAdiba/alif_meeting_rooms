@@ -37,7 +37,7 @@ export const AddDepartment = () => {
   return (
     <div>
       <Button
-        variant="outlined"
+        variant="contained"
         onClick={handleClickOpen}
         className={classes.btnReserve}
       >

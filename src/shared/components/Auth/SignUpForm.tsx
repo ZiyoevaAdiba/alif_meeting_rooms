@@ -1,4 +1,10 @@
-import { Box, createStyles, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
+import { 
+  createStyles, 
+  InputLabel, 
+  makeStyles, 
+  MenuItem, 
+  Select 
+} from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +16,7 @@ import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { SignupSchema } from '../../validations/SignUpValidation';
 import { removeToken } from '../../../store/actions/login';
-import { getAllDepartments, getDepartments } from '../../../store/actions/departments';
+import { getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
 import { Page } from '../../../layouts/Page';
@@ -90,6 +96,7 @@ export const SignUpForm = () => {
 
   useEffect(() => {
     dispatch(getDepartments());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {

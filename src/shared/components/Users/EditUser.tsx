@@ -31,6 +31,7 @@ export const EditUser = ({ page, history }: any) => {
 
   useEffect(() => {
     setOpen(!open);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   
   const handleClose = () => {

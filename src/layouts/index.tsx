@@ -8,7 +8,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         height: '100%',
         width: '100%',
-        fontSize: 20
+        fontSize: 20,
+
+        '& .MuiPaper-elevation4': {
+            boxShadow: 'none',
+            borderBottom: '2px solid #EBEBEB'
+        }
     },
     wrapper: {
         display: 'flex',
@@ -30,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const DashboardLayout = ({ children }: any) => {
     const classes = useStyles();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isMobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
     return (

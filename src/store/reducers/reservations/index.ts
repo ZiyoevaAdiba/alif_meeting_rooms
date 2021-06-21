@@ -22,7 +22,7 @@ export const reservationsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'Проверьте доступ. Попробуйте снова.',
+        error: 'Проверьте доступ. Попробуйте снова',
       };
     case getReservationsType.GET_RESERVATIONS_SUCCESS:
       const reservationData = (typeof action.payload.id === 'string')

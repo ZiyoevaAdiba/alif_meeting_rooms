@@ -27,6 +27,7 @@ export const EditRoom = () => {
 
   useEffect(() => {
     setOpen(!open);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);
 
   const handleClose = () => {

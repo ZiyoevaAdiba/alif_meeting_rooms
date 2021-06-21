@@ -1,7 +1,6 @@
 import { ILoginData, loginType } from "./interfaces";
 import { Dispatch } from "react";
 import { api, urls } from "../../../routes/urls";
-import { IForgetData } from "../forget/interfaces";
 import { History } from "history";
 import { Axios } from "../../../shared/axios";
 

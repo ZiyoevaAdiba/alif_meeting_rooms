@@ -16,6 +16,7 @@ import { getAllDepartments } from "../../../store/actions/departments/index";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete } from "../ButtonIcons";
 import { ErrorDiv } from "../ErrorDiv";
+import { LoadingScreen } from "../LoadingScreen";
 import { AddDepartment } from "./AddDepartment";
 import { ConfirmDelDepart } from "./ConfirmDelDepart";
 
@@ -71,7 +72,10 @@ const columns: GridColumns = [
 ];
 
 export const Departments = () => {
-  const { departments, error } = useSelector((state: IRootReducer) => state.departmentsReducer);
+  const { 
+    departments, 
+    error 
+  } = useSelector((state: IRootReducer) => state.departmentsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -80,9 +84,10 @@ export const Departments = () => {
 
   const classes = useStyles();
 
-  // if (!requests?.length) {
-  //     return <LoadingScreen />;
-  // }
+  if (!departments.length && !error) {
+    return <LoadingScreen />;
+  }
+
 
   return (
     <Page title="Отделы">
@@ -94,23 +99,23 @@ export const Departments = () => {
               error={error}
             />
             :
-              <Grid className={classes.CardsContainer}
-                container spacing={6}
-              >
-                <Box className={classes.requests_header}>
-                  Отделы
-                </Box>
+            <Grid className={classes.CardsContainer}
+              container spacing={6}
+            >
+              <Box className={classes.requests_header}>
+                Отделы
+              </Box>
 
-                <AddDepartment />
-                <ConfirmDelDepart />
-                <DataGrid
-                  className={classes.table_users}
-                  rows={departments || []}
-                  columns={columns}
-                  rowsPerPageOptions={[]}
-                  hideFooter
-                />
-              </Grid>
+              <AddDepartment />
+              <ConfirmDelDepart />
+              <DataGrid
+                className={classes.table_users}
+                rows={departments || []}
+                columns={columns}
+                rowsPerPageOptions={[]}
+                hideFooter
+              />
+            </Grid>
         }
 
       </Container>
