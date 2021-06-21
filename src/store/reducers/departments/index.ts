@@ -6,6 +6,7 @@ const initialState: IdepartmentsReducer = {
   departments: [],
   loading: false,
   error: null,
+  addError: null,
   showAlert: '',
 };
 
@@ -33,15 +34,25 @@ export const departmentsReducer = (state = initialState, action: any) => {
         departments: payload,
       };
     case getDepartmentsType.SHOW_WARNING:
-      return{
+      return {
         ...state,
         showAlert: action.payload
       }
     case getDepartmentsType.CANCEL_DELETE:
-      return{
+      return {
         ...state,
         showAlert: '',
       }
+    case getDepartmentsType.ADD_DEP_FAIL:
+      return {
+        ...state,
+        addError: action.payload,
+      };
+    case getDepartmentsType.ADD_DEP_SUCCESS:
+      return {
+        ...state,
+        addError: null,
+      };
     default:
       return state;
   }

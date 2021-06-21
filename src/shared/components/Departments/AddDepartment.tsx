@@ -5,17 +5,19 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useDispatch } from 'react-redux';
-import { requestAddDepartment } from '../../../store/actions/departments';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDepSuccess, requestAddDepartment } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
 import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
+import { IRootReducer } from '../../../store/reducers';
+import { ErrorDiv } from '../ErrorDiv';
 
 export const AddDepartment = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [depInput, setDepInput] = React.useState('');
   const dispatch = useDispatch();
-
+  const { addError } = useSelector((state: IRootReducer) => state.departmentsReducer)
   const handleClickOpen = () => {
     hideOverflow();
     setOpen(true);
@@ -24,6 +26,7 @@ export const AddDepartment = () => {
   const handleClose = () => {
     showOverflow();
     setOpen(false);
+    dispatch(addDepSuccess());
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +36,8 @@ export const AddDepartment = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(requestAddDepartment(depInput));
-    handleClose();
+    dispatch(requestAddDepartment(depInput, setOpen));
+    // handleClose();
   };
 
   return (
@@ -60,7 +63,15 @@ export const AddDepartment = () => {
               onChange={handleChange}
               required
             />
+            {
+            (addError)
+            &&
+            <ErrorDiv
+              error={addError}
+            />
+          }
           </DialogContent>
+          
           <DialogActions>
             <Button
               variant='contained'
@@ -69,10 +80,10 @@ export const AddDepartment = () => {
             >
               Добавить
             </Button>
-            <Button 
-              onClick={handleClose} 
+            <Button
+              onClick={handleClose}
               className={classes.btnCancel}
-              >
+            >
               Отмена
             </Button>
           </DialogActions>

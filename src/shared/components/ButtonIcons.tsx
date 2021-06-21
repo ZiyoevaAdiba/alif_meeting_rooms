@@ -111,6 +111,9 @@ export const ButtonPoppup = ({ params, btnLocation }: any) => {
   if (params.user.id === userData.id && btnLocation === 'reservations') {
     return <></>;
   }
+
+  const telegramLink = `https://t.me/${params.user.tg_account}`
+
   return (
     <Popup
       trigger={<AccountCircleIcon />}
@@ -120,9 +123,10 @@ export const ButtonPoppup = ({ params, btnLocation }: any) => {
     >
       {
         `${params.user.lastname} 
-          ${params.user.name}
-          @${params.user.tg_account}`
+          ${params.user.name} `
       }
-    </Popup>
+      <a href={telegramLink} target="_blank">@{params.user.tg_account}</a>
+
+    </Popup >
   )
 }

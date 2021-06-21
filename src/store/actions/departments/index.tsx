@@ -41,6 +41,21 @@ export const cancelDepartmentsDelete = () => {
 }
 
 
+export const addDepFail = (message: string) => {
+  return {
+    type: getDepartmentsType.ADD_DEP_FAIL,
+    payload: message
+  }
+}
+
+export const addDepSuccess = () => {
+  return {
+    type: getDepartmentsType.ADD_DEP_SUCCESS,
+    payload: {}
+  }
+}
+
+
 export const getAllDepartments = () => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
@@ -66,7 +81,7 @@ export const getDepartments = () => async(dispatch: Dispatch<any>) => {
 }
 
 
-export const requestAddDepartment = (depData: string) => async(dispatch: Dispatch<any>) => {
+export const requestAddDepartment = (depData: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
     
@@ -75,10 +90,12 @@ export const requestAddDepartment = (depData: string) => async(dispatch: Dispatc
     };
     
     await Axios.post(`${api.departments}`, data);
+    dispatch(addDepSuccess())
+    setOpen(false)
     dispatch(getAllDepartments());
     
   } catch (error) {
-    dispatch(getDepartmentsFail());
+    dispatch(addDepFail(error.response.data.payload.message));
     // console.log(error.response);
   }
 }

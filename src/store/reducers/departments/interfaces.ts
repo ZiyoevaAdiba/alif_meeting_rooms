@@ -6,6 +6,7 @@ export interface IDepartment {
 export interface IdepartmentsReducer {
   loading: boolean,
   error: null | any,
+  addError: null | any,
   departments: IDepartment[],
   department: IDepartment | {},
   showAlert: string,
