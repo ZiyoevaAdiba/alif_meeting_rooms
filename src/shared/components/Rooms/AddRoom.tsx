@@ -19,6 +19,7 @@ import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
+import { ErrorDiv } from '../ErrorDiv';
 
 
 export const AddRoom = () => {
@@ -35,8 +36,8 @@ export const AddRoom = () => {
     setOpen(false);
     dispatch(cancelImgUpload());
   };
-  
-  const { imgSrc } = useSelector((state: IRootReducer) => state.roomsReducer)
+
+  const { imgSrc, addError } = useSelector((state: IRootReducer) => state.roomsReducer)
   const dispatch = useDispatch();
 
   const handleImageUpload = (evt: any) => {
@@ -55,7 +56,7 @@ export const AddRoom = () => {
       >
         Добавить Meeting Room
       </Button>
-      
+
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Добавление Meeting Room-а</DialogTitle>
         <DialogContent>
@@ -161,7 +162,7 @@ export const AddRoom = () => {
                     component="span"
                     startIcon={<CloudUploadIcon />}
                     style={{ marginTop: '30px', marginBottom: '20px' }}
-                    // className={classes.btnReserve}
+                  // className={classes.btnReserve}
                   >
                     Загрузить
                   </Button>
@@ -192,6 +193,13 @@ export const AddRoom = () => {
                     отмена
                   </Button>
                 </DialogActions>
+                {
+                  (addError)
+                  &&
+                  <ErrorDiv
+                    error={addError}
+                  />
+                }
 
               </Form>
             )}
