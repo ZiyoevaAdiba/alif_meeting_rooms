@@ -22,12 +22,18 @@ const routesConfig = [
     },
     {
         exact: true,
+        path: `${urls.registrationAlert}`,
+        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
+            default: module.LoginView
+        })))
+    },
+    {
+        exact: true,
         path: `${urls.forget}`,
         component: lazy(() => import('../views/pages/AuthPage').then(module => ({
             default: module.LoginView
         })))
     },
-    
     {
         path: '/',
         guard: AuthGuard,

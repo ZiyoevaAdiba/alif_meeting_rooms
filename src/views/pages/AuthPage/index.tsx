@@ -14,6 +14,7 @@ import { urls } from '../../../routes/urls';
 import { LoginForm } from '../../../shared/components/Auth/LoginForm';
 import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
 import { removeToken } from '../../../store/actions/login';
+import { EmailAlert } from '../../../shared/components/Auth/EmailAlert';
 
 const useStyles = makeStyles((theme) => ({
   authFormContainer: {
@@ -82,6 +83,12 @@ export const LoginView = () => {
                 (history.location.pathname === urls.forget)
                 &&
                 <ForgetPasswordForm />
+              }
+              {
+                
+                (history.location.pathname === urls.registrationAlert)
+                &&
+                <EmailAlert />
               }
             </Box>
 
