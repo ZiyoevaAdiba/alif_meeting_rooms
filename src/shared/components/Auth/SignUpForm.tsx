@@ -92,7 +92,6 @@ export const SignUpForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.signUpReducer);
-  removeToken();
 
   useEffect(() => {
     dispatch(getDepartments());
@@ -117,7 +116,6 @@ export const SignUpForm = () => {
         initialValues={user}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // same shape as initial values
           dispatch(requestRegistration(values, history, setSubmitting));
         }
         }

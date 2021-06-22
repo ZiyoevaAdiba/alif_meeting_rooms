@@ -74,8 +74,6 @@ export const LoginForm = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
  
-  removeToken();
-
   const user: ILoginData = {
     email: '',
     password: '',

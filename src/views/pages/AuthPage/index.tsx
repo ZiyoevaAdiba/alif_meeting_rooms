@@ -13,6 +13,7 @@ import logo from '../../../assets/images/alif_logo.png';
 import { urls } from '../../../routes/urls';
 import { LoginForm } from '../../../shared/components/Auth/LoginForm';
 import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
+import { removeToken } from '../../../store/actions/login';
 
 const useStyles = makeStyles((theme) => ({
   authFormContainer: {
@@ -51,7 +52,9 @@ const useStyles = makeStyles((theme) => ({
 export const LoginView = () => {
   const classes = useStyles();
   const history = useHistory();
-  //   removeToken();
+
+  removeToken();
+
   return (
     <Page title="Войти">
       <Container maxWidth="md" className={classes.authFormContainer}>
@@ -64,23 +67,22 @@ export const LoginView = () => {
               <img src={logo} alt="no Logo" />
             </Typography>
 
-
             <Box mt={3}>
-                {
-                  (history.location.pathname === urls.login)
-                  &&
-                  <LoginForm />
-                }
-                {
-                  (history.location.pathname === urls.signUp)
-                  &&
-                  <SignUpForm/>
-                }
-                 {
-                  (history.location.pathname === urls.forget)
-                  &&
-                  <ForgetPasswordForm />
-                }
+              {
+                (history.location.pathname === urls.login)
+                &&
+                <LoginForm />
+              }
+              {
+                (history.location.pathname === urls.signUp)
+                &&
+                <SignUpForm />
+              }
+              {
+                (history.location.pathname === urls.forget)
+                &&
+                <ForgetPasswordForm />
+              }
             </Box>
 
           </CardContent>

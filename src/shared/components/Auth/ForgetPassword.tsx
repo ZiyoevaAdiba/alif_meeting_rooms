@@ -66,17 +66,16 @@ const fieldInput: IForgetData = {
 export const ForgetPasswordForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: IRootReducer) => state.forgetReducer);
+  const { 
+    loading, 
+    error 
+  } = useSelector((state: IRootReducer) => state.forgetReducer);
   const history = useHistory();
 
 
   const user: IForgetData = {
     email: '',
   };
-
-  // const history = useHistory();
-  // const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
-
 
   const cancelPasswordBtn = () => {
     history.push(urls.login);
@@ -89,7 +88,6 @@ export const ForgetPasswordForm = () => {
         initialValues={user}
         validationSchema={ForgetSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // same shape as initial values
           dispatch(requestPassword(values, setSubmitting, history));
         }
         }

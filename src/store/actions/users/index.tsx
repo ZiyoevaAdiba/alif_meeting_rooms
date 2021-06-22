@@ -7,6 +7,7 @@ import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
 import { requestFail } from "../signUp";
 import { showOverflow } from "../../../shared/handlerStyle/bodyOverflow";
+import { store } from "react-notifications-component";
 
 const getUsersReq = () => {
   return {
@@ -90,7 +91,19 @@ export const requestAddUser = (page: number, history: History, userData: IUserDa
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
     setOpen(false);
-    alert('Пользователь успешно добавлен. Проверьте почту для подтверждения регистрации!');
+    store.addNotification({
+      title: "Wonderful!",
+      message: "Для продолжения регистрации подтвердите почту",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 7000,
+        onScreen: true
+      }
+    });
     dispatch(getAllUsers(page, history));
     
   } catch (error) {
