@@ -26,15 +26,15 @@ const loginReqSuccess = (userRole?: string) => {
 }
 
 export const getToken = () => {
-  return localStorage.getItem('token') || '';
+  return localStorage.getItem('ua_fight!place') || '';
 } 
 
 export const setToken = (token: string) => {
-  localStorage.setItem('token', token);
+  localStorage.setItem('ua_fight!place', token);
 } 
 
 export const removeToken = () => {
-  localStorage.removeItem('token');
+  localStorage.removeItem('ua_fight!place');
 }
 
 

@@ -82,7 +82,6 @@ export const LoginForm = () => {
   };
 
   const history = useHistory();
-  // const { loading } = useSelector((state: IRootReducer) => state.signUpReducer);
 
 
   const signUpClick = () => {
@@ -100,7 +99,6 @@ export const LoginForm = () => {
         initialValues={user}
         validationSchema={LoginSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // same shape as initial values
           dispatch(requestLogin(values, setSubmitting, history));
         }
         }
@@ -166,7 +164,6 @@ export const LoginForm = () => {
                 className={classes.btnsText}
                 disabled={isSubmitting}
                 fullWidth
-                // width={1/2}
                 type="button"
                 variant="text"
                 onClick={signUpClick}
@@ -177,7 +174,6 @@ export const LoginForm = () => {
                 className={classes.btnsText}
                 disabled={isSubmitting}
                 fullWidth
-                // width={1/2}
                 type="button"
                 variant="text"
                 onClick={forgetPasswordClick}

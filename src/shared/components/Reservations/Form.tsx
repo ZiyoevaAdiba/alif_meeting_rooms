@@ -11,7 +11,7 @@ import {
   KeyboardTimePicker,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
-import { format } from 'date-fns';
+import { addHours, format } from 'date-fns';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,7 +56,7 @@ export const Form = ({ setOpen, booking, addError }: any) => {
     new Date(),
   );
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
-    new Date(),
+    addHours(new Date() || 0, 1),
   );
 
   const initBooking: IReservation = {

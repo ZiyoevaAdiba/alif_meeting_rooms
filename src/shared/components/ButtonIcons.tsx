@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 import {
   Button,
+  Link,
   makeStyles,
 } from "@material-ui/core";
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
@@ -125,7 +126,9 @@ export const ButtonPoppup = ({ params, btnLocation }: any) => {
         `${params.user.lastname} 
           ${params.user.name} `
       }
-      <a href={telegramLink} target="_blank">@{params.user.tg_account}</a>
+      <Link href={telegramLink} target="_blank">
+        @{params.user.tg_account}
+      </Link>
 
     </Popup >
   )

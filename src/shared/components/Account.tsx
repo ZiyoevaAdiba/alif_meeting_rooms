@@ -78,6 +78,7 @@ export const Account = () => {
           horizontal: 'center'
         }}
         keepMounted
+        disableScrollLock
         PaperProps={{ className: classes.popover }}
         getContentAnchorEl={null}
         anchorEl={ref.current}
