@@ -22,12 +22,13 @@ import { PaginationLink } from "../PaginationLink";
 import { useHistory, useLocation } from "react-router-dom";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
+import { SearchForm } from "./SearchForm";
 
 const useStyles = makeStyles((theme) => ({
   CardsContainer: {
     marginTop: 15,
     justifyContent: 'space-evenly',
-    // flexWrap: 'wrap', 
+    flexWrap: 'wrap',
     height: 'auto',
     flexDirection: 'column',
     rowGap: 20,
@@ -184,6 +185,7 @@ export const AllUsers = () => {
                   Пользователи
                 </Box>
 
+                <SearchForm />
                 <AddUser
                   page={page}
                   history={history}

@@ -9,9 +9,9 @@ import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
 import { ErrorDiv } from '../ErrorDiv';
-import { 
-  removeToken, 
-  requestLogin 
+import {
+  removeToken,
+  requestLogin
 } from '../../../store/actions/login';
 
 const useStyles = makeStyles(() => createStyles({
@@ -50,10 +50,10 @@ const useStyles = makeStyles(() => createStyles({
   },
 
   btns: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      marginTop: '10px'      
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    marginTop: '10px'
   },
 
   btnsText: {
@@ -72,8 +72,11 @@ const fieldInput: ILoginData = {
 export const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: IRootReducer) => state.loginReducer);
- 
+  const {
+    loading,
+    error
+  } = useSelector((state: IRootReducer) => state.loginReducer);
+
   const user: ILoginData = {
     email: '',
     password: '',
@@ -92,7 +95,7 @@ export const LoginForm = () => {
 
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Meeting Rooms</h1>
+      <h1 style={{ textAlign: 'center' }}>Meeting Rooms</h1>
       <Formik
         initialValues={user}
         validationSchema={LoginSchema}
@@ -123,7 +126,7 @@ export const LoginForm = () => {
               onBlur={handleBlur}
               type='text'
             />
-            
+
             <TextField
               name={fieldInput.password}
               label="Пароль"
@@ -135,7 +138,7 @@ export const LoginForm = () => {
               onBlur={handleBlur}
               type='password'
             />
-            
+
             <Button
               className={classes.authBtn}
               disabled={isSubmitting}
@@ -151,10 +154,10 @@ export const LoginForm = () => {
               }
             </Button>
             {
-              (error)
+              error
               &&
               <ErrorDiv
-              error={error}
+                error={error}
               />
             }
             <ButtonGroup className={classes.btns}>
@@ -184,6 +187,5 @@ export const LoginForm = () => {
         )}
       </Formik>
     </div>
-
   );
 }

@@ -1,0 +1,6 @@
+export enum emailType {
+  EMAIL_REQUEST = 'EMAIL_REQUEST',
+  EMAIL_FAIL = 'EMAIL_FAIL',
+  EMAIL_SUCCESS = 'EMAIL_SUCCESS',
+}
+

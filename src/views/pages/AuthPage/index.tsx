@@ -50,9 +50,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const LoginView = () => {
+export const LoginView = ({children}: any) => {
   const classes = useStyles();
-  const history = useHistory();
 
   removeToken();
 
@@ -69,27 +68,7 @@ export const LoginView = () => {
             </Typography>
 
             <Box mt={3}>
-              {
-                (history.location.pathname === urls.login)
-                &&
-                <LoginForm />
-              }
-              {
-                (history.location.pathname === urls.signUp)
-                &&
-                <SignUpForm />
-              }
-              {
-                (history.location.pathname === urls.forget)
-                &&
-                <ForgetPasswordForm />
-              }
-              {
-                
-                (history.location.pathname === urls.registrationAlert)
-                &&
-                <EmailAlert />
-              }
+              {children}
             </Box>
 
           </CardContent>
