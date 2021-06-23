@@ -4,35 +4,42 @@ import { DashboardLayout } from '../layouts';
 import { AuthGuard } from '../shared/components/AuthGuard';
 import { LoadingScreen } from '../shared/components/LoadingScreen';
 import { urls } from './urls';
+import { LoginView } from '../views/pages/AuthPage';
 
 const routesConfig = [
     {
-        exact: true,
-        path: `${urls.login}`,
-        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
-            default: module.LoginView
+        exact: false,
+        path: urls.registrationAlert,
+        component: lazy(() => import('../views/pages/ComfirmEmail').then(module => ({
+            default: module.ConfirmEmail
         })))
     },
     {
-        exact: true,
-        path: `${urls.signUp}`,
-        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
-            default: module.LoginView
-        })))
-    },
-    {
-        exact: true,
-        path: `${urls.registrationAlert}`,
-        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
-            default: module.LoginView
-        })))
-    },
-    {
-        exact: true,
-        path: `${urls.forget}`,
-        component: lazy(() => import('../views/pages/AuthPage').then(module => ({
-            default: module.LoginView
-        })))
+        path: urls.authPage,
+        layout: LoginView,
+        routes: [
+            {
+                exact: true,
+                path: urls.login,
+                component: lazy(() => import('../shared/components/Auth/LoginForm').then(module => ({
+                    default: module.LoginForm
+                })))
+            },
+            {
+                exact: true,
+                path: urls.signUp,
+                component: lazy(() => import('../shared/components/Auth/SignUpForm').then(module => ({
+                    default: module.SignUpForm
+                })))
+            },
+            {
+                exact: true,
+                path: urls.forget,
+                component: lazy(() => import('../shared/components/Auth/ForgetPassword').then(module => ({
+                    default: module.ForgetPasswordForm
+                })))
+            },
+        ]
     },
     {
         path: '/',
@@ -42,32 +49,32 @@ const routesConfig = [
             {
                 exact: true,
                 path: '/',
-                component: () => <Redirect to={urls.reservations} /> 
+                component: () => <Redirect to={urls.reservations} />
             },
             {
                 exact: true,
-                path: `${urls.users}`,
+                path: urls.users,
                 component: lazy(() => import('../shared/components/Users/AllUsers').then(module => ({
                     default: module.AllUsers
                 })))
             },
             {
                 exact: true,
-                path: `${urls.meetingRooms}`,
+                path: urls.meetingRooms,
                 component: lazy(() => import('../shared/components/Rooms/MeetingRooms').then(module => ({
                     default: module.MeetingRooms
                 })))
             },
             {
                 exact: true,
-                path: `${urls.departments}`,
+                path: urls.departments,
                 component: lazy(() => import('../shared/components/Departments/Departments').then(module => ({
                     default: module.Departments
                 })))
             },
             {
                 exact: true,
-                path: `${urls.reservations}`,
+                path: urls.reservations,
                 component: lazy(() => import('../shared/components/Reservations/ReservationPage').then(module => ({
                     default: module.ReservationPage
                 })))
@@ -95,8 +102,8 @@ const renderRoutes = (routes: any) => (routes ? (
                                 <Layout>
                                     {route.routes ? (
                                         renderRoutes(route.routes)
-                                    ) :(
-                                         <Component {...props} />
+                                    ) : (
+                                        <Component {...props} />
                                     )}
                                 </Layout>
                             </Guard>

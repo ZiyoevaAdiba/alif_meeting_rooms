@@ -1,4 +1,5 @@
 interface IUrls {
+    authPage: string,
     home: string,
     login: string,
     signUp: string,
@@ -10,11 +11,12 @@ interface IUrls {
     reservations: string,
 };
 export const urls: IUrls = {
+    authPage: '/auth',
     home: '/home',
-    login: '/login',
-    signUp: '/signUp',
-    forget: '/forget',
-    registrationAlert: '​/sign-ac​',
+    login: '/auth/login',
+    signUp: '/auth/signUp',
+    forget: '/auth/forget',
+    registrationAlert: '/sign-ac',
     users: '/users',
     meetingRooms: '/meeting-rooms',
     departments: '/departments',
@@ -22,7 +24,6 @@ export const urls: IUrls = {
 };
 
 interface IApi {
-    base: string,
     login: string,
     signUp: string,
     forget: string,
@@ -39,7 +40,6 @@ interface IApi {
 };
 
 export const api: IApi = {
-    base: `${process.env.REACT_APP_DEV_URL}`,
     login: '/auth/sign-in',
     signUp: '/auth/sign-up',
     forget: '/auth/forget',

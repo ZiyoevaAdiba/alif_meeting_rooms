@@ -18,12 +18,15 @@ import { getMRsDataReducer } from './reservations/meetingRoomsData';
 import { IMeetingRoomsInfoReducer } from './reservations/meetingRoomsData/interfaces';
 import { IForgetReducer } from './forget/interfaces';
 import { forgetReducer } from './forget';
+import { IEmailConfirmReducer } from './emailConfirm/interfaces';
+import { emailConfirmReducer } from './emailConfirm'
 
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
     loginReducer: ILoginReducer,
     forgetReducer: IForgetReducer,
+    emailConfirmReducer: IEmailConfirmReducer,
     usersReducer: IusersReducer,
     roomsReducer: IroomsReducer,
     departmentsReducer: IdepartmentsReducer,
@@ -37,6 +40,7 @@ export const rootReducer = (history: any) => combineReducers({
     signUpReducer,
     loginReducer,
     forgetReducer,
+    emailConfirmReducer,
     usersReducer,
     roomsReducer,
     departmentsReducer,
