@@ -17,8 +17,6 @@ export const EmailAlert = () => {
     success
   } = useSelector((state: IRootReducer) => state.emailConfirmReducer);
 
-  const classes = useStyles();
-
     return (
     <>
       {
