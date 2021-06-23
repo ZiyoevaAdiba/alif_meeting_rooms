@@ -14,7 +14,7 @@ export const urls: IUrls = {
     login: '/login',
     signUp: '/signUp',
     forget: '/forget',
-    registrationAlert: '​/sign-ac​',
+    registrationAlert: '/sign-ac',
     users: '/users',
     meetingRooms: '/meeting-rooms',
     departments: '/departments',

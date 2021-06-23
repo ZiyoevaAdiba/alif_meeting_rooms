@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const EmailAlert = () => {
   const classes = useStyles();
-
   return (
     <>
       <Alert variant="filled" severity="error">

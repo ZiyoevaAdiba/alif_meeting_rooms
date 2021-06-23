@@ -81,17 +81,19 @@ const renderRoutes = (routes: any) => (routes ? (
         <Switch>
             {routes.map((route: any, i: number) => {
 
+                
                 const Guard = route.guard || Fragment;
                 const Layout = route.layout || Fragment;
                 const Component = route.component;
-
+            
+                
                 return (
                     <Route
                         key={i}
                         path={route.path}
                         exact={route.exact}
                         render={(props: any) => (
-                            <Guard>
+                            <Guard> 
                                 <Layout>
                                     {route.routes ? (
                                         renderRoutes(route.routes)
@@ -99,7 +101,7 @@ const renderRoutes = (routes: any) => (routes ? (
                                          <Component {...props} />
                                     )}
                                 </Layout>
-                            </Guard>
+                            </Guard>  
                         )}
                     />
                 );

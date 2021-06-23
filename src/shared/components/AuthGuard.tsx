@@ -19,5 +19,5 @@ export const AuthGuard = ({ children }: any) => {
     }
     removeToken();
 
-    return <Redirect to={urls.registrationAlert} />;
+    return <Redirect to={urls.login} />;
 }
