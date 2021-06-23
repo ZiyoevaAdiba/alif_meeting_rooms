@@ -15,7 +15,6 @@ import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { SignupSchema } from '../../validations/SignUpValidation';
-import { removeToken } from '../../../store/actions/login';
 import { getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
@@ -38,14 +37,13 @@ const useStyles = makeStyles(() => createStyles({
     },
     '#root': {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      '& .MuiFormControl-fullWidth': {
+        marginBottom: 10,
+      }
     },
   },
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
+
   authBtn: {
     marginTop: 30,
     fontSize: '1.2rem',
@@ -130,12 +128,10 @@ export const SignUpForm = () => {
           isSubmitting,
         }: any) => (
           <Form
-            className={classes.signUpForm}
             onSubmit={handleSubmit}>
-
             <TextField
               name={fieldInput.name}
-              label="имя"
+              label="Имя"
               fullWidth
               error={Boolean(touched.name && errors.name)}
               helperText={touched.name && errors.name}
@@ -147,7 +143,7 @@ export const SignUpForm = () => {
 
             <TextField
               name={fieldInput.lastname}
-              label="фамилия"
+              label="Фамилия"
               error={Boolean(touched.lastname && errors.lastname)}
               helperText={touched.lastname && errors.lastname}
               fullWidth
@@ -159,7 +155,7 @@ export const SignUpForm = () => {
 
             <TextField
               name={fieldInput.email}
-              label="e-mail"
+              label="E-mail"
               fullWidth
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
@@ -181,8 +177,7 @@ export const SignUpForm = () => {
               type='text'
             />
             <InputLabel
-              className={classes.signUpForm}
-              style={{ marginTop: '30px' }}
+              style={{ marginTop: '18px' }}
               id="demo-simple-select-label"
               error={Boolean(touched.department && errors.department)}
               onBlur={handleBlur}
@@ -208,7 +203,7 @@ export const SignUpForm = () => {
 
             <TextField
               name={fieldInput.tg_account}
-              label="аккаунт telegram"
+              label="Аккаунт telegram"
               fullWidth
               error={Boolean(touched.tg_account && errors.tg_account)}
               helperText={touched.tg_account && errors.tg_account}
@@ -220,7 +215,7 @@ export const SignUpForm = () => {
 
             <TextField
               name={fieldInput.password}
-              label="введите пароль"
+              label="Введите пароль"
               fullWidth
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}

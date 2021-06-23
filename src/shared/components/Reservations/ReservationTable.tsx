@@ -62,7 +62,7 @@ const columns: GridColumns = [
   {
     field: 'end_time',
     headerName: 'Конец',
-    align: 'left',
+    align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
     width: 120,

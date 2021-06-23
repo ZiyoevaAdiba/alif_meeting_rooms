@@ -10,7 +10,6 @@ import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
 import { ErrorDiv } from '../ErrorDiv';
 import {
-  removeToken,
   requestLogin
 } from '../../../store/actions/login';
 
@@ -30,16 +29,18 @@ const useStyles = makeStyles(() => createStyles({
     },
     '#root': {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      '& .MuiFormControl-fullWidth': {
+        marginBottom: 20,
+      }
     },
   },
   signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
+    marginBottom: 20,
   },
+
   authBtn: {
-    marginTop: 30,
+    marginTop: 20,
     fontSize: '1.2rem',
     color: 'white',
     backgroundColor: '#39b97f',
@@ -52,7 +53,7 @@ const useStyles = makeStyles(() => createStyles({
   btns: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     marginTop: '10px'
   },
 
@@ -114,10 +115,12 @@ export const LoginForm = () => {
           isSubmitting,
         }: any) => (
           <Form
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            className={classes.signUpForm}
+          >
             <TextField
               name={fieldInput.email}
-              label="e-mail"
+              label="E-mail"
               fullWidth
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}

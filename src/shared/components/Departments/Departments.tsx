@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
   },
   requests_header: {
-    fontSize: 40
+    fontSize: 35
   },
 }));
 
@@ -52,7 +52,7 @@ const columns: GridColumns = [
     field: 'name',
     headerName: 'Название',
     align: 'left',
-    headerAlign: 'center',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 6,
   },

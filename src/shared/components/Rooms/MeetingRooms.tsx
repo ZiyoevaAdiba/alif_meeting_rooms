@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
   },
   requests_header: {
-    fontSize: 40
+    fontSize: 35
   },
 
 }));
@@ -77,8 +77,8 @@ const columns: GridColumns = [
     field: 'number',
     headerName: 'Номер',
     type: 'number',
-    align: 'center',
-    headerAlign: 'center',
+    align: 'left',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 1,
   },
@@ -86,7 +86,7 @@ const columns: GridColumns = [
     field: 'name',
     headerName: 'Название',
     align: 'left',
-    headerAlign: 'center',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 2,
   },
@@ -96,7 +96,7 @@ const columns: GridColumns = [
     headerName: 'Город',
     type: 'string',
     align: 'left',
-    headerAlign: 'center',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 2,
   },
@@ -105,7 +105,7 @@ const columns: GridColumns = [
     headerName: 'Фото',
     type: 'image',
     align: 'left',
-    headerAlign: 'center',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 1.5,
     renderCell: (params: GridValueGetterParams) => {
@@ -122,8 +122,8 @@ const columns: GridColumns = [
     field: 'status',
     headerName: 'Статус',
     type: 'string',
-    align: 'center',
-    headerAlign: 'center',
+    align: 'left',
+    headerAlign: 'left',
     disableColumnMenu: true,
     flex: 2,
     valueGetter: (params: GridValueGetterParams) => {

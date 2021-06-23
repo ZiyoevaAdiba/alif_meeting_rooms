@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => createStyles({
     }
   },
   authBtn: {
-    marginTop: 20,
+    marginTop: 30,
     fontSize: '1.2rem',
     color: 'white',
     backgroundColor: '#39b97f',
@@ -106,7 +106,7 @@ export const ForgetPasswordForm = () => {
             onSubmit={handleSubmit}>
             <TextField
               name={fieldInput.email}
-              label="e-mail"
+              label="E-mail"
               fullWidth
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
