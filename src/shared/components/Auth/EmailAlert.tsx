@@ -1,15 +1,18 @@
 import Alert from '@material-ui/lab/Alert';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
 import { IRootReducer } from '../../../store/reducers';
 
 export const EmailAlert = () => {
 
   const dispatch = useDispatch();
+  const {id}: {id: string}  = useParams();
+  console.log(id);
 
   useEffect(() => {
-    dispatch(requestEmailConfirm());
+    dispatch(requestEmailConfirm(id));
   }, [])
 
   const {
@@ -17,7 +20,7 @@ export const EmailAlert = () => {
     success
   } = useSelector((state: IRootReducer) => state.emailConfirmReducer);
 
-    return (
+  return (
     <>
       {
         (error && !success)

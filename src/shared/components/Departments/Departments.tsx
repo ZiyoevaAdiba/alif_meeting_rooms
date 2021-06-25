@@ -93,7 +93,6 @@ export const Departments = () => {
     return <LoadingScreen />;
   }
 
-
   return (
     <Page title="Отделы">
       <Container maxWidth="xl" >

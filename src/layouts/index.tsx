@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
         // overflow: 'hidden',
         '& .MuiPaper-elevation4': {
             boxShadow: 'none',
-            borderBottom: '2px solid #EBEBEB'
+            borderBottom: '2px solid #EBEBEB',
+            height: '70px',
         }
     },
     wrapper: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         // overflow: 'hidden',
         paddingTop: 70,
         [theme.breakpoints.up('lg')]: {
-            padding: '80px 50px 0'
+            padding: '70px 50px 0'
         }
     },
     contentContainer: {

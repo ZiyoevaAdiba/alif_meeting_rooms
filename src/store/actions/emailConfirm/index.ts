@@ -25,10 +25,10 @@ const emailReqSuccess = () => {
 }
 
 
-export const requestEmailConfirm = () => async(dispatch: Dispatch<any>) => {
+export const requestEmailConfirm = (id: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(emailReqSent());
-    await Axios.get(`${api.registrationAlert}`);
+    await Axios.get(`${api.registrationAlert}/${id}`);
     dispatch(emailReqSuccess());
 
   } catch (error) {

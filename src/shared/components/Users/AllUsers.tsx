@@ -150,11 +150,10 @@ export const AllUsers = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
-  const location = useLocation();
+  const location = useLocation();  
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
-
+   
   useEffect(() => {
     dispatch(getAllUsers(page, history));
   }, [page, history, dispatch]);
@@ -185,7 +184,7 @@ export const AllUsers = () => {
                   Пользователи
                 </Box>
 
-                <SearchForm />
+                {/* <SearchForm/> */}
                 <AddUser
                   page={page}
                   history={history}
