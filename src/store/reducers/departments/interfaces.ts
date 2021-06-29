@@ -7,8 +7,9 @@ export interface IdepartmentsReducer {
   loading: boolean,
   error: null | any,
   addError: null | any,
+  editError: null | any,
   departments: IDepartment[],
-  department: IDepartment | {},
+  department: IDepartment,
   showAlert: string,
 
 }

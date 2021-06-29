@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import { TextField, Button, ButtonGroup } from '@material-ui/core'
+import { Button, ButtonGroup } from '@material-ui/core'
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { ILoginData } from '../../../store/actions/login/interfaces';
@@ -9,9 +9,8 @@ import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
 import { ErrorDiv } from '../ErrorDiv';
-import {
-  requestLogin
-} from '../../../store/actions/login';
+import { requestLogin } from '../../../store/actions/login';
+import { CustomInput } from '../CustomInput';
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -70,6 +69,19 @@ const fieldInput: ILoginData = {
   password: 'password',
 }
 
+const loginFields = [
+  {
+    name: fieldInput.email ,
+    label: "E-mail",
+    type: 'text'
+  },
+  {
+    name: fieldInput.password ,
+    label: "Пароль",
+    type: 'password',
+  },
+]
+
 export const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -102,49 +114,26 @@ export const LoginForm = () => {
         validationSchema={LoginSchema}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestLogin(values, setSubmitting, history));
-        }
-        }
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-        }: any) => (
+        {props => (
           <Form
-            onSubmit={handleSubmit}
+            onSubmit={props.handleSubmit}
             className={classes.signUpForm}
           >
-            <TextField
-              name={fieldInput.email}
-              label="E-mail"
-              fullWidth
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
-              onChange={handleChange}
-              value={values.email}
-              onBlur={handleBlur}
-              type='text'
-            />
-
-            <TextField
-              name={fieldInput.password}
-              label="Пароль"
-              fullWidth
-              error={Boolean(touched.password && errors.password)}
-              helperText={touched.password && errors.password}
-              onChange={handleChange}
-              value={values.password}
-              onBlur={handleBlur}
-              type='password'
-            />
+            {
+              loginFields.map(
+                item => <CustomInput 
+                key={item.name}
+                fieldData={item}
+                formikProps={props}
+                />
+              )
+            }
 
             <Button
               className={classes.authBtn}
-              disabled={isSubmitting}
+              disabled={props.isSubmitting}
               fullWidth
               type="submit"
               variant="contained"
@@ -166,7 +155,7 @@ export const LoginForm = () => {
             <ButtonGroup className={classes.btns}>
               <Button
                 className={classes.btnsText}
-                disabled={isSubmitting}
+                disabled={props.isSubmitting}
                 fullWidth
                 type="button"
                 variant="text"
@@ -176,7 +165,7 @@ export const LoginForm = () => {
               </Button>
               <Button
                 className={classes.btnsText}
-                disabled={isSubmitting}
+                disabled={props.isSubmitting}
                 fullWidth
                 type="button"
                 variant="text"

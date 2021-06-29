@@ -18,8 +18,9 @@ import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
 import { ErrorDiv } from '../ErrorDiv';
+import { CustomInput } from '../CustomInput';
+import { addEditRoomFields } from './roomFields';
 
 
 export const AddRoom = () => {
@@ -27,12 +28,10 @@ export const AddRoom = () => {
   const classes = useStyles();
 
   const handleClickOpen = () => {
-    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
-    showOverflow();
     setOpen(false);
     dispatch(cancelImgUpload());
     dispatch(addRoomReqSuccess());
@@ -80,70 +79,33 @@ export const AddRoom = () => {
               values.color = 'blackQ';
               dispatch(requestAddRoom(values, setSubmitting, setOpen));
               // handleClose();
-            }
-            }
+            }}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-            }: any) => (
+            {props => (
               <Form
-                onSubmit={handleSubmit}
+                onSubmit={props.handleSubmit}
                 className={classes.signUpForm}
               >
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldRoom.number}
-                  label="Номер"
-                  fullWidth
-                  error={Boolean(touched.number && errors.number)}
-                  helperText={touched.number && errors.number}
-                  onChange={handleChange}
-                  value={values.number}
-                  onBlur={handleBlur}
-                  type='number'
-                />
-
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldRoom.name}
-                  label="Название"
-                  fullWidth
-                  error={Boolean(touched.name && errors.name)}
-                  helperText={touched.name && errors.name}
-                  onChange={handleChange}
-                  value={values.name}
-                  onBlur={handleBlur}
-                  type='text'
-                />
-
-                <TextField
-                  className={classes.inputGap}
-                  name={fieldRoom.city}
-                  label="Город"
-                  error={Boolean(touched.city && errors.city)}
-                  helperText={touched.city && errors.city}
-                  fullWidth
-                  onChange={handleChange}
-                  value={values.city}
-                  onBlur={handleBlur}
-                  type='text'
-                />
-
+                {
+                  addEditRoomFields.map(
+                    item => <CustomInput
+                      className={classes.inputGap}
+                      key={item.name}
+                      fieldData={item}
+                      formikProps={props}
+                    />
+                  )
+                }
                 <InputLabel
                   className={classes.inputGap}
-                  style={{ marginTop: '30px' }}
+                  style={{ marginTop: '20px' }}
                   id="demo-simple-select-label"
                 >Состояние meeting room-a
                 </InputLabel>
                 <Select
                   id="demo-simple-select"
-                  value={values.status}
-                  onChange={handleChange}
+                  value={props.values.status}
+                  onChange={props.handleChange}
                   name={fieldRoom.status}
                   fullWidth
                 >

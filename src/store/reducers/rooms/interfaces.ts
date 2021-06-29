@@ -1,5 +1,12 @@
 export interface IRoom {
-  city?: string,
+  building?: {
+    id?: string,
+    name?: string,
+    city?: {
+      id: string,
+      name: string,
+    }
+  }
   name?: string,
   number?: number,
   photo?: any,   

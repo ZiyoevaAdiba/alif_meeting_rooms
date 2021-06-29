@@ -12,12 +12,11 @@ import {
 } from '../../store/actions/rooms';
 import { useDispatch, useSelector } from 'react-redux';
 import { showUserData, userWarningDelete } from '../../store/actions/users';
-import { departmentsWarningDelete } from '../../store/actions/departments'
+import { departmentsWarningDelete, showDepartmentData } from '../../store/actions/departments'
 import { reservationWarningDelete } from '../../store/actions/reservations';
 import { IRootReducer } from '../../store/reducers';
 import Popup from 'reactjs-popup';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { hideOverflow } from '../handlerStyle/bodyOverflow';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -36,36 +35,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any>) => {
-  hideOverflow();
 
-  (btnLocation === 'users')
-    ?
-    dispatch(userWarningDelete(rowId))
-    :
-    (
-      (btnLocation === 'meeting-rooms')
-        ?
-        dispatch(roomWarningDelete(rowId))
-        :
-        (
-          (btnLocation === 'departments')
-            ?
-            dispatch(departmentsWarningDelete(rowId))
-            :
-            dispatch(reservationWarningDelete(rowId))
-        )
-    )
+  if (btnLocation === 'users') {
+    dispatch(userWarningDelete(rowId));
+    return;
+  }
+  if (btnLocation === 'meeting-rooms') {
+    dispatch(roomWarningDelete(rowId));
+    return;
+  }
+  if (btnLocation === 'departments') {
+    dispatch(departmentsWarningDelete(rowId));
+    return;
+  }
+  if (btnLocation === 'reservations') {
+    dispatch(reservationWarningDelete(rowId))
+    return;
+  }
 }
 
 const handleEdit = (row: any, btnLocation: string, dispatch: Dispatch<any>) => {
-  hideOverflow();
-  (btnLocation === 'users')
-    ?
-    dispatch(showUserData(row))
-    :
-    dispatch(showRoomData(row))
+  if (btnLocation === 'users'){
+    dispatch(showUserData(row));
+    return;
+  }
+  if (btnLocation === 'meeting-rooms'){
+    dispatch(showRoomData(row));
+    return;
+  }
+  if (btnLocation === 'departments'){
+    dispatch(showDepartmentData(row));
+    return;
+  }  
 }
-
 
 export const ButtonEdit = ({ row, btnLocation }: any) => {
   const classes = useStyles();
@@ -123,7 +125,7 @@ export const ButtonPoppup = ({ params, btnLocation }: any) => {
       nested
     >
       {
-        `${params.user.lastname} 
+        `${params.user.last_name} 
           ${params.user.name} `
       }
       <Link href={telegramLink} target="_blank">

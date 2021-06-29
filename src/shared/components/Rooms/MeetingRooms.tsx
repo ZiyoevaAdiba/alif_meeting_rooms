@@ -25,7 +25,7 @@ import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
 
 export const room: IRoom = {
-  city: '',
+  building: {},
   name: '',
   number: 0,
   photo: '',
@@ -92,6 +92,19 @@ const columns: GridColumns = [
   },
 
   {
+    field: 'building',
+    headerName: 'Название здания',
+    type: 'string',
+    align: 'left',
+    headerAlign: 'left',
+    disableColumnMenu: true,
+    flex: 2,
+    valueGetter: (params: GridValueGetterParams) => {
+      // console.log(params.row.building);
+      return params.row.building.name
+    },
+  },
+  {
     field: 'city',
     headerName: 'Город',
     type: 'string',
@@ -99,7 +112,11 @@ const columns: GridColumns = [
     headerAlign: 'left',
     disableColumnMenu: true,
     flex: 2,
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.building.city.name
+    },
   },
+
   {
     field: 'photo',
     headerName: 'Фото',
@@ -160,7 +177,8 @@ const columns: GridColumns = [
 export const MeetingRooms = () => {
   const {
     rooms,
-    roomsError
+    roomsError,
+    loading
   } = useSelector((state: IRootReducer) => state.roomsReducer);
   const dispatch = useDispatch();
 
@@ -170,7 +188,7 @@ export const MeetingRooms = () => {
 
   const classes = useStyles();
 
-  if (!rooms.length && !roomsError) {
+  if (loading && !roomsError) {
     return <LoadingScreen />;
   }
 

@@ -4,12 +4,12 @@ import PaginationItem from '@material-ui/lab/PaginationItem';
 import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/actions/users';
 
-export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) => {
+export const PaginationLink = ({ pageNumber, history, page, searchInput }: any) => {
 
   const dispatch = useDispatch();
 
   const usersPerPage = (page: number) => {
-    dispatch(getAllUsers(page, history))
+    dispatch(getAllUsers(page, searchInput, history))
   }
 
   return (
@@ -23,8 +23,6 @@ export const PaginationLink = ({ pageNumber, history, page, pagLocation }: any) 
                         
             return (
               <PaginationItem
-                // component={Link}
-                // to={`${urls.users}${`?page=${item.page}`}`}
                 {...item}
               />
             )

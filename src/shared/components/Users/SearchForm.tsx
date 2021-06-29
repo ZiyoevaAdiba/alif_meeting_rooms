@@ -4,10 +4,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllUsers } from '../../../store/actions/users';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   searchBar: {
-      minHeight: 32,
+    minHeight: 32,
   },
   search: {
     position: 'relative',
@@ -50,14 +52,22 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }),
 );
 
-export const SearchForm = () => {
+export const SearchForm = ({ page, history, searchInput, setsearchInput }: any) => {
   const classes = useStyles();
-  const [searchInput, setsearchInput] = useState('');
+  const dispatch = useDispatch();
 
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {    
     setsearchInput(event?.target.value);
   }
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // console.log(searchInput);
+    
+    (event.key === 'Enter')
+      &&
+      dispatch(getAllUsers(page, searchInput, history));
+  };
 
   return (
     <Toolbar className={classes.searchBar}>
@@ -73,6 +83,8 @@ export const SearchForm = () => {
           }}
           inputProps={{ 'aria-label': 'search' }}
           onChange={handleChange}
+          onKeyDown={handleSearch}
+          value={searchInput}
         />
       </div>
     </Toolbar>

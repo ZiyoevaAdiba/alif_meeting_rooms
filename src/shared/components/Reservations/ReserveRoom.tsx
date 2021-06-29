@@ -4,10 +4,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
-import { showOverflow } from '../../handlerStyle/bodyOverflow';
 import { Form } from './Form';
 import { ReservationTable } from './ReservationTable';
-
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -48,7 +46,6 @@ export const ReserveRoom = ({ open, setOpen }: any) => {
   } = useSelector((state: IRootReducer) => state.reservationsReducer)
 
   const handleClose = () => {
-    showOverflow();
     setOpen(false);
   }
   

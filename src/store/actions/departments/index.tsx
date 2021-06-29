@@ -25,6 +25,19 @@ const getDepartmentsSuccess = (data?: IDepartment[]) => {
   }
 }
 
+export const showDepartmentData = (data: IDepartment) => {
+  return {
+    type: getDepartmentsType.SHOW_DEPARTMENT,
+    payload: data
+  }
+}
+
+export const resetDepartmentEditing = () => {
+  return {
+    type: getDepartmentsType.RESET_EDITING,
+    payload: {}
+  }
+}
 
 export const departmentsWarningDelete = (rowId: string) => {
   return {
@@ -52,6 +65,14 @@ export const addDepSuccess = () => {
   return {
     type: getDepartmentsType.RESET_DEPARTMENTS_ERRORS,
     payload: {}
+  }
+}
+
+
+export const editDepFail = (message: string) => {
+  return {
+    type: getDepartmentsType.EDIT_DEP_FAIL,
+    payload: message
   }
 }
 
@@ -97,6 +118,29 @@ export const requestAddDepartment = (depData: string, setOpen: any) => async(dis
   } catch (error) {
     dispatch(addDepFail(error.response.data.payload.message));
     // console.log(error.response);
+  }
+}
+
+
+
+export const requestEditDepartment = (
+  depData: string | undefined, 
+  setOpen: any,
+  id: string | undefined,
+  ) => async(dispatch: Dispatch<any>) => {
+  try {    
+    const data = {
+      name: depData
+    };
+
+    await Axios.put(`${api.departments}/${id}`, data);
+    setOpen(false)
+    dispatch(addDepSuccess());
+    dispatch(resetDepartmentEditing());
+    dispatch(getAllDepartments());
+    
+  } catch (error) {
+    dispatch(editDepFail(error.response.data.payload.message));
   }
 }
 

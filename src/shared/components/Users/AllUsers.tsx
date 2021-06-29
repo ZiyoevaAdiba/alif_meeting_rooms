@@ -8,8 +8,9 @@ import {
   DataGrid,
   GridCellParams,
   GridColumns,
+  GridValueGetterParams,
 } from '@material-ui/data-grid';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { getAllUsers } from "../../../store/actions/users";
@@ -56,7 +57,7 @@ const columns: GridColumns = [
     sortable: false,
   },
   {
-    field: 'lastname',
+    field: 'last_name',
     headerName: 'Фамилия',
     type: 'string',
     align: 'left',
@@ -74,6 +75,10 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     flex: 2,
     sortable: false,
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.department.name
+    },
+
   },
   {
     field: 'phone',
@@ -146,19 +151,26 @@ export const AllUsers = () => {
     users,
     pageCount,
     usersError,
+    loading
   } = useSelector((state: IRootReducer) => state.usersReducer);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const location = useLocation();  
+  
+  const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
-   
-  useEffect(() => {
-    dispatch(getAllUsers(page, history));
-  }, [page, history, dispatch]);
+  
+  const searchQuery = new URLSearchParams(location.search);
+  const searchParam = (searchQuery.get('search') || '');
 
-  if (!users.length && !usersError) {
+  const [searchInput, setSearchInput] = useState(searchParam);
+  
+  useEffect(() => {
+    setSearchInput(searchParam);
+    dispatch(getAllUsers(page, searchInput, history));
+  }, []);
+
+  if (loading && !usersError) {
     return <LoadingScreen />;
   }
 
@@ -184,18 +196,26 @@ export const AllUsers = () => {
                   Пользователи
                 </Box>
 
-                {/* <SearchForm/> */}
+                <SearchForm
+                  page={page}
+                  history={history}
+                  searchInput={searchInput}
+                  setsearchInput={setSearchInput}
+                />
                 <AddUser
                   page={page}
+                  searchInput={searchInput}
                   history={history}
                 />
               </Box>
               <EditUser
                 page={page}
+                searchInput={searchInput}
                 history={history}
               />
               <ConfirmDelUser
                 page={page}
+                searchInput={searchInput}
                 history={history}
               />
               <DataGrid
@@ -207,9 +227,9 @@ export const AllUsers = () => {
               />
               <PaginationLink
                 pageNumber={pageCount}
+                searchInput={searchInput}
                 history={history}
                 page={page}
-                pagLocation={'users'}
               />
             </Grid>
         }

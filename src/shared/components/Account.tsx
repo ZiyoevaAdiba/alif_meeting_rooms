@@ -18,7 +18,6 @@ import { removeToken } from '../../store/actions/login';
 import { urls } from '../../routes/urls';
 import { userDataDelete } from '../../store/actions/reservations/userData';
 import PersonIcon from '@material-ui/icons/Person';
-import { hideOverflow, showOverflow } from '../handlerStyle/bodyOverflow';
 
 const useStyles = makeStyles((theme) => ({
   popover: {
@@ -40,12 +39,10 @@ export const Account = () => {
   const dispatch = useDispatch()
 
   const handleOpen = () => {
-    hideOverflow();
     setOpen(true);
   };
 
   const handleClose = () => {
-    showOverflow();
     setOpen(false);
   };
 
@@ -85,7 +82,7 @@ export const Account = () => {
         open={isOpen}
       >
         <MenuItem disabled>
-          {`${userData.lastname || ''} ${userData.name || ''}`}
+          {`${userData.last_name || ''} ${userData.name || ''}`}
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           Выйти

@@ -45,7 +45,8 @@ export const ReservationPage = () => {
   const classes = useStyles();
   const {
     meetingRoomsInfo,
-    error
+    error,
+    loading
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
 
   const [open, setOpen] = useState(false);
@@ -60,7 +61,7 @@ export const ReservationPage = () => {
     dispatch(getMRsInfo());
   }, [dispatch]);
 
-  if (!meetingRoomsInfo.length && !error) {
+  if (loading && !error) {
     return <LoadingScreen />;
   }
 

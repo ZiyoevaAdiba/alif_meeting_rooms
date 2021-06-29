@@ -8,7 +8,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { cancelRoomDelete, requestDeleteRoom } from '../../../store/actions/rooms';
-import { showOverflow } from '../../handlerStyle/bodyOverflow';
 
 export const ConfirmDelRoom = () => {
   const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
@@ -17,11 +16,9 @@ export const ConfirmDelRoom = () => {
 
   useEffect(() => {
     setOpen(!open);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAlert])
 
   const handleClose = () => {
-    showOverflow();
     dispatch(cancelRoomDelete())
   };
 

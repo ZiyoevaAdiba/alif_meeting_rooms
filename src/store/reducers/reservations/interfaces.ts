@@ -5,7 +5,7 @@ export interface IResRoom {
 }
 
 export interface IResUser {
-  lastname?: string,
+  last_name?: string,
   name?: string 
 }
 

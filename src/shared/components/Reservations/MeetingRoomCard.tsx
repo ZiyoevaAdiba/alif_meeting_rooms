@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch } from "react-redux";
 import { getMRReservations } from "../../../store/actions/reservations/";
-import { hideOverflow } from "../../handlerStyle/bodyOverflow";
 
 const useStyles = makeStyles({
   mrRoot: {
@@ -40,7 +39,6 @@ export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen, photo }: 
 
   const getMRReservationData = () => {
     setOpen(true);
-    hideOverflow();
     dispatch(getMRReservations(mrID));
   }
 

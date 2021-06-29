@@ -14,11 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { getAllDepartments } from "../../../store/actions/departments/index";
 import { IRootReducer } from "../../../store/reducers";
-import { ButtonDelete } from "../ButtonIcons";
+import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
 import { AddDepartment } from "./AddDepartment";
 import { ConfirmDelDepart } from "./ConfirmDelDepart";
+import { EditDepartment } from "./EditDepartment";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -67,6 +68,10 @@ const columns: GridColumns = [
     flex: 2,
     renderCell: (params: GridCellParams) => (
       <>
+        <ButtonEdit
+          row={params.row}
+          btnLocation={'departments'}
+        />
         <ButtonDelete
           id={params.row.id}
           btnLocation={'departments'}
@@ -79,7 +84,8 @@ const columns: GridColumns = [
 export const Departments = () => {
   const {
     departments,
-    error
+    error,
+    loading
   } = useSelector((state: IRootReducer) => state.departmentsReducer);
   const dispatch = useDispatch();
 
@@ -89,7 +95,7 @@ export const Departments = () => {
 
   const classes = useStyles();
 
-  if (!departments.length && !error) {
+  if (loading && !error) {
     return <LoadingScreen />;
   }
 
@@ -113,6 +119,7 @@ export const Departments = () => {
 
                 <AddDepartment />
               </Box>
+              <EditDepartment />
               <ConfirmDelDepart />
               <DataGrid
                 className={classes.table_users}

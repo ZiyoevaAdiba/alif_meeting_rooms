@@ -2,8 +2,12 @@ export interface IUser {
   active?: boolean,
   id?: string, 
   name?: string,
-  lastname?: string,
-  deparment?: string,
+  last_name?: string,
+  department?: {
+    id: string,
+    name: string
+  },
+  department_id?: string,
   phone?: string,
   tg_account?: string,
   email?: string,
@@ -16,7 +20,7 @@ export interface IusersReducer {
   userError: null | any,
   usersError: null | any,
   users: IUser[],
-  user: IUser | {},
+  user: IUser, 
   showAlert: string,
   pageCount: number,
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -12,34 +11,35 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
-import { fieldInput } from '../Auth/SignUpForm';
 import { requestEditUser, resetUserEditing } from '../../../store/actions/users';
 import { UserSchema } from '../../validations/UserValidation';
 import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
-import { hideOverflow, showOverflow } from '../../handlerStyle/bodyOverflow';
+import { fieldInput, userDataFields } from '../../consts/userConsts';
+import { CustomInput } from '../CustomInput';
 
 
-export const EditUser = ({ page, history }: any) => {
+export const EditUser = ({ page, history, searchInput }: any) => {
 
   const {
     user,
     userError
-  } = useSelector((state: IRootReducer) => state.usersReducer)
+  } = useSelector((state: IRootReducer) => state.usersReducer);
+  const {
+    departments
+  } = useSelector((state: IRootReducer) => state.departmentsReducer);
+
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
     setOpen(!open);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-  
+
   const handleClose = () => {
-    showOverflow();
     dispatch(resetUserEditing());
   };
-
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -52,110 +52,61 @@ export const EditUser = ({ page, history }: any) => {
           initialValues={user}
           validationSchema={UserSchema}
           onSubmit={(values) => {
-            dispatch(requestEditUser(page, history, values));
-          }
-          }
+            delete values.department;
+            dispatch(requestEditUser(page, searchInput, history, values));
+          }}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-          }: any) => (
+          {props => (
             <Form
-              onSubmit={handleSubmit}
+              onSubmit={props.handleSubmit}
               className={classes.signUpForm}
             >
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.name}
-                label="имя"
-                fullWidth
-                error={Boolean(touched.name && errors.name)}
-                helperText={touched.name && errors.name}
-                onChange={handleChange}
-                value={values?.name}
-                onBlur={handleBlur}
-                type='text'
-              />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.lastname}
-                label="фамилия"
-                error={Boolean(touched.lastname && errors.lastname)}
-                helperText={touched.lastname && errors.lastname}
-                fullWidth
-                onChange={handleChange}
-                value={values?.lastname}
-                onBlur={handleBlur}
-                type='text'
-              />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.email}
-                label="e-mail"
-                fullWidth
-                error={Boolean(touched.email && errors.email)}
-                helperText={touched.email && errors.email}
-                onChange={handleChange}
-                value={values?.email}
-                onBlur={handleBlur}
-                type='email'
-              />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.phone}
-                label="Телефон"
-                fullWidth
-                error={Boolean(touched.phone && errors.phone)}
-                helperText={touched.phone && errors.phone}
-                onChange={handleChange}
-                value={values?.phone}
-                onBlur={handleBlur}
-                type='text'
-              />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.department}
-                label="департамент"
-                fullWidth
-                error={Boolean(touched.department && errors.department)}
-                helperText={touched.department && errors.department}
-                onChange={handleChange}
-                value={values?.department}
-                onBlur={handleBlur}
-                type='text'
-              />
-
-              <TextField
-                className={classes.inputGap}
-                name={fieldInput.tg_account}
-                label="аккаунт telegram"
-                fullWidth
-                error={Boolean(touched.tg_account && errors.tg_account)}
-                helperText={touched.tg_account && errors.tg_account}
-                onChange={handleChange}
-                value={values?.tg_account}
-                onBlur={handleBlur}
-                type='text'
-              />
+              {
+                userDataFields.map(
+                  item => <CustomInput
+                    key={item.name}
+                    fieldData={item}
+                    formikProps={props}
+                  />
+                )
+              }
 
               <InputLabel
                 className={classes.inputGap}
-                style={{ marginTop: '30px' }}
-                id="select-label"
+                style={{ marginTop: '10px' }}
+                id="select-department"
+              >Отдел
+              </InputLabel>
+              <Select
+                id="select-department"
+                value={props.values?.department_id}
+                onChange={props.handleChange}
+                name={fieldInput.department_id}
+                fullWidth
+              >
+                {
+                  departments.map(item => {
+                    return <MenuItem
+                      key={item.id}
+                      value={item.id}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  }
+                  )
+                }
+              </Select>
+
+              <InputLabel
+                className={classes.inputGap}
+                style={{ marginTop: '20px' }}
+                id="select-role"
               >Назначить роль
               </InputLabel>
               <Select
-                id="simple-select"
-                value={values?.role}
-                onChange={handleChange}
+                id="select-role"
+                value={props.values?.role || ''}
+                onChange={props.handleChange}
                 name={fieldInput.role}
                 fullWidth
               >

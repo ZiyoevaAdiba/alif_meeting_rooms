@@ -1,7 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { IForgetData } from '../../../store/actions/forget/interfaces';
 import { ErrorDiv } from '../ErrorDiv';
+import { CustomInput } from '../CustomInput';
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -45,9 +46,9 @@ const useStyles = makeStyles(() => createStyles({
       height: 'auto',
     }
   },
-  
+
   btnsText: {
-    marginTop: '10px',      
+    marginTop: '10px',
     fontSize: 12,
     fontWeight: 550,
     color: '#39b97f',
@@ -66,9 +67,9 @@ const fieldInput: IForgetData = {
 export const ForgetPasswordForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { 
-    loading, 
-    error 
+  const {
+    loading,
+    error
   } = useSelector((state: IRootReducer) => state.forgetReducer);
   const history = useHistory();
 
@@ -83,7 +84,7 @@ export const ForgetPasswordForm = () => {
 
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Отправка пароля</h1>
+      <h1 style={{ textAlign: 'center' }}>Отправка пароля</h1>
       <Formik
         initialValues={user}
         validationSchema={ForgetSchema}
@@ -92,33 +93,22 @@ export const ForgetPasswordForm = () => {
         }
         }
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-
-        }: any) => (
+        {props => (
           <Form
-            onSubmit={handleSubmit}>
-            <TextField
-              name={fieldInput.email}
-              label="E-mail"
-              fullWidth
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
-              onChange={handleChange}
-              value={values.email}
-              onBlur={handleBlur}
-              type='text'
+            onSubmit={props.handleSubmit}>
+            <CustomInput
+              fieldData={
+                {
+                  name: fieldInput.email,
+                  label: "E-mail",
+                  type: 'email'
+                }
+              }
+              formikProps={props}
             />
-            
             <Button
               className={classes.authBtn}
-              disabled={isSubmitting}
+              disabled={props.isSubmitting}
               fullWidth
               type="submit"
               variant="contained"
@@ -134,12 +124,12 @@ export const ForgetPasswordForm = () => {
               (error)
               &&
               <ErrorDiv
-              error={error}
+                error={error}
               />
             }
             <Button
               className={classes.btnsText}
-              disabled={isSubmitting}
+              disabled={props.isSubmitting}
               fullWidth
               type="button"
               variant="text"

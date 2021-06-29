@@ -1,6 +1,6 @@
 export interface IGetUserData {
   id?: string,
-  lastname?: string,
+  last_name?: string,
   name?: string,
   role?: string,
 }

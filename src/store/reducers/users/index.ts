@@ -1,3 +1,4 @@
+import { user } from "../../../shared/consts/userConsts";
 import { getUsersType } from "../../actions/users/interfaces";
 import { IusersReducer } from "./interfaces";
 
@@ -38,7 +39,10 @@ export const usersReducer = (state = initialState, action: any) => {
     case getUsersType.SHOW_USER:
       return {
         ...state,
-        user: action.payload,
+        user: {
+          ...action.payload,
+          department_id: action.payload.department.id
+        }
       };
     case getUsersType.RESET_EDITING:
       return {

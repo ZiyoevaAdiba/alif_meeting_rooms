@@ -79,7 +79,6 @@ export const Form = ({ setOpen, booking, addError }: any) => {
   }
   return (
     <Formik
-
       initialValues={initBooking}
       validationSchema={ReserveSchema}
       onSubmit={(values) => {
@@ -124,7 +123,6 @@ export const Form = ({ setOpen, booking, addError }: any) => {
                 value={values.purpose}
                 type='text'
                 error={Boolean(touched.purpose && errors.purpose)}
-
               />
 
               <KeyboardDatePicker

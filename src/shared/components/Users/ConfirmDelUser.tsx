@@ -8,9 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { cancelUserDelete, requestDeleteUser } from '../../../store/actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
-import { showOverflow } from '../../handlerStyle/bodyOverflow';
 
-export const ConfirmDelUser = ({page, history} : any ) => {
+export const ConfirmDelUser = ({page, searchInput, history} : any ) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
@@ -21,13 +20,12 @@ export const ConfirmDelUser = ({page, history} : any ) => {
   }, [showAlert])
 
   const handleClose = () => {
-    showOverflow();
     dispatch(cancelUserDelete());
   };
   
   const handleConfirm = () => {
     handleClose();
-    dispatch(requestDeleteUser(page, history, showAlert));
+    dispatch(requestDeleteUser(page, searchInput, history, showAlert));
   };
   return (
     <>

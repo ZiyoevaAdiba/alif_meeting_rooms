@@ -5,12 +5,18 @@ export enum signUpType {
 }
 
 
+interface IUserDeparment {
+  id?: string,
+  name?: string
+}
+
 export interface IUserData {
   name: string,
-  lastname: string,
+  last_name: string,
   email: string,
   phone: string,
-  department: string,
+  department?: IUserDeparment,
+  department_id?: string,
   tg_account: string,
   password: string,
   role?: string,

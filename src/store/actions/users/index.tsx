@@ -5,9 +5,9 @@ import { IUser } from '../../reducers/users/interfaces'
 import { Axios } from "../../../shared/axios";
 import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
-import { requestFail } from "../signUp";
-import { showOverflow } from "../../../shared/handlerStyle/bodyOverflow";
+import { requestFail } from "../signUp"; 
 import { store } from "react-notifications-component";
+import { IDepartment } from "../../reducers/departments/interfaces";
 
 const getUsersReq = () => {
   return {
@@ -72,13 +72,12 @@ export const editUserReqSuccess = () => {
   }
 }
 
-export const getAllUsers = (page: number, history: History) => async(dispatch: Dispatch<any>) => {
-  
+export const getAllUsers = (page: number, search: string, history: History) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getUsersReq());
-    const res = await Axios.get(`${api.users}/${page}`);
+    const res = await Axios.get(`${api.users}?page=${page}&search=${search}`);
     dispatch(getUsersReqSuccess(res.data.payload));
-    history.push(`${urls.users}?page=${page}`);
+    history.push(`${urls.users}?page=${page}&search=${search}`);
 
   } catch (error) {
     dispatch(getUsersReqFail());
@@ -86,8 +85,11 @@ export const getAllUsers = (page: number, history: History) => async(dispatch: D
   }
 }
 
-export const requestAddUser = (page: number, history: History, userData: IUserData, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddUser = (page: number, search: string, history: History, userData: IUserData, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
+    console.log(userData);
+    // userData.department_id = userData.department; 
+    delete userData.department;
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
     setOpen(false);
@@ -104,7 +106,7 @@ export const requestAddUser = (page: number, history: History, userData: IUserDa
         onScreen: true
       }
     });
-    dispatch(getAllUsers(page, history));
+    dispatch(getAllUsers(page, search, history));
     
   } catch (error) {
     dispatch(requestFail());
@@ -113,11 +115,11 @@ export const requestAddUser = (page: number, history: History, userData: IUserDa
   }
 }
 
-export const requestDeleteUser = (page: number, history: History, userId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteUser = (page: number, search: string, history: History, userId: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getUsersReq());
     await Axios.delete(`${api.users}/${userId}`);
-    dispatch(getAllUsers(page, history));
+    dispatch(getAllUsers(page, search, history));
     
   } catch (error) {
     dispatch(getUsersReqFail());
@@ -125,13 +127,21 @@ export const requestDeleteUser = (page: number, history: History, userId: string
   }
 }
 
-export const requestEditUser = (page: number, history: History, userData: any) => async(dispatch: Dispatch<any>) => {
+export const requestEditUser = (
+  page: number, 
+  search: string, 
+  history: History, 
+  userData: any
+  ) => async(dispatch: Dispatch<any>) => {
   try {
-    await Axios.put(`${api.users}/${userData.id}`, userData);
+    const userId = userData.id;
+    delete userData.id;
+    delete userData.created_at;
+    await Axios.put(`${api.users}/${userId}`, userData);
     dispatch(editUserReqSuccess());
     dispatch(resetUserEditing());
-    dispatch(getAllUsers(page, history));
-    showOverflow();
+    dispatch(getAllUsers(page, search, history));
+    
   } catch (error) {
     dispatch(editUserReqFail(error.response.data.payload.message));
     console.log(error.response);

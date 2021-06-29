@@ -113,7 +113,6 @@ export const requestAddRoom = (roomData: IRoom, setSubmitting: any, setOpen: any
     await Axios.post(`${api.adminRooms}`, roomData); 
     dispatch(addRoomReqSuccess())
     setOpen(false);
-    alert('Миттинг рум успешно добавлен.');
     dispatch(getAllRooms());
     
   } catch (error) {

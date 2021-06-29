@@ -7,9 +7,9 @@ const initialState: IdepartmentsReducer = {
   loading: false,
   error: null,
   addError: null,
+  editError: null,
   showAlert: '',
 };
-
 
 export const departmentsReducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -34,6 +34,22 @@ export const departmentsReducer = (state = initialState, action: any) => {
         error: null,
         departments: payload,
       };
+    case getDepartmentsType.SHOW_DEPARTMENT:
+      return {
+        ...state,
+        department: action.payload,
+      };
+    case getDepartmentsType.RESET_EDITING:
+      return {
+        ...state,
+        department: {},
+        editError: null,
+      };
+    case getDepartmentsType.EDIT_DEP_FAIL:
+      return {
+        ...state,
+        editError: action.payload,
+      };
     case getDepartmentsType.SHOW_WARNING:
       return {
         ...state,
@@ -54,6 +70,7 @@ export const departmentsReducer = (state = initialState, action: any) => {
         ...state,
         addError: null,
         error: null,
+        editError: null,
       };
     default:
       return state;
