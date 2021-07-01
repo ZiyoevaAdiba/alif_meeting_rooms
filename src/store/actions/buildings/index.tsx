@@ -92,7 +92,19 @@ export const getAllBuildings = () => async(dispatch: Dispatch<any>) => {
     dispatch(getBuildingsReqFail());
     console.log(error.response);
   }
-}
+};
+
+export const getBuildingsByCityId = (city_id: string) => async(dispatch: Dispatch<any>) => {
+  try {
+    dispatch(getBuildingsReq());
+    const res = await Axios.get(`${api.adminBuildings}/${city_id}/city`);
+    dispatch(getBuildingsReqSuccess(res.data.payload));
+
+  } catch (error) {
+    dispatch(getBuildingsReqFail());
+    console.log(error.response);
+  }
+};
 
 export const requestAddBuilding = (buildingData: IBuilding, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {

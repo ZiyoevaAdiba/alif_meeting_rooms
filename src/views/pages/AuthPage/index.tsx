@@ -15,6 +15,7 @@ import { LoginForm } from '../../../shared/components/Auth/LoginForm';
 import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
 import { removeToken } from '../../../store/actions/login';
 import { EmailAlert } from '../../../shared/components/Auth/EmailAlert';
+import { gridColumnsTotalWidthSelector } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
   authFormContainer: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const LoginView = ({children}: any) => {
   const classes = useStyles();
-
+  
   removeToken();
 
   return (

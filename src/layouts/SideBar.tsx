@@ -1,7 +1,7 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import { urls } from '../routes/urls';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../store/reducers';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
@@ -17,7 +17,7 @@ const drawerWidth = 220;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
-      width: drawerWidth,
+      width: 180,
       flexShrink: 0,
     },
     drawerPaper: {
@@ -82,47 +82,18 @@ export const SideBar = () => {
       }}
     >
       {
-        (userData.role === 'admin')
-        &&
-        <>
-          {
-            sections.map(item =>
-              <ListItem
-                button
-                key={item.url}
-                component={Link}
-                to={item.url}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-              </ListItem>
-            )
-
-          }
-          {/* <NavLink
-            to={`${urls.users}?page=${1}`}
+        sections.map(item =>
+          <ListItem
+            button
+            key={item.url}
+            component={Link}
+            to={item.url}
           >
-            Пользователи
-          </NavLink>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.title} />
+          </ListItem>
+        )
 
-          <NavLink
-            to={urls.meetingRooms}
-          >
-            Meeting rooms
-          </NavLink>
-
-          <NavLink
-            to={urls.departments}
-          >
-            Отделы
-          </NavLink>
-
-          <NavLink
-            to={urls.reservations}
-          >
-            Бронирования
-          </NavLink> */}
-        </>
       }
     </Drawer>
   );

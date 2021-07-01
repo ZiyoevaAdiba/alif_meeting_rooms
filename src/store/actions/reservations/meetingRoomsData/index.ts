@@ -35,6 +35,28 @@ export const getMRsInfo = () => async(dispatch: Dispatch<any>) => {
     dispatch(getMRsInfoFail());
     console.log(error.response);
   }
+};
+
+export const getMRsByCityId = (city_id: any) => async(dispatch: Dispatch<any>) => {
+  try {
+    dispatch(getMRsInfoReq());
+    const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
+    dispatch(getMRsInfoSuccess(res.data.payload));
+    
+  } catch (error) {
+    dispatch(getMRsInfoFail());
+    console.log(error.response);
+  }
+};
+
+export const getMRsByBuildingId = (building_id: any) => async(dispatch: Dispatch<any>) => {
+  try {
+    dispatch(getMRsInfoReq());
+    const res = await Axios.get(`${api.meetingRooms}/${building_id}/building`);
+    dispatch(getMRsInfoSuccess(res.data.payload));
+    
+  } catch (error) {
+    dispatch(getMRsInfoFail());
+    console.log(error.response);
+  }
 }
-
-

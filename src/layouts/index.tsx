@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { Container, CssBaseline, makeStyles } from '@material-ui/core';
 import { SideBar } from './SideBar';
 import { TopBar } from './TopBar';
+import { IRootReducer } from '../store/reducers';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,12 +33,15 @@ const useStyles = makeStyles((theme) => ({
         flex: '1 1 auto',
         height: '100%',
     }
+    
 }));
-
 export const DashboardLayout = ({ children }: any) => {
     const classes = useStyles();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const [isMobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
+    const {
+        userData
+    } = useSelector((state: IRootReducer) => state.getUserDataReducer);
 
     return (
         <Container
@@ -45,7 +50,11 @@ export const DashboardLayout = ({ children }: any) => {
         >
             <CssBaseline />
             <TopBar />
-            <SideBar />
+            {
+                (userData.role === 'admin')
+                &&
+                <SideBar />
+            }
 
             <div className={classes.wrapper}>
                 <div className={classes.contentContainer}>
