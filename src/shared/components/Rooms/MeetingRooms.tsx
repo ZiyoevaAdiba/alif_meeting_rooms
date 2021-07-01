@@ -26,6 +26,7 @@ import { LoadingScreen } from "../LoadingScreen";
 
 export const room: IRoom = {
   building: {},
+  building_id: '',
   name: '',
   number: 0,
   photo: '',
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
   },
   requests_header: {
-    fontSize: 35
+    fontSize: 30
   },
 
 }));

@@ -1,5 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import { Routes } from './routes';
+import ReactNotification from 'react-notifications-component';
+import "react-notifications-component/dist/theme.css";
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -17,7 +19,7 @@ const useStyles = makeStyles(() => createStyles({
       padding: 0,
       '& .popup-content': {
         zIndex: '9999 !important'
-      } 
+      }
     },
     '#root': {
       '& .MuiDataGrid-columnsContainer': {
@@ -35,6 +37,9 @@ export const App = () => {
   useStyles();
 
   return (
-    <Routes />
+    <>
+      <ReactNotification />
+      <Routes />
+    </>
   );
 }

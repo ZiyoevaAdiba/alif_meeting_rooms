@@ -8,6 +8,8 @@ interface IUrls {
     users: string,
     meetingRooms: string,
     departments: string,
+    cities: string,
+    buildings: string,
     reservations: string,
 };
 export const urls: IUrls = {
@@ -16,10 +18,12 @@ export const urls: IUrls = {
     login: '/auth/login',
     signUp: '/auth/signUp',
     forget: '/auth/forget',
-    registrationAlert: 'sign-ac/:id',
+    registrationAlert: '/sign-ac/:id',
     users: '/users',
     meetingRooms: '/meeting-rooms',
     departments: '/departments',
+    cities: '/cities',
+    buildings: '/buildings',
     reservations: '/reservations',
 };
 
@@ -32,11 +36,15 @@ interface IApi {
     meetingRooms: string,
     adminRooms: string,
     departments: string,
+    apiCities: string,
+    adminCities: string,
     reservations: string,
     loggedUserData: string,
     departmentsForDropdown: string,
     mrReservations: string,
-    uploadPhoto: string
+    uploadPhoto: string,
+    apiBuildings: string,
+    adminBuildings: string,
 };
 
 export const api: IApi = {
@@ -48,9 +56,13 @@ export const api: IApi = {
     meetingRooms: '/api/meeting-rooms',
     adminRooms: '/admin/meeting-room',
     departments: '/admin/department',
+    apiCities: '/api/city',
+    adminCities: '/admin/city',
     reservations: '/api/reservation',
     loggedUserData: '/api/parse-token',
     departmentsForDropdown: '/auth/department',
     mrReservations: '/api/reservation',
-    uploadPhoto: '/admin/photo/meeting-room'
+    uploadPhoto: '/admin/photo/meeting-room',
+    apiBuildings: '/api/building',
+    adminBuildings: '/admin/building',
 };

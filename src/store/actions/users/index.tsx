@@ -7,7 +7,6 @@ import { History } from "history";
 import { IUserData } from "../signUp/interfaces";
 import { requestFail } from "../signUp"; 
 import { store } from "react-notifications-component";
-import { IDepartment } from "../../reducers/departments/interfaces";
 
 const getUsersReq = () => {
   return {
@@ -94,7 +93,7 @@ export const requestAddUser = (page: number, search: string, history: History, u
     await Axios.post(`${api.users}`, userData);
     setOpen(false);
     store.addNotification({
-      title: "Wonderful!",
+      title: "Отлично!",
       message: "Для продолжения регистрации подтвердите почту",
       type: "success",
       insert: "top",

@@ -17,6 +17,8 @@ import { reservationWarningDelete } from '../../store/actions/reservations';
 import { IRootReducer } from '../../store/reducers';
 import Popup from 'reactjs-popup';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { citiesWarningDelete, showCityData } from '../../store/actions/cities';
+import { buildingWarningDelete, showBuildingData } from '../../store/actions/buildings';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -48,8 +50,16 @@ const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any
     dispatch(departmentsWarningDelete(rowId));
     return;
   }
+  if (btnLocation === 'cities') {
+    dispatch(citiesWarningDelete(rowId));
+    return;
+  }
   if (btnLocation === 'reservations') {
     dispatch(reservationWarningDelete(rowId))
+    return;
+  }
+  if (btnLocation === 'buildings'){
+    dispatch(buildingWarningDelete(rowId));
     return;
   }
 }
@@ -66,7 +76,15 @@ const handleEdit = (row: any, btnLocation: string, dispatch: Dispatch<any>) => {
   if (btnLocation === 'departments'){
     dispatch(showDepartmentData(row));
     return;
+  }
+  if (btnLocation === 'cities'){
+    dispatch(showCityData(row));
+    return;
   }  
+  if (btnLocation === 'buildings'){
+    dispatch(showBuildingData(row));
+    return;
+  }
 }
 
 export const ButtonEdit = ({ row, btnLocation }: any) => {

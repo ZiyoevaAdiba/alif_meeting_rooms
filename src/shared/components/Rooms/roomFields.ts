@@ -6,6 +6,7 @@ export const fieldRoom = {
   number: 'number',
   status: 'status',
   photo: 'image',
+  building_id: 'building_id',
 }
 
 export const addEditRoomFields = [
@@ -19,9 +20,9 @@ export const addEditRoomFields = [
     label: "Название",
     type: 'text'
   },
-  {
-    name: fieldRoom.city,
-    label: "Город",
-    type: 'text'
-  }
+  // {
+  //   name: fieldRoom.building_id,
+  //   label: "Офис",
+  //   type: 'text'
+  // }
 ];

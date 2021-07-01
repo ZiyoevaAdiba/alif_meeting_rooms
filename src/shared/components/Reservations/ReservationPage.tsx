@@ -58,6 +58,8 @@ export const ReservationPage = () => {
   const page = parseInt(query.get('page') || '1', 10);
 
   useEffect(() => {
+    console.log('hay');
+    
     dispatch(getMRsInfo());
   }, [dispatch]);
 

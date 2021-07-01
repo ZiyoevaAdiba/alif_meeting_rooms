@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
   },
   requests_header: {
-    fontSize: 35
+    fontSize: 30
   },
 
 }));

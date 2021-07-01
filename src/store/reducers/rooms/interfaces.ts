@@ -13,6 +13,7 @@ export interface IRoom {
   place?: string,
   color?: string,
   status?: boolean | string,
+  building_id?: string
 } 
 
 export interface IroomsReducer {

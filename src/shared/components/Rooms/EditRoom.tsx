@@ -37,7 +37,8 @@ export const EditRoom = () => {
     dispatch(cancelImgUpload());
   };
 
-  const { imgSrc, editError } = useSelector((state: IRootReducer) => state.roomsReducer)
+  const { imgSrc, editError } = useSelector((state: IRootReducer) => state.roomsReducer);
+  const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
 
   const handleImageUpload = (evt: any) => {
     const photo = evt.target.files[0];
@@ -77,6 +78,32 @@ export const EditRoom = () => {
                   />
                 )
               }
+               <InputLabel
+                className={classes.inputGap}
+                style={{ marginTop: '10px' }}
+                id="select-building"
+              >Офис
+              </InputLabel>
+              <Select
+                id="select-building"
+                value={props.values?.building_id}
+                onChange={props.handleChange}
+                name='building_id'
+                fullWidth
+              >
+                {
+                  buildings.map(item => {
+                    return <MenuItem
+                      key={item.id}
+                      value={item.id}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  }
+                  )
+                }
+              </Select>
+
               <TextField
                 className={classes.inputGap}
                 name={fieldRoom.photo}

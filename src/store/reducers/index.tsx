@@ -20,7 +20,10 @@ import { IForgetReducer } from './forget/interfaces';
 import { forgetReducer } from './forget';
 import { IEmailConfirmReducer } from './emailConfirm/interfaces';
 import { emailConfirmReducer } from './emailConfirm'
-
+import { ICityReducer } from './cities/interfaces';
+import { citiesReducer } from './cities';
+import { IBuildingsReducer } from './buildings/interfaces';
+import { buildingsReducer } from './buildings';
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
@@ -33,6 +36,8 @@ export interface IRootReducer {
     getUserDataReducer: IGetUserDataReducer,
     getMRsDataReducer: IMeetingRoomsInfoReducer,
     reservationsReducer: IreservationsReducer,
+    citiesReducer: ICityReducer,
+    buildingsReducer: IBuildingsReducer,
 }
 
 export const rootReducer = (history: any) => combineReducers({
@@ -47,4 +52,6 @@ export const rootReducer = (history: any) => combineReducers({
     getUserDataReducer,
     getMRsDataReducer,
     reservationsReducer,
+    citiesReducer,
+    buildingsReducer,
 });

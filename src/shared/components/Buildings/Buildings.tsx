@@ -3,39 +3,33 @@ import {
   Container,
   Grid,
   makeStyles,
-} from "@material-ui/core"
+} from "@material-ui/core";
 import {
   DataGrid,
   GridCellParams,
   GridColumns,
+  GridValueGetterParams,
 } from '@material-ui/data-grid';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
-import { getAllDepartments } from "../../../store/actions/departments/index";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
+import { AddBuilding } from "./AddBuilding";
+import { EditBuilding } from "./EditBuilding";
+import { ConfirmDelBuilding } from "./ConfirmDelBuilding";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
-import { AddDepartment } from "./AddDepartment";
-import { ConfirmDelDepart } from "./ConfirmDelDepart";
-import { EditDepartment } from "./EditDepartment";
+import { getAllBuildings } from "../../../store/actions/buildings";
 
 const useStyles = makeStyles((theme) => ({
-  table_users: {
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-
   CardsContainer: {
     marginTop: 15,
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
     height: 'auto',
-    width: 900,
     flexDirection: 'column',
-    rowGap: 10,
+    rowGap: 20,
     marginBottom: 40,
   },
   topRow: {
@@ -46,94 +40,111 @@ const useStyles = makeStyles((theme) => ({
   requests_header: {
     fontSize: 30
   },
+
 }));
 
 const columns: GridColumns = [
   {
     field: 'name',
-    headerName: 'Название',
+    headerName: 'Имя/Адрес',
     align: 'left',
     headerAlign: 'left',
     disableColumnMenu: true,
-    flex: 6,
+    flex: 2,
+    sortable: false,
   },
-
+  
   {
-    field: 'actions',
+    field: 'city',
+    headerName: 'Город',
+    type: 'string',
+    align: 'left',
+    headerAlign: 'left',
+    disableColumnMenu: true,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => {
+      return params.row.city.name
+    },
+  },
+  
+  {
+    field: '',
     headerName: 'Действие',
     type: 'button',
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    flex: 2,
+    flex: 0.5,
+    sortable: false,
     renderCell: (params: GridCellParams) => (
       <>
         <ButtonEdit
           row={params.row}
-          btnLocation={'departments'}
+          btnLocation={'buildings'}
         />
         <ButtonDelete
           id={params.row.id}
-          btnLocation={'departments'}
+          btnLocation={'buildings'}
         />
       </>
     )
-  }
+  },
 ];
 
-export const Departments = () => {
-  const {
-    departments,
-    error,
-    loading
-  } = useSelector((state: IRootReducer) => state.departmentsReducer);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllDepartments());
-  }, [dispatch]);
-
+export const Buildings = () => {
   const classes = useStyles();
+  const {
+    buildings,
+    buildingsError,
+    loading
+  } = useSelector((state: IRootReducer) => state.buildingsReducer);
+  const dispatch = useDispatch();  
+  
+  useEffect(() => {
+    dispatch(getAllBuildings());
+  }, []);
 
-  if (loading && !error) {
+  if (loading && !buildingsError) {
     return <LoadingScreen />;
   }
 
   return (
-    <Page title="Отделы">
+    <Page title="Офисы">
       <Container maxWidth="xl" >
         {
-          (error)
+          (buildingsError)
             ?
             <ErrorDiv
-              error={error}
+              error={buildingsError}
             />
             :
-            <Grid className={classes.CardsContainer}
-              container spacing={6}
+            <Grid
+              className={classes.CardsContainer}
+              container
+              spacing={6}
             >
               <Box
                 className={classes.topRow}
               >
                 <Box className={classes.requests_header}>
-                  Отделы
+                   Офисы Алифа
                 </Box>
-                <AddDepartment />
+            
+                <AddBuilding/>
               </Box>
-              <EditDepartment />
-              <ConfirmDelDepart />
+              <EditBuilding/>
+              <ConfirmDelBuilding/>
               <DataGrid
-                className={classes.table_users}
-                rows={departments || []}
+                rows={buildings || []}
                 columns={columns}
                 rowsPerPageOptions={[]}
                 hideFooter
                 autoHeight
               />
+              
             </Grid>
         }
-
       </Container>
-    </Page >
+    </Page>
   )
 }

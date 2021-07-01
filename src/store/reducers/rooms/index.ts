@@ -42,7 +42,10 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.SHOW_ROOM:
       return {
         ...state,
-        room: action.payload,
+        room: {
+          ...action.payload,
+          building_id: action.payload.building.id
+        }
       };
     case getRoomsType.RESET_EDITING:
       return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -21,6 +21,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
 import { CustomInput } from '../CustomInput';
 import { addEditRoomFields } from './roomFields';
+import { getAllBuildings } from '../../../store/actions/buildings';
 
 
 export const AddRoom = () => {
@@ -40,8 +41,14 @@ export const AddRoom = () => {
   const {
     imgSrc,
     addError
-  } = useSelector((state: IRootReducer) => state.roomsReducer)
+  } = useSelector((state: IRootReducer) => state.roomsReducer);
+  const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllBuildings());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleImageUpload = (evt: any) => {
     const photo = evt.target.files[0];
@@ -60,7 +67,7 @@ export const AddRoom = () => {
         Добавить Meeting Room
       </Button>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Добавление Meeting Room-а</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -96,6 +103,34 @@ export const AddRoom = () => {
                     />
                   )
                 }
+                <InputLabel
+                  className={classes.signUpForm}
+                  style={{ marginTop: '10px' }}
+                  id="demo-simple-select"
+                  error={Boolean(props.touched.building_id && props.errors.building_id)}
+                  onBlur={props.handleBlur}
+                >Выбрать офис
+                </InputLabel>
+                <Select
+                  id="demo-simple-select"
+                  value={props.values.building_id}
+                  onChange={props.handleChange}
+                  name='building_id'
+                  fullWidth
+                >
+                  {
+                    buildings.map(
+                      (item) => {
+                        return (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        )
+                      }
+                    )
+                  }
+                </Select>
+
                 <InputLabel
                   className={classes.inputGap}
                   style={{ marginTop: '20px' }}

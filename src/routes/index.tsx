@@ -10,7 +10,7 @@ const routesConfig = [
     {
         exact: false,
         path: urls.registrationAlert,
-        component: lazy(() => import('../views/pages/ComfirmEmail').then(module => ({
+        component: lazy(() => import('../views/pages/ConfirmEmail').then(module => ({
             default: module.ConfirmEmail
         })))
     },
@@ -70,6 +70,20 @@ const routesConfig = [
                 path: urls.departments,
                 component: lazy(() => import('../shared/components/Departments/Departments').then(module => ({
                     default: module.Departments
+                })))
+            },
+            {
+                exact: true,
+                path: urls.cities,
+                component: lazy(() => import('../shared/components/Cities/Cities').then(module => ({
+                    default: module.Cities
+                })))
+            },
+            {
+                exact: true,
+                path: urls.buildings,
+                component: lazy(() => import('../shared/components/Buildings/Buildings').then(module => ({
+                    default: module.Buildings
                 })))
             },
             {

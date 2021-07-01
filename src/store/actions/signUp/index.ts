@@ -29,9 +29,12 @@ const requestSuccess = () => {
 export const requestRegistration = (userData: IUserData, history: History, setSubmitting: any) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(requestSent());
+    
     await Axios.post(`${api.signUp}`, userData);
+    
     dispatch(requestSuccess());
     history.push(urls.login);
+    
     store.addNotification({
       title: "Добавлен!",
       message: "Для продолжения регистрации подтвердите почту",

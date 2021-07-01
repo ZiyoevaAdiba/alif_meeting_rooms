@@ -9,16 +9,20 @@ export const EmailAlert = () => {
 
   const dispatch = useDispatch();
   const {id}: {id: string}  = useParams();
-  console.log(id);
 
   useEffect(() => {
     dispatch(requestEmailConfirm(id));
-  }, [])
+  }, []);
 
   const {
     error,
-    success
+    success,
+    loading
   } = useSelector((state: IRootReducer) => state.emailConfirmReducer);
+
+  if (loading) {
+    return <>Loading...</>
+  }
 
   return (
     <>

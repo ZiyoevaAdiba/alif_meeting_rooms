@@ -2,7 +2,7 @@ import { emailType } from "../../actions/emailConfirm/interfaces";
 import { IEmailConfirmReducer } from "./interfaces";
 
 const initialState: IEmailConfirmReducer = {
-  loading: false,
+  loading: true,
   error: false,
   success: false,
 };

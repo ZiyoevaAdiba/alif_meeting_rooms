@@ -12,14 +12,14 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
-import { getAllDepartments } from "../../../store/actions/departments/index";
+import { getAllCities } from "../../../store/actions/cities";
 import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
-import { AddDepartment } from "./AddDepartment";
-import { ConfirmDelDepart } from "./ConfirmDelDepart";
-import { EditDepartment } from "./EditDepartment";
+import { AddCity } from "./AddCity";
+import { ConfirmDelCity } from "./ConfirmDelCity";
+import { EditCity } from "./EditCity";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -70,27 +70,27 @@ const columns: GridColumns = [
       <>
         <ButtonEdit
           row={params.row}
-          btnLocation={'departments'}
+          btnLocation={'cities'}
         />
         <ButtonDelete
           id={params.row.id}
-          btnLocation={'departments'}
+          btnLocation={'cities'}
         />
       </>
     )
   }
 ];
 
-export const Departments = () => {
+export const Cities = () => {
   const {
-    departments,
+    cities,
     error,
     loading
-  } = useSelector((state: IRootReducer) => state.departmentsReducer);
+  } = useSelector((state: IRootReducer) => state.citiesReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDepartments());
+    dispatch(getAllCities());
   }, [dispatch]);
 
   const classes = useStyles();
@@ -100,7 +100,7 @@ export const Departments = () => {
   }
 
   return (
-    <Page title="Отделы">
+    <Page title="Города">
       <Container maxWidth="xl" >
         {
           (error)
@@ -116,15 +116,15 @@ export const Departments = () => {
                 className={classes.topRow}
               >
                 <Box className={classes.requests_header}>
-                  Отделы
+                  Города
                 </Box>
-                <AddDepartment />
+                <AddCity />
               </Box>
-              <EditDepartment />
-              <ConfirmDelDepart />
+              <EditCity />
+              <ConfirmDelCity />
               <DataGrid
                 className={classes.table_users}
-                rows={departments || []}
+                rows={cities || []}
                 columns={columns}
                 rowsPerPageOptions={[]}
                 hideFooter
