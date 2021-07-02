@@ -1,7 +1,8 @@
 import { getMeetingRoomsDataType } from "./interfaces";
 import { Dispatch } from "react";
-import { api } from "../../../../routes/urls";
+import { api, urls } from "../../../../routes/urls";
 import { Axios } from "../../../../shared/axios";
+import { History } from "history";
 
 const getMRsInfoReq = () => {
   return {
@@ -30,31 +31,35 @@ export const getMRsInfo = () => async(dispatch: Dispatch<any>) => {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    
+
   } catch (error) {
     dispatch(getMRsInfoFail());
     console.log(error.response);
   }
 };
 
-export const getMRsByCityId = (city_id: any) => async(dispatch: Dispatch<any>) => {
+export const getMRsByCityId = (city_id: any, history: History, selectedBuilding: string) => async(dispatch: Dispatch<any>) => {
   try {
+    console.log(selectedBuilding);
+    
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    
+    history.push(`${urls.reservations}?city=${city_id}&building=${selectedBuilding}`)
+
   } catch (error) {
     dispatch(getMRsInfoFail());
     console.log(error.response);
   }
 };
 
-export const getMRsByBuildingId = (building_id: any) => async(dispatch: Dispatch<any>) => {
+export const getMRsByBuildingId = (building_id: any, history: History, selectedCity: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${building_id}/building`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    
+    history.push(`${urls.reservations}?city=${selectedCity}&building=${building_id}`)
+
   } catch (error) {
     dispatch(getMRsInfoFail());
     console.log(error.response);

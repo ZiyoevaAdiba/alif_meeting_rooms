@@ -100,7 +100,7 @@ const columns: GridColumns = [
   }
 ];
 
-export const ReservationTable = ({ booking }: any) => {
+export const ReservationTable = ({ booking, selectedCity, history, selectedBuilding }: any) => {
   const classes = useStyles();
 
   const mrID = (typeof booking === 'string')
@@ -115,6 +115,9 @@ export const ReservationTable = ({ booking }: any) => {
     >
       <ConfirmDelReservation
         mrID={mrID}
+        selectedCity = {selectedCity}
+        history= {history}
+        selectedBuilding = {selectedBuilding}
       />
       
       <DataGrid

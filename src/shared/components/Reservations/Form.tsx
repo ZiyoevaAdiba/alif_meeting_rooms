@@ -20,6 +20,7 @@ import { IRootReducer } from '../../../store/reducers';
 import { IReservation } from '../../../store/reducers/reservations/interfaces';
 import { ReserveSchema } from '../../validations/Reservation';
 import { ErrorDiv } from '../ErrorDiv';
+import { getFilteredMRs } from './getFilteredMRs';
 
 export const useStyles = makeStyles((theme) => ({
   signUpForm: {
@@ -41,7 +42,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const Form = ({ setOpen, booking, addError }: any) => {
+export const Form = ({selectedCity, history, selectedBuilding, setOpen, booking, addError }: any) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -75,8 +76,10 @@ export const Form = ({ setOpen, booking, addError }: any) => {
 
   const handleClose = () => {
     dispatch(addReservationSuccess());
+    getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
     setOpen(false)
   }
+  
   return (
     <Formik
       initialValues={initBooking}
@@ -93,7 +96,7 @@ export const Form = ({ setOpen, booking, addError }: any) => {
             ? booking
             : booking[0]?.meeting_room.id;
 
-        dispatch(requestAddReservation(values, setOpen));
+        dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedBuilding));
       }
       }
     >

@@ -38,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const ReserveRoom = ({ open, setOpen }: any) => {
+export const ReserveRoom = ({ selectedCity, history, selectedBuilding, open, setOpen }: any) => {
   const classes = useStyles();
   const {
     booking,
     addError
   } = useSelector((state: IRootReducer) => state.reservationsReducer)
-
+  
   const handleClose = () => {
     setOpen(false);
   }
@@ -68,10 +68,16 @@ export const ReserveRoom = ({ open, setOpen }: any) => {
             setOpen={setOpen}
             booking={booking}
             addError={addError}
-          />
+            selectedCity={selectedCity}
+            history={history}
+            selectedBuilding={selectedBuilding}
+      />
 
           <ReservationTable
             booking={booking}
+            selectedCity={selectedCity}
+            history={history}
+            selectedBuilding={selectedBuilding}
           />
         </DialogContent>
 

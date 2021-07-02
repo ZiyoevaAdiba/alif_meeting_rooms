@@ -21,6 +21,7 @@ export interface IroomsReducer {
   roomsError: null | any,
   editError: null | any,
   addError: null | any,
+  deleteError: null | any,
   rooms: IRoom[],
   room: IRoom, 
   showAlert: string,

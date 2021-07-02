@@ -48,7 +48,7 @@ export const requestLogin = (userData: ILoginData, setSubmitting: any, history: 
 
   } catch (error) {
 
-    dispatch(loginReqFail(error.response.data.payload.message));
+    dispatch(loginReqFail(error.response));
     setSubmitting(false);
   }
 }

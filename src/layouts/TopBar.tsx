@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Account } from '../shared/components/Account';
 import { Box } from '@material-ui/core';
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TopBar = ({ onMobileNavOpen, className}: any) => {
+export const TopBar = ({ onMobileNavOpen, className }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const token: string = getToken();
@@ -42,19 +41,17 @@ export const TopBar = ({ onMobileNavOpen, className}: any) => {
   }, []);
 
   return (
-      // <CssBaseline />
-      <AppBar color="default" position="fixed" className={classes.appBar} >
-        <Toolbar className={classes.toolbar}>
-          <Link to="/">
-            <img className={classes.logo} src={logo} alt="LOGO" />
-          </Link>
-          <Box
-            ml={2}
-          >
-            <Account />
-          </Box>
-        </Toolbar>
-      </AppBar>
+    // <CssBaseline />
+    <AppBar color="default" position="fixed" className={classes.appBar} >
+      <Toolbar className={classes.toolbar}>
+        <img className={classes.logo} src={logo} alt="LOGO" />
+        <Box
+          ml={2}
+        >
+          <Account />
+        </Box>
+      </Toolbar>
+    </AppBar>
 
   )
 }

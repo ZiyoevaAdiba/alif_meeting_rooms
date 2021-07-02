@@ -3,8 +3,8 @@ import { Dispatch } from "react";
 import { api } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
 import { IReservation } from "../../reducers/reservations/interfaces";
-import { getMRsInfo } from "./meetingRoomsData";
-
+import { History } from "history";
+import { getFilteredMRs } from "../../../shared/components/Reservations/getFilteredMRs";
 
 const getReservationsReq = () => {
   return {
@@ -49,32 +49,32 @@ export const addReservationSuccess = () => {
   }
 }
 
-export const requestAddReservation = (reservationData: IReservation, setOpen: any) => async (dispatch: Dispatch<any>) => {
+export const requestAddReservation = (reservationData: IReservation, setOpen: any, selectedCity: string, history: History, selectedBuilding: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
     dispatch(addReservationSuccess());
     dispatch(getMRReservations(reservationData.meeting_room_id));
     setOpen(false);
-    dispatch(getMRsInfo());
+    getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
 
   } catch (error) {
     dispatch(addReservationFail(error.response.data.payload.message));
   }
 }
 
-export const requestDeleteReservation = (mrID: string, reservationId: string) => async (dispatch: Dispatch<any>) => {
+export const requestDeleteReservation = (mrID: string, reservationId: string, selectedCity: string, history: History, selectedBuilding: string) => async (dispatch: Dispatch<any>) => {
   try {
     await Axios.delete(`${api.reservations}/${reservationId}`);
     dispatch(getMRReservations(mrID));
-    dispatch(getMRsInfo());
+
+    // getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
 
   } catch (error) {
     // dispatch(getReservationsFail());
     console.log(error.response);
   }
 }
-
 
 export const getMRReservations = (mrID: string) => async (dispatch: Dispatch<any>) => {
   try {

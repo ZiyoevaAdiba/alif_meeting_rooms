@@ -10,7 +10,7 @@ import { IRootReducer } from '../../../store/reducers';
 import { cancelReservationDelete, requestDeleteReservation } from '../../../store/actions/reservations';
 import { useState } from 'react';
 
-export const ConfirmDelReservation = ({mrID} : any ) => {
+export const ConfirmDelReservation = ({mrID, selectedCity, history, selectedBuilding} : any ) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.reservationsReducer)
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const ConfirmDelReservation = ({mrID} : any ) => {
   };
 
   const handleConfirm = () => {
-    dispatch(requestDeleteReservation(mrID, showAlert));
+    dispatch(requestDeleteReservation(mrID, showAlert, selectedCity, history, selectedBuilding));
     handleClose();
   };
 

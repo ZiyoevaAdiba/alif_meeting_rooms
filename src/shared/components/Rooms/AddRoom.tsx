@@ -82,8 +82,7 @@ export const AddRoom = () => {
                 ? true
                 : false;
               delete values.status;
-              // values.place = 'jhsda';
-              values.color = 'blackQ';
+              // values.color = 'blackQ';
               dispatch(requestAddRoom(values, setSubmitting, setOpen));
               // handleClose();
             }}

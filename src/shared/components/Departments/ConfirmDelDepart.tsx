@@ -16,7 +16,7 @@ export const ConfirmDelDepart = () => {
 
   useEffect(() => {
     setOpen(!open);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAlert])
 
   const handleClose = () => {
@@ -40,7 +40,8 @@ export const ConfirmDelDepart = () => {
         <DialogTitle id="alert-dialog-title">{"Предупреждение"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Вы уверены, что вы хотите удалить Отдел?
+            {`Вы уверены, что вы хотите удалить Отдел?
+            Этот отдел может иметь сотрудников`} 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -50,7 +51,7 @@ export const ConfirmDelDepart = () => {
           <Button onClick={handleClose} color="primary">
             Отменить
           </Button>
-        
+
         </DialogActions>
       </Dialog>
     </>

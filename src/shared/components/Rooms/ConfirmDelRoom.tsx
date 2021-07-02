@@ -8,9 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { cancelRoomDelete, requestDeleteRoom } from '../../../store/actions/rooms';
+import { ErrorDiv } from '../ErrorDiv';
 
 export const ConfirmDelRoom = () => {
   const { showAlert } = useSelector((state: IRootReducer) => state.usersReducer)
+  const { deleteError } = useSelector((state: IRootReducer) => state.roomsReducer)
+
   const [open, setOpen] = React.useState(true);
   const dispatch = useDispatch();
 
@@ -21,10 +24,11 @@ export const ConfirmDelRoom = () => {
   const handleClose = () => {
     dispatch(cancelRoomDelete())
   };
+  console.log('outoy',showAlert);
 
   const handleConfirm = () => {
+    console.log('out',showAlert);
     dispatch(requestDeleteRoom(showAlert))
-    handleClose();
   };
 
   return (
@@ -40,6 +44,13 @@ export const ConfirmDelRoom = () => {
           <DialogContentText id="alert-dialog-description">
             Вы уверены, что вы хотите удалить meeting room?
           </DialogContentText>
+        {
+          deleteError
+          &&          
+          <ErrorDiv
+            error={deleteError}
+          />
+        }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleConfirm} color="primary" autoFocus>
@@ -48,7 +59,7 @@ export const ConfirmDelRoom = () => {
           <Button onClick={handleClose} color="primary">
             Отменить
           </Button>
-        
+
         </DialogActions>
       </Dialog>
     </>

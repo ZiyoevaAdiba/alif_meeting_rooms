@@ -1,9 +1,7 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import { urls } from '../routes/urls';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { IRootReducer } from '../store/reducers';
+import { Link, NavLink } from 'react-router-dom';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import MeetingRoomOutlinedIcon from '@material-ui/icons/MeetingRoomOutlined';
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
@@ -11,14 +9,25 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import { Divider } from '@material-ui/core';
+import { useState } from 'react';
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
       width: 180,
       flexShrink: 0,
+      '& .active': {
+        color: 'rgb(57 185 127)'
+      },
+      '& a':{
+        textDecoration: 'none',
+        color: '#505050',
+      },
     },
     drawerPaper: {
       width: drawerWidth,
@@ -49,12 +58,7 @@ const sections = [
   {
     url: urls.departments,
     title: 'Отделы',
-    icon: <GroupOutlinedIcon />
-  },
-  {
-    url: urls.reservations,
-    title: 'Бронирования',
-    icon: <EventAvailableIcon />
+    icon: <WorkOutlineIcon />
   },
   {
     url: urls.cities,
@@ -64,14 +68,23 @@ const sections = [
   {
     url: urls.buildings,
     title: 'Офисы Алифа',
-    icon: <HomeWorkOutlinedIcon />
+    icon: <LocationCityIcon />
+  },
+  {
+    url: urls.reservations,
+    title: 'Бронирования',
+    icon: <EventAvailableIcon />
   },
 ]
+
 export const SideBar = () => {
   const classes = useStyles();
-  const {
-    userData
-  } = useSelector((state: IRootReducer) => state.getUserDataReducer);
+
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const setActive = (index: any) => {
+    setSelectedIndex(index);
+  };
 
   return (
     <Drawer
@@ -82,19 +95,24 @@ export const SideBar = () => {
       }}
     >
       {
-        sections.map(item =>
-          <ListItem
-            button
+        sections.map((item, index) =>
+          <NavLink
             key={item.url}
-            component={Link}
             to={item.url}
+          // selected={index === selectedIndex}
+          // onClick={() => { setActive(index); }}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.title} />
-          </ListItem>
+            <ListItem
+              button
+            // component={button}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
+            </ListItem>
+          </NavLink>
         )
-
       }
+      <Divider />
     </Drawer>
   );
 }

@@ -20,6 +20,8 @@ import { useState } from "react";
 import { LoadingScreen } from "../LoadingScreen";
 import { getAllBuildings, getBuildingsByCityId } from "../../../store/actions/buildings";
 import { getAllCities } from "../../../store/actions/cities";
+import { History } from "history";
+import { getFilteredMRs } from "./getFilteredMRs";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   filters: {
     display: 'flex',
     columnGap: '20px',
+    width: '400px'
   },
 }));
 
@@ -63,38 +66,51 @@ export const ReservationPage = () => {
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
 
   const [open, setOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedBuilding, setSelectedBuilding] = useState('');
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const page = parseInt(query.get('page') || '1', 10);
+  
   const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
   const { cities } = useSelector((state: IRootReducer) => state.citiesReducer);
+  
+  const location = useLocation();
+  
+  const cityQuery = new URLSearchParams(location.search);
+  const cityParam = (cityQuery.get('city') || '');
+  
+  const buildingQuery = new URLSearchParams(location.search);
+  const buildingParam = (buildingQuery.get('building') || '');
+  
+  const [selectedCity, setSelectedCity] = useState(cityParam);
+  const [selectedBuilding, setSelectedBuilding] = useState(buildingParam);
 
   useEffect(() => {
     dispatch(getAllCities());
-    dispatch(getAllBuildings());
-    dispatch(getMRsInfo());
+
+    if (selectedCity){
+      dispatch(getBuildingsByCityId(selectedCity));
+    } else {
+      dispatch(getAllBuildings());
+    }
+
+    getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
+    // dispatch(getMRsInfo());
   }, []);
 
   if (loading && !error) {
     return <LoadingScreen />;
   }
 
-  const handleCitySelect = (e: any) => {
+  const handleCitySelect = (e: any, history: History, selectedBuilding: string) => {
     setSelectedCity(e.target.value);
-    // console.log(e.target.value);
-    dispatch(getMRsByCityId(e.target.value));
+    setSelectedBuilding('');
+    dispatch(getMRsByCityId(e.target.value, history, ''));
     dispatch(getBuildingsByCityId(e.target.value));
   };
 
-  const handleBuildingSelect = (e: any) => {
+  const handleBuildingSelect = (e: any, history: History, selectedCity: string) => {
     setSelectedBuilding(e.target.value);
-    dispatch(getMRsByBuildingId(e.target.value))
+    dispatch(getMRsByBuildingId(e.target.value, history, selectedCity))
   };
 
   return (
@@ -114,16 +130,16 @@ export const ReservationPage = () => {
               <Box className={classes.requests_header}>
                 Забронировать Meeting Room
                 <Box className={classes.filters}>
-                  <InputLabel
+                  {/* <InputLabel
                     // className={classes.signUpForm}
                     style={{ marginTop: '10px', width: '200px' }}
                     id="demo-simple-select"
                   >Выбрать город
-                  </InputLabel>
+                  </InputLabel> */}
                   <Select
                     id="demo-simple-select"
                     value={selectedCity}
-                    onChange={(e) => handleCitySelect(e)}
+                    onChange={(e) => handleCitySelect(e, history, selectedBuilding)}
                     name='city_id'
                     fullWidth
                   >
@@ -140,17 +156,17 @@ export const ReservationPage = () => {
                     }
                   </Select>
 
-                  <InputLabel
+                  {/* <InputLabel
                     // className={classes.signUpForm}
                     style={{ marginTop: '10px', width: '200px' }}
                     id="demo-simple-select"
 
                   >Выбрать офис
-                  </InputLabel>
+                  </InputLabel> */}
                   <Select
                     id="demo-simple-select"
                     value={selectedBuilding}
-                    onChange={(e) => handleBuildingSelect(e)}
+                    onChange={(e) => handleBuildingSelect(e, history, selectedCity)}
                     name='building_id'
                     fullWidth
                   >
@@ -197,8 +213,9 @@ export const ReservationPage = () => {
               </Grid>
 
               <ReserveRoom
-                page={page}
+                selectedCity={selectedCity}
                 history={history}
+                selectedBuilding={selectedBuilding}
                 open={open}
                 setOpen={setOpen}
               />

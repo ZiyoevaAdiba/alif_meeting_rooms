@@ -8,6 +8,7 @@ const initialState: IroomsReducer = {
   roomsError: null,
   editError: null,
   addError: null,
+  deleteError: null,
   showAlert: '',
   imgSrc: '',
 };
@@ -21,7 +22,8 @@ export const roomsReducer = (state = initialState, action: any) => {
         loading: true,
         roomsError: null,
         editError: null,
-        addError: null,      
+        addError: null,   
+        deleteError: null,   
       };
     case getRoomsType.GET_ROOMS_FAIL:
       return {
@@ -90,12 +92,18 @@ export const roomsReducer = (state = initialState, action: any) => {
         ...state,
         addError: action.payload,
       };
+    case getRoomsType.DELETE_ROOM_FAIL:
+      return {
+        ...state,
+        deleteError: action.payload,
+      };
     case getRoomsType.RESET_ROOMS_ERRORS:
       return {
         ...state,
         roomsError: null,
         editError: null,
-        addError: null,      
+        addError: null, 
+        deleteError: null     
       };
     default:
       return state;

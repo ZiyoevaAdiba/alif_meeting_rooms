@@ -88,6 +88,13 @@ export const addRoomReqFail = (message: string) => {
   }
 }
 
+export const deleteRoomReqFail = (message: string) => {
+  return {
+    type: getRoomsType.DELETE_ROOM_FAIL,
+    payload: message
+  }
+}
+
 export const addRoomReqSuccess = () => {
   return {
     type: getRoomsType.RESET_ROOMS_ERRORS,
@@ -133,13 +140,14 @@ export const addMRPhoto = (roomPhoto: any) => async(dispatch: Dispatch<any>) => 
 
 export const requestDeleteRoom = (roomId: string) => async(dispatch: Dispatch<any>) => {
   try {
-    dispatch(getRoomsReq());
+    // dispatch(getRoomsReq());
     await Axios.delete(`${api.adminRooms}/${roomId}`);
+    dispatch(cancelRoomDelete());
+    dispatch(addRoomReqSuccess());
     dispatch(getAllRooms());
     
   } catch (error) {
-    dispatch(getRoomsFail());
-    console.log(error.response);
+    dispatch(deleteRoomReqFail(error.response.data.payload.message));
   }
 }
 
