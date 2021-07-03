@@ -41,7 +41,6 @@ export const EditDepartment = () => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setDepInput(e.target.value);
   };
 

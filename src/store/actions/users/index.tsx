@@ -80,14 +80,11 @@ export const getAllUsers = (page: number, search: string, history: History) => a
 
   } catch (error) {
     dispatch(getUsersReqFail());
-    console.log(error.response);
   }
 }
 
 export const requestAddUser = (page: number, search: string, history: History, userData: IUserData, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
-    console.log(userData);
-    // userData.department_id = userData.department; 
     delete userData.department;
     dispatch(getUsersReq());
     await Axios.post(`${api.users}`, userData);
@@ -108,9 +105,8 @@ export const requestAddUser = (page: number, search: string, history: History, u
     dispatch(getAllUsers(page, search, history));
     
   } catch (error) {
-    dispatch(requestFail());
+    dispatch(requestFail(error.response.data.payload.message));
     setSubmitting(false);
-    // alert(error.response.data.message);
   }
 }
 
@@ -122,7 +118,6 @@ export const requestDeleteUser = (page: number, search: string, history: History
     
   } catch (error) {
     dispatch(getUsersReqFail());
-    console.log(error.response);
   }
 }
 
@@ -143,6 +138,5 @@ export const requestEditUser = (
     
   } catch (error) {
     dispatch(editUserReqFail(error.response.data.payload.message));
-    console.log(error.response);
   }
 }

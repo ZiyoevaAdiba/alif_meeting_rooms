@@ -39,7 +39,6 @@ export const getCurrentUserInfo = (token: string) => async(dispatch: Dispatch<an
     
   } catch (error) {
     dispatch(getUserInfoFail());
-    console.log(error.response);
   }
 }
 

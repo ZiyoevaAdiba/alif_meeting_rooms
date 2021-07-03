@@ -19,7 +19,7 @@ export const signUpReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        error: 'такой пользователь уже зарегистрирован',
+        error: action.payload,
       };
     case signUpType.SIGNUP_SUCCESS:
       return {

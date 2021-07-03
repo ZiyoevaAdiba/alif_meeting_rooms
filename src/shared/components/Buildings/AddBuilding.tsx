@@ -13,7 +13,6 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { ErrorDiv } from '../ErrorDiv';
 import { IRootReducer } from '../../../store/reducers';
-import { getDepartments } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
 import { CustomInput } from '../CustomInput';
 import { requestAddBuilding } from '../../../store/actions/buildings';
@@ -67,7 +66,6 @@ export const AddBuilding = () => {
           </DialogContentText>
           <Formik
             initialValues={initialBuilding}
-            // validationSchema={SignupSchema}
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
               dispatch(requestAddBuilding(values, setSubmitting, setOpen));
@@ -118,7 +116,6 @@ export const AddBuilding = () => {
                   }
                 </Select>
 
-                
                 {
                   (addBuildingError)
                   &&

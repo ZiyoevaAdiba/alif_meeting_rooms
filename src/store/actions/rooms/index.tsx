@@ -67,6 +67,13 @@ export const cancelImgUpload = () => {
   }
 }
 
+export const imgUploadFail = () => {
+  return {
+    type: getRoomsType.UPLOAD_PIC_FAIL,
+    payload: {}
+  }
+}
+
 export const editRoomReqFail = (message: string) => {
   return {
     type: getRoomsType.EDIT_ROOM_FAIL,
@@ -95,7 +102,7 @@ export const deleteRoomReqFail = (message: string) => {
   }
 }
 
-export const addRoomReqSuccess = () => {
+export const resetRoomErrors = () => {
   return {
     type: getRoomsType.RESET_ROOMS_ERRORS,
     payload: {}
@@ -110,7 +117,6 @@ export const getAllRooms = () => async(dispatch: Dispatch<any>) => {
     
   } catch (error) {
     dispatch(getRoomsFail());
-    console.log(error.response);
   }
 }
 
@@ -118,32 +124,29 @@ export const requestAddRoom = (roomData: IRoom, setSubmitting: any, setOpen: any
   try {
     dispatch(getRoomsReq());
     await Axios.post(`${api.adminRooms}`, roomData); 
-    dispatch(addRoomReqSuccess())
+    dispatch(resetRoomErrors())
     setOpen(false);
     dispatch(getAllRooms());
     
   } catch (error) {
     dispatch(addRoomReqFail(error.response.data.payload.message));
-    console.log(error.response);
   }
 }
 export const addMRPhoto = (roomPhoto: any) => async(dispatch: Dispatch<any>) => {
   try {
     const res = await Axios.post(api.uploadPhoto, roomPhoto);
-    // console.log(res);
     dispatch(getRoomPicURL(res.data.payload));
 
   } catch (error) {
-    console.log(error.response);
+    dispatch(imgUploadFail());
   }
 }
 
 export const requestDeleteRoom = (roomId: string) => async(dispatch: Dispatch<any>) => {
   try {
-    // dispatch(getRoomsReq());
     await Axios.delete(`${api.adminRooms}/${roomId}`);
     dispatch(cancelRoomDelete());
-    dispatch(addRoomReqSuccess());
+    dispatch(resetRoomErrors());
     dispatch(getAllRooms());
     
   } catch (error) {
@@ -161,11 +164,9 @@ export const requestEditRoom = (roomData: any) => async(dispatch: Dispatch<any>)
     dispatch(editRoomReqSuccess());
     dispatch(resetRoomEditing());
     dispatch(cancelImgUpload());
-
     dispatch(getAllRooms());
     
   } catch (error) {
     dispatch(editRoomReqFail(error.response.data.payload.message));
-    console.log(error.response);
   }
 }

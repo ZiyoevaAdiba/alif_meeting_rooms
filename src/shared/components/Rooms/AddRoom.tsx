@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom, room } from './MeetingRooms';
-import { addMRPhoto, addRoomReqSuccess, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
+import { addMRPhoto, resetRoomErrors, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
@@ -35,7 +35,7 @@ export const AddRoom = () => {
   const handleClose = () => {
     setOpen(false);
     dispatch(cancelImgUpload());
-    dispatch(addRoomReqSuccess());
+    dispatch(resetRoomErrors());
   };
 
   const {
@@ -82,9 +82,7 @@ export const AddRoom = () => {
                 ? true
                 : false;
               delete values.status;
-              // values.color = 'blackQ';
               dispatch(requestAddRoom(values, setSubmitting, setOpen));
-              // handleClose();
             }}
           >
             {props => (
@@ -162,7 +160,6 @@ export const AddRoom = () => {
                     component="span"
                     startIcon={<CloudUploadIcon />}
                     style={{ marginTop: '30px', marginBottom: '20px' }}
-                  // className={classes.btnReserve}
                   >
                     Загрузить
                   </Button>
@@ -187,7 +184,6 @@ export const AddRoom = () => {
                 <DialogActions>
                   <Button
                     type='submit'
-                    // onClick={handleClose} 
                     variant='contained'
                     className={classes.btnReserve}
                   >

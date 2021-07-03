@@ -90,7 +90,6 @@ export const getAllBuildings = () => async(dispatch: Dispatch<any>) => {
 
   } catch (error) {
     dispatch(getBuildingsReqFail());
-    console.log(error.response);
   }
 };
 
@@ -102,13 +101,11 @@ export const getBuildingsByCityId = (city_id: string) => async(dispatch: Dispatc
 
   } catch (error) {
     dispatch(getBuildingsReqFail());
-    console.log(error.response);
   }
 };
 
 export const requestAddBuilding = (buildingData: IBuilding, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
-    console.log(buildingData);
     await Axios.post(`${api.adminBuildings}`, buildingData);
     dispatch(addBuildingSuccess());
     setOpen(false);
@@ -142,7 +139,6 @@ export const requestDeleteBuilding = (buildingId: string) => async(dispatch: Dis
     
   } catch (error) {
     dispatch(getBuildingsReqFail());
-    console.log(error.response);
   }
 }
 
@@ -158,6 +154,5 @@ export const requestEditBuilding = (buildingData: any) => async(dispatch: Dispat
     
   } catch (error) {
     dispatch(editBuildingReqFail(error.response.data.payload.message));
-    console.log(error.response);
   }
 }

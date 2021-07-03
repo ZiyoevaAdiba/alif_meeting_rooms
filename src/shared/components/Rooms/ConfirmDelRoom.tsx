@@ -24,10 +24,8 @@ export const ConfirmDelRoom = () => {
   const handleClose = () => {
     dispatch(cancelRoomDelete())
   };
-  console.log('outoy',showAlert);
 
   const handleConfirm = () => {
-    console.log('out',showAlert);
     dispatch(requestDeleteRoom(showAlert))
   };
 

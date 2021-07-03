@@ -3,16 +3,14 @@ import {
   Box,
   Container,
   Grid,
-  InputLabel,
   makeStyles,
   MenuItem,
   Select,
 } from "@material-ui/core"
-import { ChangeEvent, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "../../../layouts/Page"
 import { IRootReducer } from "../../../store/reducers";
-import { getMRsByBuildingId, getMRsByCityId, getMRsInfo } from "../../../store/actions/reservations/meetingRoomsData";
 import { useHistory, useLocation } from "react-router";
 import { ErrorDiv } from "../ErrorDiv";
 import { MeetingRoomCard } from "./MeetingRoomCard";
@@ -40,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     flexDirection: 'column',
     rowGap: 20,
+    ['@media (min-width: 600px)']: {
+      // '& .MuiContainer-root': {
+      paddingLeft: 0,
+      paddingRight: 0,
+      // }
+    }
   },
 
   requests_header: {
@@ -66,35 +70,37 @@ export const ReservationPage = () => {
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
 
   const [open, setOpen] = useState(false);
-  
+
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
   const { cities } = useSelector((state: IRootReducer) => state.citiesReducer);
-  
+
   const location = useLocation();
-  
+
   const cityQuery = new URLSearchParams(location.search);
   const cityParam = (cityQuery.get('city') || '');
-  
+
   const buildingQuery = new URLSearchParams(location.search);
   const buildingParam = (buildingQuery.get('building') || '');
-  
+
   const [selectedCity, setSelectedCity] = useState(cityParam);
   const [selectedBuilding, setSelectedBuilding] = useState(buildingParam);
 
+const getBuildingsForDropdown = (cityId: string) => {
+  if (cityId) {
+    dispatch(getBuildingsByCityId(cityId));
+    return;
+  }
+  dispatch(getAllBuildings());
+}
+
   useEffect(() => {
     dispatch(getAllCities());
-
-    if (selectedCity){
-      dispatch(getBuildingsByCityId(selectedCity));
-    } else {
-      dispatch(getAllBuildings());
-    }
+    getBuildingsForDropdown(selectedCity);
 
     getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
-    // dispatch(getMRsInfo());
   }, []);
 
   if (loading && !error) {
@@ -104,13 +110,15 @@ export const ReservationPage = () => {
   const handleCitySelect = (e: any, history: History, selectedBuilding: string) => {
     setSelectedCity(e.target.value);
     setSelectedBuilding('');
-    dispatch(getMRsByCityId(e.target.value, history, ''));
-    dispatch(getBuildingsByCityId(e.target.value));
+
+    getFilteredMRs(e.target.value, history, '', dispatch);
+    getBuildingsForDropdown(e.target.value);
+    
   };
 
   const handleBuildingSelect = (e: any, history: History, selectedCity: string) => {
     setSelectedBuilding(e.target.value);
-    dispatch(getMRsByBuildingId(e.target.value, history, selectedCity))
+    getFilteredMRs(selectedCity, history, e.target.value, dispatch);
   };
 
   return (
@@ -130,19 +138,15 @@ export const ReservationPage = () => {
               <Box className={classes.requests_header}>
                 Забронировать Meeting Room
                 <Box className={classes.filters}>
-                  {/* <InputLabel
-                    // className={classes.signUpForm}
-                    style={{ marginTop: '10px', width: '200px' }}
-                    id="demo-simple-select"
-                  >Выбрать город
-                  </InputLabel> */}
                   <Select
                     id="demo-simple-select"
                     value={selectedCity}
                     onChange={(e) => handleCitySelect(e, history, selectedBuilding)}
                     name='city_id'
                     fullWidth
+                    displayEmpty
                   >
+
                     {
                       cities.map(
                         (item) => {
@@ -154,21 +158,18 @@ export const ReservationPage = () => {
                         }
                       )
                     }
+                    <MenuItem value={''}>
+                      Все города
+                    </MenuItem>
                   </Select>
 
-                  {/* <InputLabel
-                    // className={classes.signUpForm}
-                    style={{ marginTop: '10px', width: '200px' }}
-                    id="demo-simple-select"
-
-                  >Выбрать офис
-                  </InputLabel> */}
                   <Select
                     id="demo-simple-select"
                     value={selectedBuilding}
                     onChange={(e) => handleBuildingSelect(e, history, selectedCity)}
                     name='building_id'
                     fullWidth
+                    displayEmpty
                   >
                     {
                       buildings.map(
@@ -181,6 +182,9 @@ export const ReservationPage = () => {
                         }
                       )
                     }
+                    <MenuItem value={''}>
+                      Все здания
+                    </MenuItem>
                   </Select>
                 </Box>
               </Box>
@@ -191,7 +195,7 @@ export const ReservationPage = () => {
                 className={classes.cardsRoot}
                 justify='center'
               >
-
+                
                 {
                   (!meetingRoomsInfo)
                   &&

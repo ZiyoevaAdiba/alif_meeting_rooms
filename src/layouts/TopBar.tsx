@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TopBar = ({ onMobileNavOpen, className }: any) => {
+export const TopBar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const token: string = getToken();
@@ -41,7 +41,6 @@ export const TopBar = ({ onMobileNavOpen, className }: any) => {
   }, []);
 
   return (
-    // <CssBaseline />
     <AppBar color="default" position="fixed" className={classes.appBar} >
       <Toolbar className={classes.toolbar}>
         <img className={classes.logo} src={logo} alt="LOGO" />

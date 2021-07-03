@@ -8,6 +8,7 @@ const initialState: IroomsReducer = {
   roomsError: null,
   editError: null,
   addError: null,
+  uploadError: null,
   deleteError: null,
   showAlert: '',
   imgSrc: '',
@@ -23,7 +24,8 @@ export const roomsReducer = (state = initialState, action: any) => {
         roomsError: null,
         editError: null,
         addError: null,   
-        deleteError: null,   
+        deleteError: null, 
+        uploadError: null,  
       };
     case getRoomsType.GET_ROOMS_FAIL:
       return {
@@ -74,13 +76,19 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.CANCEL_UPLOAD: {
       return {
         ...state,
-        imgSrc: ''
+        imgSrc: '',
+        uploadError: null,
       }
     }
+    case getRoomsType.UPLOAD_PIC_FAIL:
+      return {
+        ...state,
+        uploadError: 'Размер изображения не должен превышать 1мб',
+      };
     case getRoomsType.EDIT_ROOM_FAIL:
       return {
         ...state,
-        editError: 'Такой миттинг рум уже есть в системе',
+        editError: action.payload,
       };
     case getRoomsType.EDIT_ROOM_SUCCESS:
       return {
@@ -103,7 +111,8 @@ export const roomsReducer = (state = initialState, action: any) => {
         roomsError: null,
         editError: null,
         addError: null, 
-        deleteError: null     
+        deleteError: null,
+        uploadError: null,     
       };
     default:
       return state;

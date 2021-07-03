@@ -61,9 +61,7 @@ export const SearchForm = ({ page, history, searchInput, setsearchInput }: any) 
     setsearchInput(event?.target.value);
   }
 
-  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    // console.log(searchInput);
-    
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {    
     (event.key === 'Enter')
       &&
       dispatch(getAllUsers(page, searchInput, history));

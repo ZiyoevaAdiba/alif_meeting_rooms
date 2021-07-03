@@ -68,10 +68,7 @@ export const requestDeleteReservation = (mrID: string, reservationId: string, se
     await Axios.delete(`${api.reservations}/${reservationId}`);
     dispatch(getMRReservations(mrID));
 
-    // getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
-
   } catch (error) {
-    // dispatch(getReservationsFail());
     console.log(error.response);
   }
 }

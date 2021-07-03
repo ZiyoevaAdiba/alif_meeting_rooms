@@ -101,7 +101,6 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     flex: 2,
     valueGetter: (params: GridValueGetterParams) => {
-      // console.log(params.row.building);
       return params.row.building.name
     },
   },

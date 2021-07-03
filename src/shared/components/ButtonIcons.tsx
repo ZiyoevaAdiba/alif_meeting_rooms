@@ -125,7 +125,6 @@ export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
 
 
 export const ButtonPoppup = ({ params, btnLocation }: any) => {
-  // id, columnUserId = '',
 
   const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)
 

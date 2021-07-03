@@ -128,7 +128,6 @@ export const SignUpForm = () => {
               {
                 departments.map(
                   (item) => {
-                    // console.log(item);
                     return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
                   }
                 )

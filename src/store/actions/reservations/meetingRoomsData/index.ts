@@ -26,22 +26,20 @@ const getMRsInfoSuccess = (data?: any) => {
 }
 
 
-export const getMRsInfo = () => async(dispatch: Dispatch<any>) => {
+export const getMRsInfo = (history: History) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}`);
     dispatch(getMRsInfoSuccess(res.data.payload));
+    history.push(`${urls.reservations}?city=&building=`) 
 
   } catch (error) {
     dispatch(getMRsInfoFail());
-    console.log(error.response);
   }
 };
 
 export const getMRsByCityId = (city_id: any, history: History, selectedBuilding: string) => async(dispatch: Dispatch<any>) => {
-  try {
-    console.log(selectedBuilding);
-    
+  try {    
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
     dispatch(getMRsInfoSuccess(res.data.payload));

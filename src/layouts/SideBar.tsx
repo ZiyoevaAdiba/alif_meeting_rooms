@@ -19,7 +19,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
-      width: 180,
+      width: 220,
       flexShrink: 0,
       '& .active': {
         color: 'rgb(57 185 127)'
@@ -80,12 +80,6 @@ const sections = [
 export const SideBar = () => {
   const classes = useStyles();
 
-  const [selectedIndex, setSelectedIndex] = useState(null);
-
-  const setActive = (index: any) => {
-    setSelectedIndex(index);
-  };
-
   return (
     <Drawer
       className={classes.drawer}
@@ -99,12 +93,9 @@ export const SideBar = () => {
           <NavLink
             key={item.url}
             to={item.url}
-          // selected={index === selectedIndex}
-          // onClick={() => { setActive(index); }}
           >
             <ListItem
               button
-            // component={button}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />

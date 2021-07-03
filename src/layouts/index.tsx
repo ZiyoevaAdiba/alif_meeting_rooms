@@ -33,12 +33,10 @@ const useStyles = makeStyles((theme) => ({
         flex: '1 1 auto',
         height: '100%',
     }
-    
+
 }));
 export const DashboardLayout = ({ children }: any) => {
     const classes = useStyles();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // const [isMobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
     const {
         userData
     } = useSelector((state: IRootReducer) => state.getUserDataReducer);

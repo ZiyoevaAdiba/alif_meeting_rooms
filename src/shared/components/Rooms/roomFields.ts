@@ -20,9 +20,4 @@ export const addEditRoomFields = [
     label: "Название",
     type: 'text'
   },
-  // {
-  //   name: fieldRoom.building_id,
-  //   label: "Офис",
-  //   type: 'text'
-  // }
 ];

@@ -12,10 +12,10 @@ const requestSent = () => {
   }
 }
 
-export const requestFail = () => {
+export const requestFail = (message: string) => {
   return {
     type: signUpType.SIGNUP_FAIL,
-    payload: {}
+    payload: message
   }
 }
 
@@ -50,9 +50,8 @@ export const requestRegistration = (userData: IUserData, history: History, setSu
     });
 
   } catch (error) {
-    dispatch(requestFail());
+    dispatch(requestFail(error.response.data.payload.message));
     setSubmitting(false);
-    console.log(error.response);
   }
 }
 
@@ -63,8 +62,7 @@ export const reqDepartments = () => async (dispatch: Dispatch<any>) => {
     dispatch(requestSuccess());
 
   } catch (error) {
-    dispatch(requestFail());
-    console.log(error.response);
+    // dispatch(requestFail());
   }
 }
 

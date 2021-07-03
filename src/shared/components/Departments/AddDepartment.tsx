@@ -29,13 +29,11 @@ export const AddDepartment = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDepInput(e.target.value);
-    // setOpen(false);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(requestAddDepartment(depInput, setOpen));
-    // handleClose();
   };
 
   return (

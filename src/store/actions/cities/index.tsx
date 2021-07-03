@@ -85,22 +85,8 @@ export const getAllCities = () => async(dispatch: Dispatch<any>) => {
 
   } catch (error) {
     dispatch(getCitiesFail());
-    // console.log(error.response);
   }
 }
-
-// export const getDepartments = () => async(dispatch: Dispatch<any>) => {
-//   try {
-//     dispatch(getDepartmentsReq());
-//     const res = await Axios.get(`${api.departmentsForDropdown}`);
-//     dispatch(getDepartmentsSuccess(res.data.payload));
-
-//   } catch (error) {
-//     dispatch(getDepartmentsFail());
-//     // console.log(error.response);
-//   }
-// }
-
 
 export const requestAddCity = (depData: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
   try {
@@ -117,7 +103,6 @@ export const requestAddCity = (depData: string, setOpen: any) => async(dispatch:
     
   } catch (error) {
     dispatch(addCityFail(error.response.data.payload.message));
-    // console.log(error.response);
   }
 }
 
@@ -152,6 +137,5 @@ export const requestDeleteCity = (depId: string) => async(dispatch: Dispatch<any
     
   } catch (error) {
     dispatch(getCitiesFail());
-    // console.log(error.response);
   }
 }

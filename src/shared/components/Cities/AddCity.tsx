@@ -29,13 +29,11 @@ export const AddCity = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCityInput(e.target.value);
-    // setOpen(false);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(requestAddCity(cityInput, setOpen));
-    // handleClose();
   };
 
   return (

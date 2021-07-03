@@ -85,7 +85,6 @@ export const getAllDepartments = () => async(dispatch: Dispatch<any>) => {
 
   } catch (error) {
     dispatch(getDepartmentsFail());
-    // console.log(error.response);
   }
 }
 
@@ -97,7 +96,6 @@ export const getDepartments = () => async(dispatch: Dispatch<any>) => {
 
   } catch (error) {
     dispatch(getDepartmentsFail());
-    // console.log(error.response);
   }
 }
 
@@ -117,7 +115,6 @@ export const requestAddDepartment = (depData: string, setOpen: any) => async(dis
     
   } catch (error) {
     dispatch(addDepFail(error.response.data.payload.message));
-    // console.log(error.response);
   }
 }
 
@@ -152,6 +149,5 @@ export const requestDeleteDepartment = (depId: string) => async(dispatch: Dispat
     
   } catch (error) {
     dispatch(getDepartmentsFail());
-    // console.log(error.response);
   }
 }

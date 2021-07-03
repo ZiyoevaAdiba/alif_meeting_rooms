@@ -33,12 +33,10 @@ export const EditCity = () => {
   }, [city]);
 
   const handleClose = () => {
-    // setOpen(false);
     dispatch(resetCityEditing());
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setCityInput(e.target.value);
   };
 
