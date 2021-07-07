@@ -13,6 +13,12 @@ const getReservationsReq = () => {
   }
 }
 
+const getReservationsFail = () => {
+  return {
+    type: getReservationsType.GET_RESERVATIONS_FAIL,
+    payload: {}
+  };
+}
 const getReservationsSuccess = (data?: any) => {
   return {
     type: getReservationsType.GET_RESERVATIONS_SUCCESS,
@@ -42,7 +48,7 @@ export const addReservationFail = (message: string) => {
   }
 }
 
-export const addReservationSuccess = () => {
+export const reservationSuccess = () => {
   return {
     type: getReservationsType.RESET_RESERVATION_ERRORS,
     payload: {}
@@ -53,7 +59,7 @@ export const requestAddReservation = (reservationData: IReservation, setOpen: an
   try {
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
-    dispatch(addReservationSuccess());
+    dispatch(reservationSuccess());
     dispatch(getMRReservations(reservationData.meeting_room_id));
     setOpen(false);
     getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
@@ -63,13 +69,12 @@ export const requestAddReservation = (reservationData: IReservation, setOpen: an
   }
 }
 
-export const requestDeleteReservation = (mrID: string, reservationId: string, selectedCity: string, history: History, selectedBuilding: string) => async (dispatch: Dispatch<any>) => {
+export const requestDeleteReservation = (mrID: string, reservationId: string) => async (dispatch: Dispatch<any>) => {
   try {
     await Axios.delete(`${api.reservations}/${reservationId}`);
     dispatch(getMRReservations(mrID));
-
   } catch (error) {
-    console.log(error.response);
+    dispatch(getReservationsFail());
   }
 }
 
@@ -77,8 +82,7 @@ export const getMRReservations = (mrID: string) => async (dispatch: Dispatch<any
   try {
     const res = await Axios.get(`${api.mrReservations}/${mrID}/meeting`);
     dispatch(getReservationsSuccess(res.data.payload));
-
-  } catch (error) {
-    console.log(error.response);
+  } catch (error) {    
+    dispatch(getReservationsFail());
   }
 }

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,6 +9,7 @@ import { addDepSuccess, requestAddDepartment } from '../../../store/actions/depa
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import { ErrorDiv } from '../ErrorDiv';
+import { CssTextField } from '../CustomInput';
 
 export const AddDepartment = () => {
   const classes = useStyles();
@@ -51,7 +51,7 @@ export const AddDepartment = () => {
           onSubmit={handleSubmit}
         >
           <DialogContent>
-            <TextField
+            <CssTextField
               // autoFocus
               name="name"
               fullWidth

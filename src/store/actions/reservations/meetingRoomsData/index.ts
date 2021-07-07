@@ -47,7 +47,6 @@ export const getMRsByCityId = (city_id: any, history: History, selectedBuilding:
 
   } catch (error) {
     dispatch(getMRsInfoFail());
-    console.log(error.response);
   }
 };
 
@@ -60,6 +59,5 @@ export const getMRsByBuildingId = (building_id: any, history: History, selectedC
 
   } catch (error) {
     dispatch(getMRsInfoFail());
-    console.log(error.response);
   }
 }

@@ -3,6 +3,7 @@ import { Dispatch } from "react";
 import { api, urls } from "../../../routes/urls";
 import { History } from "history";
 import { Axios } from "../../../shared/axios";
+import { store } from "react-notifications-component";
 
 const forgetReqSent = () => {
   return {
@@ -30,7 +31,19 @@ export const requestPassword = (userData: IForgetData, setSubmitting: any, histo
     dispatch(forgetReqSent());
     await Axios.post(`${api.forget}`, userData);
     dispatch(forgetReqSuccess());
-    alert('новый пароль был отправлен, проверьте почту');
+    store.addNotification({
+      title: "Успешно!",
+      message: "новый пароль был отправлен, проверьте почту",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 7000,
+        onScreen: true
+      }
+    })
     history.push(urls.login);
 
 

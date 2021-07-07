@@ -127,7 +127,6 @@ export const requestAddBuilding = (buildingData: IBuilding, setSubmitting: any, 
   } catch (error) {
     dispatch(addBuildingFail(error.response.data.payload.message));
     setSubmitting(false);
-    // alert(error.response.data.message);
   }
 }
 

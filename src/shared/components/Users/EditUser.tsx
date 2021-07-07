@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,10 +13,11 @@ import { UserSchema } from '../../validations/UserValidation';
 import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
 import { fieldInput, userDataFields } from '../../consts/userConsts';
-import { CustomInput } from '../CustomInput';
+import { CustomInput, CustomSelect } from '../CustomInput';
+import { IUserPageProps } from './AddUser';
 
 
-export const EditUser = ({ page, history, searchInput }: any) => {
+export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }: any) => {
 
   const {
     user,
@@ -31,6 +29,7 @@ export const EditUser = ({ page, history, searchInput }: any) => {
 
   const [open, setOpen] = useState(true);
   const classes = useStyles();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,48 +70,19 @@ export const EditUser = ({ page, history, searchInput }: any) => {
                 )
               }
 
-              <InputLabel
-                className={classes.inputGap}
-                style={{ marginTop: '10px' }}
-                id="select-department"
-              >Отдел
-              </InputLabel>
-              <Select
-                id="select-department"
-                value={props.values?.department_id}
-                onChange={props.handleChange}
-                name={fieldInput.department_id}
-                fullWidth
-              >
-                {
-                  departments.map(item => {
-                    return <MenuItem
-                      key={item.id}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </MenuItem>
-                  }
-                  )
-                }
-              </Select>
+              <CustomSelect
+              itemList={departments}
+              formikProps={props}
+              fieldName={fieldInput.department_id}
+              text="Отдел"
+              />
 
-              <InputLabel
-                className={classes.inputGap}
-                style={{ marginTop: '20px' }}
-                id="select-role"
-              >Назначить роль
-              </InputLabel>
-              <Select
-                id="select-role"
-                value={props.values?.role || ''}
-                onChange={props.handleChange}
-                name={fieldInput.role}
-                fullWidth
-              >
-                <MenuItem value={'admin'}>Админ</MenuItem>
-                <MenuItem value={'user'}>Пользователь</MenuItem>
-              </Select>
+              <CustomSelect
+              formikProps={props}
+              fieldName={fieldInput.role}
+              text="Назначить роль"
+              />
+
               {
                 (userError)
                 &&

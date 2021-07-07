@@ -4,23 +4,24 @@ import {
   DialogActions,
   Grid,
   makeStyles,
-  TextField
 } from '@material-ui/core';
 import {
   KeyboardDatePicker,
   KeyboardTimePicker,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
-import { addHours, format } from 'date-fns';
+import { addHours, addMinutes, format } from 'date-fns';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReservationSuccess, requestAddReservation } from '../../../store/actions/reservations';
+import { reservationSuccess, requestAddReservation } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
 import { IReservation } from '../../../store/reducers/reservations/interfaces';
 import { ReserveSchema } from '../../validations/Reservation';
+import { CssTextField } from '../CustomInput';
 import { ErrorDiv } from '../ErrorDiv';
 import { getFilteredMRs } from './getFilteredMRs';
+import { History } from "history";
 
 export const useStyles = makeStyles((theme) => ({
   signUpForm: {
@@ -28,9 +29,11 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: 5,
     }
   },
+  
   inputGap: {
     margin: 5,
   },
+
   btnReserve: {
     color: 'white',
     backgroundColor: 'rgb(57 185 127)',
@@ -41,8 +44,16 @@ export const useStyles = makeStyles((theme) => ({
   }
 }));
 
+interface IForm {
+  selectedCity: string
+  history: History,
+  selectedBuilding: string,
+  setOpen: any,
+  booking: IReservation[] | string,
+  addError: null | any
+}
 
-export const Form = ({selectedCity, history, selectedBuilding, setOpen, booking, addError }: any) => {
+export const Form: FC<IForm> = ({ selectedCity, history, selectedBuilding, setOpen, booking, addError }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -54,7 +65,7 @@ export const Form = ({selectedCity, history, selectedBuilding, setOpen, booking,
     new Date(),
   );
   const [selectedStartTime, setSelectedStartTime] = useState<Date | null>(
-    new Date(),
+    addMinutes(new Date() || 0, 1),
   );
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
     addHours(new Date() || 0, 1),
@@ -71,15 +82,15 @@ export const Form = ({selectedCity, history, selectedBuilding, setOpen, booking,
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
     setSelectedStartTime(date);
-    setSelectedEndTime(date);
+    setSelectedEndTime(addHours(date || 0, 1));
   };
 
   const handleClose = () => {
-    dispatch(addReservationSuccess());
+    dispatch(reservationSuccess());
     getFilteredMRs(selectedCity, history, selectedBuilding, dispatch)
     setOpen(false)
   }
-  
+
   return (
     <Formik
       initialValues={initBooking}
@@ -117,7 +128,7 @@ export const Form = ({selectedCity, history, selectedBuilding, setOpen, booking,
               container
               justify="space-around"
             >
-              <TextField
+              <CssTextField
                 className={classes.inputGap}
                 name='purpose'
                 label="Цель брони"

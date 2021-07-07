@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '& a':{
         textDecoration: 'none',
+        marginTop: 10,
         color: '#505050',
+        fontSize: '20px',
       },
     },
     drawerPaper: {

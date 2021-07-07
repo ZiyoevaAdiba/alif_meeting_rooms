@@ -2,20 +2,17 @@ import { Box, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { reservationSuccess } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
 import { Form } from './Form';
+import { getFilteredMRs } from './getFilteredMRs';
 import { ReservationTable } from './ReservationTable';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    // paddingTop: 20,
     display: "flex",
     columnGap: 70,
-  },
-
-  inputGap: {
-    margin: 5,
   },
 
   CardsContainer: {
@@ -33,22 +30,23 @@ const useStyles = makeStyles((theme) => ({
   requests_header: {
     fontSize: 40
   },
-  form: {
-    background: "green"
-  }
 }));
 
 export const ReserveRoom = ({ selectedCity, history, selectedBuilding, open, setOpen }: any) => {
   const classes = useStyles();
   const {
     booking,
-    addError
-  } = useSelector((state: IRootReducer) => state.reservationsReducer)
-  
+    addError,
+    error
+  } = useSelector((state: IRootReducer) => state.reservationsReducer);
+  const dispatch = useDispatch();
+
   const handleClose = () => {
     setOpen(false);
-  }
-  
+    getFilteredMRs(selectedCity, history, selectedBuilding, dispatch);
+    dispatch(reservationSuccess())
+  };
+
   return (
     <Box>
       <Dialog
@@ -64,20 +62,16 @@ export const ReserveRoom = ({ selectedCity, history, selectedBuilding, open, set
         <DialogContent className={classes.content}>
 
           <Form
-            className={classes.form}
             setOpen={setOpen}
             booking={booking}
             addError={addError}
             selectedCity={selectedCity}
             history={history}
             selectedBuilding={selectedBuilding}
-      />
-
+          />
           <ReservationTable
             booking={booking}
-            selectedCity={selectedCity}
-            history={history}
-            selectedBuilding={selectedBuilding}
+            error={error}
           />
         </DialogContent>
 

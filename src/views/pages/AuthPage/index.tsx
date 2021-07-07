@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router';
 import {
   Box,
   Container,
@@ -8,14 +7,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Page } from '../../../layouts/Page';
-import { SignUpForm } from '../../../shared/components/Auth/SignUpForm';
 import logo from '../../../assets/images/alif_logo.png';
-import { urls } from '../../../routes/urls';
-import { LoginForm } from '../../../shared/components/Auth/LoginForm';
-import { ForgetPasswordForm } from '../../../shared/components/Auth/ForgetPassword';
 import { removeToken } from '../../../store/actions/login';
-import { EmailAlert } from '../../../shared/components/Auth/EmailAlert';
-import { gridColumnsTotalWidthSelector } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme) => ({
   authFormContainer: {

@@ -4,7 +4,6 @@ interface IUrls {
     login: string,
     signUp: string,
     forget: string,
-    registrationAlert: string
     users: string,
     meetingRooms: string,
     departments: string,
@@ -18,7 +17,6 @@ export const urls: IUrls = {
     login: '/auth/login',
     signUp: '/auth/signUp',
     forget: '/auth/forget',
-    registrationAlert: '/sign-ac/:id',
     users: '/users',
     meetingRooms: '/meeting-rooms',
     departments: '/departments',

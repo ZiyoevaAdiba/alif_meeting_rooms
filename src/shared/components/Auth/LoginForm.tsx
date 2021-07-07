@@ -1,7 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Button, ButtonGroup } from '@material-ui/core'
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { ILoginData } from '../../../store/actions/login/interfaces';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,10 @@ import { LoginSchema } from '../../validations/LoginValidation';
 import { ErrorDiv } from '../ErrorDiv';
 import { requestLogin } from '../../../store/actions/login';
 import { CustomInput } from '../CustomInput';
+import { useEffect } from 'react';
+import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
+import { store } from "react-notifications-component";
+
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -71,12 +75,12 @@ const fieldInput: ILoginData = {
 
 const loginFields = [
   {
-    name: fieldInput.email ,
+    name: fieldInput.email,
     label: "E-mail",
     type: 'text'
   },
   {
-    name: fieldInput.password ,
+    name: fieldInput.password,
     label: "Пароль",
     type: 'password',
   },
@@ -89,6 +93,18 @@ export const LoginForm = () => {
     loading,
     error
   } = useSelector((state: IRootReducer) => state.loginReducer);
+  const {
+    exist
+  } = useSelector((state: IRootReducer) => state.emailConfirmReducer);
+  const location = useLocation();
+  const activationQuery = new URLSearchParams(location.search);
+  const activationParam = (activationQuery.get('p') || '');
+
+  useEffect(() => {
+    if (activationParam){
+      dispatch(requestEmailConfirm(activationParam)); 
+    }
+  }, []);
 
   const user: ILoginData = {
     email: '',
@@ -96,7 +112,6 @@ export const LoginForm = () => {
   };
 
   const history = useHistory();
-
 
   const signUpClick = () => {
     history.push(urls.signUp);
@@ -106,9 +121,29 @@ export const LoginForm = () => {
     history.push(urls.forget);
   }
 
+  const showSuccessMessage = () => {
+    store.addNotification({
+      title: "Выполнено!",
+      message: "Регистрации прошла успешно.",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 7000,
+        onScreen: true
+      }
+    })
+  }
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Meeting Rooms</h1>
+      {
+        (exist === false)
+        &&
+        showSuccessMessage()
+      }
       <Formik
         initialValues={user}
         validationSchema={LoginSchema}
@@ -123,10 +158,10 @@ export const LoginForm = () => {
           >
             {
               loginFields.map(
-                item => <CustomInput 
-                key={item.name}
-                fieldData={item}
-                formikProps={props}
+                item => <CustomInput
+                  key={item.name}
+                  fieldData={item}
+                  formikProps={props}
                 />
               )
             }

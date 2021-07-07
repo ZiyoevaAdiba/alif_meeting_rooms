@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,11 +15,19 @@ import { IRootReducer } from '../../../store/reducers';
 import { getDepartments } from '../../../store/actions/departments';
 import { useStyles } from '../Reservations/Form';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
-import { CustomInput } from '../CustomInput';
+import { CustomInput, CustomSelect } from '../CustomInput';
+import { History } from 'history';
 
-export const AddUser = ({ page, searchInput, history }: any) => {
+export interface IUserPageProps {
+  page: number,
+  searchInput: string,
+  history: History
+}
+
+export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
   const { error } = useSelector((state: IRootReducer) => state.signUpReducer)
 
   const handleClickOpen = () => {
@@ -84,53 +89,21 @@ export const AddUser = ({ page, searchInput, history }: any) => {
                     }
                   )
                 }
+                <CustomSelect
+                  itemList={departments}
+                  formikProps={props}
+                  fieldName={fieldInput.department_id}
+                  text="Отдел"
+                />
+                
+                <CustomSelect
+                  formikProps={props}
+                  fieldName={fieldInput.role}
+                  text="Назначить роль"
+                />
 
-                <InputLabel
-                  className={classes.signUpForm}
-                  style={{ marginTop: '10px' }}
-                  id="demo-simple-select"
-                  error={Boolean(props.touched.department && props.errors.department)}
-                  onBlur={props.handleBlur}
-                >Выбрать отдел
-                </InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={props.values.department_id}
-                  onChange={props.handleChange}
-                  name={fieldInput.department_id}
-                  fullWidth
-                >
-                  {
-                    departments.map(
-                      (item) => {
-                        return (
-                          <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        )
-                      }
-                    )
-                  }
-                </Select>
-
-                <InputLabel
-                  className={classes.inputGap}
-                  style={{ marginTop: '20px' }}
-                  id="demo-simple-select"
-                >Назначить роль
-                </InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={props.values.role}
-                  onChange={props.handleChange}
-                  name={fieldInput.role}
-                  fullWidth
-                >
-                  <MenuItem value={'admin'}>Админ</MenuItem>
-                  <MenuItem value={'user'}>Пользователь</MenuItem>
-                </Select>
                 <CustomInput
-                  style={{ marginTop: '10px' }}
+                  // style={{ marginTop: '10px' }}
                   fieldData={
                     {
                       name: fieldInput.password,

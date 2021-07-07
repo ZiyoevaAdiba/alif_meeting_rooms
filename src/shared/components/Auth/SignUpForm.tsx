@@ -18,9 +18,8 @@ import { getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
 import { Page } from '../../../layouts/Page';
-import { CustomInput } from '../CustomInput';
+import { CustomInput, greenStyle } from '../CustomInput';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
-
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -65,8 +64,8 @@ const useStyles = makeStyles(() => createStyles({
 
 }));
 
-
 export const SignUpForm = () => {
+  const greenClass = greenStyle();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.signUpReducer);
@@ -119,6 +118,7 @@ export const SignUpForm = () => {
             >Выбрать отдел
             </InputLabel>
             <Select
+              className={greenClass.select}
               id="demo-simple-select"
               value={props.values.department}
               onChange={props.handleChange}

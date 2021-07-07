@@ -5,7 +5,6 @@ import {
   useState 
 } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,6 +14,7 @@ import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import { ErrorDiv } from '../ErrorDiv';
 import { requestEditCity, resetCityEditing } from '../../../store/actions/cities';
+import { CssTextField } from '../CustomInput';
 
 export const EditCity = () => {
   const classes = useStyles();
@@ -53,7 +53,7 @@ export const EditCity = () => {
           onSubmit={handleSubmit}
         >
           <DialogContent>
-            <TextField
+            <CssTextField
               autoFocus
               name="name"
               fullWidth

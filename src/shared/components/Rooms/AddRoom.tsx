@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,7 +15,7 @@ import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
-import { CustomInput } from '../CustomInput';
+import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
 import { addEditRoomFields } from './roomFields';
 import { getAllBuildings } from '../../../store/actions/buildings';
 
@@ -93,59 +89,27 @@ export const AddRoom = () => {
                 {
                   addEditRoomFields.map(
                     item => <CustomInput
-                      className={classes.inputGap}
                       key={item.name}
                       fieldData={item}
                       formikProps={props}
                     />
                   )
                 }
-                <InputLabel
-                  className={classes.signUpForm}
-                  style={{ marginTop: '10px' }}
-                  id="demo-simple-select"
-                  error={Boolean(props.touched.building_id && props.errors.building_id)}
-                  onBlur={props.handleBlur}
-                >Выбрать офис
-                </InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={props.values.building_id}
-                  onChange={props.handleChange}
-                  name='building_id'
-                  fullWidth
-                >
-                  {
-                    buildings.map(
-                      (item) => {
-                        return (
-                          <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        )
-                      }
-                    )
-                  }
-                </Select>
+                <CustomSelect
+                  itemList={buildings}
+                  formikProps={props}
+                  fieldName='building_id'
+                  text="Выбрать офис"
+                />
+                
+                <CustomSelect
+                  formikProps={props}
+                  fieldName={fieldRoom.status}
+                  text="Состояние meeting room-a"
+                />
 
-                <InputLabel
-                  className={classes.inputGap}
-                  style={{ marginTop: '20px' }}
-                  id="demo-simple-select-label"
-                >Состояние meeting room-a
-                </InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={props.values.status}
-                  onChange={props.handleChange}
-                  name={fieldRoom.status}
-                  fullWidth
-                >
-                  <MenuItem value={'true'}>Доступен</MenuItem>
-                  <MenuItem value={'false'}>Недоступен</MenuItem>
-                </Select>
-                <TextField
-                  className={classes.inputGap}
+                
+                <CssTextField
                   name={fieldRoom.photo}
                   onChange={(evt) => handleImageUpload(evt)}
                   type='file'

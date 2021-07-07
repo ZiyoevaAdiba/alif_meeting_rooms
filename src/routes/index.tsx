@@ -8,13 +8,6 @@ import { LoginView } from '../views/pages/AuthPage';
 
 const routesConfig = [
     {
-        exact: false,
-        path: urls.registrationAlert,
-        component: lazy(() => import('../views/pages/ConfirmEmail').then(module => ({
-            default: module.ConfirmEmail
-        })))
-    },
-    {
         path: urls.authPage,
         layout: LoginView,
         routes: [

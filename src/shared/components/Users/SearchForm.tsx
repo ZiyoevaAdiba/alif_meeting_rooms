@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../../../store/actions/users';
+import { History } from 'history';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   searchBar: {
@@ -52,10 +53,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }),
 );
 
-export const SearchForm = ({ page, history, searchInput, setsearchInput }: any) => {
+interface ISearchForm {
+  page: number,
+  searchInput: string,
+  history: History,
+  setsearchInput: (state: string) => void 
+}
+
+export const SearchForm: FC<ISearchForm> = ({page, history, searchInput, setsearchInput}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {    
     setsearchInput(event?.target.value);

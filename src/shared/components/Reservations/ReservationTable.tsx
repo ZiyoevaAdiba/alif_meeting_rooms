@@ -4,6 +4,9 @@ import { addHours } from "date-fns";
 import { ButtonDelete, ButtonPoppup } from "../ButtonIcons";
 import { ConfirmDelReservation } from "./ConfirmDelReservation";
 import 'reactjs-popup/dist/index.css';
+import { IReservation } from "../../../store/reducers/reservations/interfaces";
+import { FC } from "react";
+import { ErrorDiv } from "../ErrorDiv";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -40,7 +43,7 @@ const columns: GridColumns = [
     valueGetter: (params: GridValueGetterParams) => {
       const date = new Date(params.row.start_time);
       const tjDate = addHours(date, -5);
-      const reservedDate = `${tjDate.getFullYear()}/${tjDate.getMonth() + 1}/${tjDate.getDate()}`;
+      const reservedDate = `${tjDate.getDate()}/${tjDate.getMonth() + 1}/${tjDate.getFullYear()}`;
       return reservedDate;
     }
   },
@@ -55,7 +58,8 @@ const columns: GridColumns = [
     valueGetter: (params: GridValueGetterParams) => {
       const date = new Date(params.row.start_time);
       const tjDate = addHours(date, -5);
-      const tjTime = `${tjDate.getHours()}:${tjDate.getMinutes()}`;
+      const zero = (tjDate.getMinutes() < 10 ? '0' : '')
+      const tjTime = `${tjDate.getHours()}:${zero}${tjDate.getMinutes()}`;
       return tjTime;
     }
   },
@@ -69,7 +73,8 @@ const columns: GridColumns = [
     valueGetter: (params: GridValueGetterParams) => {
       const date = new Date(params.row.end_time);
       const tjDate = addHours(date, -5);
-      const tjTime = `${tjDate.getHours()}:${tjDate.getMinutes()}`;
+      const zero = (tjDate.getMinutes() < 10 ? '0' : '')
+      const tjTime = `${tjDate.getHours()}:${zero}${tjDate.getMinutes()}`;
       return tjTime;
     }
   },
@@ -100,7 +105,7 @@ const columns: GridColumns = [
   }
 ];
 
-export const ReservationTable = ({ booking, selectedCity, history, selectedBuilding }: any) => {
+export const ReservationTable: FC<{ booking: IReservation[] | string, error: null | any }> = ({ booking, error }) => {
   const classes = useStyles();
 
   const mrID = (typeof booking === 'string')
@@ -115,11 +120,12 @@ export const ReservationTable = ({ booking, selectedCity, history, selectedBuild
     >
       <ConfirmDelReservation
         mrID={mrID}
-        selectedCity = {selectedCity}
-        history= {history}
-        selectedBuilding = {selectedBuilding}
       />
-      
+      {
+        error
+        &&
+        <ErrorDiv error={error} />
+      }
       <DataGrid
         className={classes.table_users}
         rows={

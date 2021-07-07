@@ -9,7 +9,6 @@ import {
   resetDepartmentEditing 
 } from '../../../store/actions/departments';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import { ErrorDiv } from '../ErrorDiv';
+import { CssTextField } from '../CustomInput';
 
 export const EditDepartment = () => {
   const classes = useStyles();
@@ -57,7 +57,7 @@ export const EditDepartment = () => {
           onSubmit={handleSubmit}
         >
           <DialogContent>
-            <TextField
+            <CssTextField
               autoFocus
               name="name"
               fullWidth

@@ -57,12 +57,16 @@ const useStyles = makeStyles((theme) => ({
   filters: {
     display: 'flex',
     columnGap: '20px',
-    width: '400px'
+    width: '400px',
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "rgb(57 185 127)",
+    },
   },
 }));
 
 export const ReservationPage = () => {
   const classes = useStyles();
+
   const {
     meetingRoomsInfo,
     error,
@@ -88,13 +92,13 @@ export const ReservationPage = () => {
   const [selectedCity, setSelectedCity] = useState(cityParam);
   const [selectedBuilding, setSelectedBuilding] = useState(buildingParam);
 
-const getBuildingsForDropdown = (cityId: string) => {
-  if (cityId) {
-    dispatch(getBuildingsByCityId(cityId));
-    return;
+  const getBuildingsForDropdown = (cityId: string) => {
+    if (cityId) {
+      dispatch(getBuildingsByCityId(cityId));
+      return;
+    }
+    dispatch(getAllBuildings());
   }
-  dispatch(getAllBuildings());
-}
 
   useEffect(() => {
     dispatch(getAllCities());
@@ -107,13 +111,13 @@ const getBuildingsForDropdown = (cityId: string) => {
     return <LoadingScreen />;
   }
 
-  const handleCitySelect = (e: any, history: History, selectedBuilding: string) => {
+  const handleCitySelect = (e: any, history: History) => {
     setSelectedCity(e.target.value);
     setSelectedBuilding('');
 
     getFilteredMRs(e.target.value, history, '', dispatch);
     getBuildingsForDropdown(e.target.value);
-    
+
   };
 
   const handleBuildingSelect = (e: any, history: History, selectedCity: string) => {
@@ -138,10 +142,11 @@ const getBuildingsForDropdown = (cityId: string) => {
               <Box className={classes.requests_header}>
                 Забронировать Meeting Room
                 <Box className={classes.filters}>
+
                   <Select
                     id="demo-simple-select"
                     value={selectedCity}
-                    onChange={(e) => handleCitySelect(e, history, selectedBuilding)}
+                    onChange={(e) => handleCitySelect(e, history)}
                     name='city_id'
                     fullWidth
                     displayEmpty
@@ -195,7 +200,7 @@ const getBuildingsForDropdown = (cityId: string) => {
                 className={classes.cardsRoot}
                 justify='center'
               >
-                
+
                 {
                   (!meetingRoomsInfo)
                   &&

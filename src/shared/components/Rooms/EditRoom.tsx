@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,14 +8,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom } from './MeetingRooms';
-import { addMRPhoto, cancelImgUpload, requestEditRoom, resetRoomEditing, resetRoomErrors } from '../../../store/actions/rooms';
+import { addMRPhoto, cancelImgUpload, requestEditRoom, resetRoomEditing } from '../../../store/actions/rooms';
 import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
 import { useStyles } from '../Reservations/Form';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
 import { addEditRoomFields } from './roomFields';
-import { CustomInput } from '../CustomInput';
+import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
 
 
 export const EditRoom = () => {
@@ -37,10 +33,10 @@ export const EditRoom = () => {
     dispatch(cancelImgUpload());
   };
 
-  const { 
-    imgSrc, 
-    editError, 
-    uploadError 
+  const {
+    imgSrc,
+    editError,
+    uploadError
   } = useSelector((state: IRootReducer) => state.roomsReducer);
   const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
 
@@ -75,46 +71,31 @@ export const EditRoom = () => {
               {
                 addEditRoomFields.map(
                   item => <CustomInput
-                    className={classes.inputGap}
                     key={item.name}
                     fieldData={item}
                     formikProps={props}
                   />
                 )
               }
-               <InputLabel
-                className={classes.inputGap}
-                style={{ marginTop: '10px' }}
-                id="select-building"
-              >Офис
-              </InputLabel>
-              <Select
-                id="select-building"
-                value={props.values?.building_id}
-                onChange={props.handleChange}
-                name='building_id'
-                fullWidth
-              >
-                {
-                  buildings.map(item => {
-                    return <MenuItem
-                      key={item.id}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </MenuItem>
-                  }
-                  )
-                }
-              </Select>
+              <CustomSelect
+                itemList={buildings}
+                formikProps={props}
+                fieldName='building_id'
+                text="Офис"
+              />
 
-              <TextField
-                className={classes.inputGap}
+              <CustomSelect
+                formikProps={props}
+                fieldName={fieldRoom.status}
+                text="Состояние meeting room-a"
+              />
+
+              <CssTextField
                 name={fieldRoom.photo}
                 onChange={(evt) => handleImageUpload(evt)}
                 type='file'
                 id="contained-button-file"
-                style={{ display: 'none' }}
+                style={{ display: 'none', margin: 5 }}
               />
               <label htmlFor="contained-button-file">
                 <Button
@@ -142,23 +123,7 @@ export const EditRoom = () => {
                 width='250px'
                 height='auto'
               />
-              <InputLabel
-                className={classes.inputGap}
-                style={{ marginTop: '20px' }}
-                id="demo-simple-select-label"
-              >
-                Состояние meeting room-a
-              </InputLabel>
-              <Select
-                id="demo-simple-select"
-                value={props.values?.status}
-                onChange={props.handleChange}
-                name={fieldRoom.status}
-                fullWidth
-              >
-                <MenuItem value={'true'}>Доступен</MenuItem>
-                <MenuItem value={'false'}>Недоступен</MenuItem>
-              </Select>
+             
               {
                 editError
                 &&

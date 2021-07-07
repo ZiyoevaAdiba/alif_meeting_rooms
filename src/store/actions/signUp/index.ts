@@ -55,14 +55,4 @@ export const requestRegistration = (userData: IUserData, history: History, setSu
   }
 }
 
-export const reqDepartments = () => async (dispatch: Dispatch<any>) => {
-  try {
-    dispatch(requestSent());
-    await Axios.get(`${api.signUp}`);
-    dispatch(requestSuccess());
-
-  } catch (error) {
-    // dispatch(requestFail());
-  }
-}
 
