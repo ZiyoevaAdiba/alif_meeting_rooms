@@ -109,30 +109,33 @@ export const resetRoomErrors = () => {
   }
 }
 
-export const getAllRooms = () => async(dispatch: Dispatch<any>) => {
+export const getAllRooms = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
     const res = await Axios.get(`${api.adminRooms}`);
     dispatch(getRoomsSuccess(res.data.payload));
-    
+
   } catch (error) {
     dispatch(getRoomsFail());
   }
 }
 
-export const requestAddRoom = (roomData: IRoom, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddRoom = (
+  roomData: IRoom,
+  setOpen: (state: boolean) => void
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
-    await Axios.post(`${api.adminRooms}`, roomData); 
+    await Axios.post(`${api.adminRooms}`, roomData);
     dispatch(resetRoomErrors())
     setOpen(false);
     dispatch(getAllRooms());
-    
+
   } catch (error) {
     dispatch(addRoomReqFail(error.response.data.payload.message));
   }
 }
-export const addMRPhoto = (roomPhoto: any) => async(dispatch: Dispatch<any>) => {
+export const addMRPhoto = (roomPhoto: FormData) => async (dispatch: Dispatch<any>) => {
   try {
     const res = await Axios.post(api.uploadPhoto, roomPhoto);
     dispatch(getRoomPicURL(res.data.payload));
@@ -142,30 +145,30 @@ export const addMRPhoto = (roomPhoto: any) => async(dispatch: Dispatch<any>) => 
   }
 }
 
-export const requestDeleteRoom = (roomId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteRoom = (roomId: string) => async (dispatch: Dispatch<any>) => {
   try {
     await Axios.delete(`${api.adminRooms}/${roomId}`);
     dispatch(cancelRoomDelete());
     dispatch(resetRoomErrors());
     dispatch(getAllRooms());
-    
+
   } catch (error) {
     dispatch(deleteRoomReqFail(error.response.data.payload.message));
   }
 }
 
-export const requestEditRoom = (roomData: any) => async(dispatch: Dispatch<any>) => {
+export const requestEditRoom = (roomData: IRoom) => async (dispatch: Dispatch<any>) => {
   try {
     roomData.status = (roomData.status === 'true')
-    ? true
-    : false;
+      ? true
+      : false; 
 
     await Axios.put(`${api.adminRooms}/${roomData.id}`, roomData);
     dispatch(editRoomReqSuccess());
     dispatch(resetRoomEditing());
     dispatch(cancelImgUpload());
     dispatch(getAllRooms());
-    
+
   } catch (error) {
     dispatch(editRoomReqFail(error.response.data.payload.message));
   }

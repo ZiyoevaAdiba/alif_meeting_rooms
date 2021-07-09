@@ -1,6 +1,7 @@
-import { user } from "../../../shared/consts/userConsts";
+import { IUserData } from "../../actions/signUp/interfaces";
 import { getUsersType } from "../../actions/users/interfaces";
-import { IusersReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { IUser, IusersReducer } from "./interfaces";
 
 const initialState: IusersReducer = {
   user: {},
@@ -12,7 +13,16 @@ const initialState: IusersReducer = {
   showAlert: '',
 };
 
-export const usersReducer = (state = initialState, action: any) => {
+interface IPayload {
+  users: IUser[],
+  count_page: number,
+}
+
+export const usersReducer = (
+  state = initialState, 
+  action: IAction<IUser[] | IUser | string | IPayload>
+  ): IusersReducer  => {
+
   switch (action.type) {
     case getUsersType.GET_USERS:
       return {
@@ -28,7 +38,7 @@ export const usersReducer = (state = initialState, action: any) => {
         usersError: 'Проверьте доступ. Попробуйте снова',
       };
     case getUsersType.GET_USERS_SUCCESS:
-      const { users, count_page } = action.payload
+      const { users, count_page } = action.payload as IPayload;
       return {
         ...state,
         loading: false,
@@ -37,11 +47,12 @@ export const usersReducer = (state = initialState, action: any) => {
         pageCount: count_page
       };
     case getUsersType.SHOW_USER:
+      const { department } = action.payload as IUser;
       return {
         ...state,
         user: {
-          ...action.payload,
-          department_id: action.payload.department.id
+          ...action.payload as IUser,
+          department_id: department?.id
         }
       };
     case getUsersType.RESET_EDITING:
@@ -53,7 +64,7 @@ export const usersReducer = (state = initialState, action: any) => {
     case getUsersType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload,
+        showAlert: action.payload as string,
       };
     case getUsersType.CANCEL_DELETE:
       return {
@@ -63,7 +74,7 @@ export const usersReducer = (state = initialState, action: any) => {
     case getUsersType.EDIT_USER_FAIL:
       return {
         ...state,
-        userError: action.payload,
+        userError: action.payload as string,
       };
     case getUsersType.EDIT_USER_SUCCESS:
       return {

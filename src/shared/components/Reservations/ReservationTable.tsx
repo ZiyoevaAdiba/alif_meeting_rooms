@@ -96,7 +96,7 @@ const columns: GridColumns = [
             btnLocation={'reservations'}
           />
           <ButtonPoppup
-            params={params.row}
+            params={params.row.user}
             btnLocation={'reservations'}
           />
         </>
@@ -105,14 +105,15 @@ const columns: GridColumns = [
   }
 ];
 
-export const ReservationTable: FC<{ booking: IReservation[] | string, error: null | any }> = ({ booking, error }) => {
+interface IReservationTable {
+  booking: IReservation[], 
+  error: null | string 
+}
+
+export const ReservationTable: FC<IReservationTable> = ({ booking, error }) => {
   const classes = useStyles();
 
-  const mrID = (typeof booking === 'string')
-    ?
-    booking
-    :
-    booking[0]?.meeting_room.id;
+  const mrID = booking[0]?.id || booking[0]?.meeting_room?.id;
 
   return (
     <Grid className={classes.CardsContainer}
@@ -128,11 +129,7 @@ export const ReservationTable: FC<{ booking: IReservation[] | string, error: nul
       }
       <DataGrid
         className={classes.table_users}
-        rows={
-          (typeof booking === 'string')
-            ? []
-            : booking
-        }
+        rows={(booking[0]?.meeting_room === undefined) ? [] : booking}
         columns={columns}
         disableExtendRowFullWidth
         autoPageSize

@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: 5,
     }
   },
-  
+
   inputGap: {
     margin: 5,
   },
@@ -48,12 +48,19 @@ interface IForm {
   selectedCity: string
   history: History,
   selectedBuilding: string,
-  setOpen: any,
-  booking: IReservation[] | string,
-  addError: null | any
+  setOpen: (state: boolean) => void,
+  booking: IReservation[],
+  addError: null | string
 }
 
-export const Form: FC<IForm> = ({ selectedCity, history, selectedBuilding, setOpen, booking, addError }) => {
+export const Form: FC<IForm> = ({
+  selectedCity,
+  history,
+  selectedBuilding,
+  setOpen,
+  booking,
+  addError
+}) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -102,112 +109,109 @@ export const Form: FC<IForm> = ({ selectedCity, history, selectedBuilding, setOp
         values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         values.user_id = userData.id;
-        values.meeting_room_id =
-          (typeof booking === 'string')
-            ? booking
-            : booking[0]?.meeting_room.id;
+        values.meeting_room_id = booking[0]?.meeting_room?.id || booking[0].id; 
 
-        dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedBuilding));
+dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedBuilding));
       }
       }
     >
-      {({
-        values,
-        handleChange,
-        handleSubmit,
-        touched,
-        errors,
-      }: any) => (
+  {({
+    values,
+    handleChange,
+    handleSubmit,
+    touched,
+    errors,
+  }: any) => (
 
-        <form
-          onSubmit={handleSubmit}
-          className={classes.signUpForm}
+    <form
+      onSubmit={handleSubmit}
+      className={classes.signUpForm}
+    >
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid
+          container
+          justify="space-around"
         >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid
-              container
-              justify="space-around"
-            >
-              <CssTextField
-                className={classes.inputGap}
-                name='purpose'
-                label="Цель брони"
-                fullWidth
-                onChange={handleChange}
-                value={values.purpose}
-                type='text'
-                error={Boolean(touched.purpose && errors.purpose)}
-              />
+          <CssTextField
+            className={classes.inputGap}
+            name='purpose'
+            label="Цель брони"
+            fullWidth
+            onChange={handleChange}
+            value={values.purpose}
+            type='text'
+            error={Boolean(touched.purpose && errors.purpose)}
+          />
 
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="dd/MM/yyyy"
-                margin="normal"
-                name='date'
-                label="Выберите дату"
-                value={selectedDate}
-                fullWidth
-                error={Boolean(touched.date && errors.date)}
-                onChange={(date) => handleDate(date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            name='date'
+            label="Выберите дату"
+            value={selectedDate}
+            fullWidth
+            error={Boolean(touched.date && errors.date)}
+            onChange={(date) => handleDate(date)}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
 
-              <KeyboardTimePicker
-                margin="normal"
-                name="start_time"
-                fullWidth
-                ampm={false}
-                error={Boolean(touched.start_time && errors.start_time)}
-                label="Выберите время начала"
-                value={selectedStartTime}
-                onChange={(date) => setSelectedStartTime(date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
+          <KeyboardTimePicker
+            margin="normal"
+            name="start_time"
+            fullWidth
+            ampm={false}
+            error={Boolean(touched.start_time && errors.start_time)}
+            label="Выберите время начала"
+            value={selectedStartTime}
+            onChange={(date) => setSelectedStartTime(date)}
+            KeyboardButtonProps={{
+              'aria-label': 'change time',
+            }}
+          />
 
-              <KeyboardTimePicker
-                margin="normal"
-                name="end_time"
-                label="Выберите время завершения"
-                value={selectedEndTime}
-                fullWidth
-                ampm={false}
-                error={Boolean(touched.end_time && errors.end_time)}
-                onChange={(date) => setSelectedEndTime(date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change time',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
+          <KeyboardTimePicker
+            margin="normal"
+            name="end_time"
+            label="Выберите время завершения"
+            value={selectedEndTime}
+            fullWidth
+            ampm={false}
+            error={Boolean(touched.end_time && errors.end_time)}
+            onChange={(date) => setSelectedEndTime(date)}
+            KeyboardButtonProps={{
+              'aria-label': 'change time',
+            }}
+          />
+        </Grid>
+      </MuiPickersUtilsProvider>
 
-          <DialogActions>
-            <Button
-              type='submit'
-              variant='contained'
-              className={classes.btnReserve}
-            >
-              Забронировать
-            </Button>
-            <Button
-              onClick={handleClose}
-              className={classes.btnCancel}
-            >
-              отмена
-            </Button>
-          </DialogActions>
-          {
-            addError
-            &&
-            <ErrorDiv error={addError} />
-          }
-        </form>
+      <DialogActions>
+        <Button
+          type='submit'
+          variant='contained'
+          className={classes.btnReserve}
+        >
+          Забронировать
+        </Button>
+        <Button
+          onClick={handleClose}
+          className={classes.btnCancel}
+        >
+          отмена
+        </Button>
+      </DialogActions>
+      {
+        addError
+        &&
+        <ErrorDiv error={addError} />
+      }
+    </form>
 
-      )}
-    </Formik>
+  )}
+    </Formik >
   )
 }

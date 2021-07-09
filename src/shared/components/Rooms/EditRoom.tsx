@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,6 +16,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
 import { addEditRoomFields } from './roomFields';
 import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
+import { roomMenuItems } from '../../consts/selectConsts';
 
 
 export const EditRoom = () => {
@@ -40,8 +41,9 @@ export const EditRoom = () => {
   } = useSelector((state: IRootReducer) => state.roomsReducer);
   const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
 
-  const handleImageUpload = (evt: any) => {
-    const photo = evt.target.files[0];
+  const handleImageUpload = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = evt.target as HTMLInputElement;
+    const photo: File = (target.files as FileList)[0];
     const fd = new FormData();
     fd.append('image', photo);
     dispatch(addMRPhoto(fd));
@@ -57,8 +59,11 @@ export const EditRoom = () => {
         <Formik
           initialValues={room}
           validationSchema={RoomSchema}
-          onSubmit={(values) => {
+          validateOnBlur={false}
+          validateOnChange={false}
+          onSubmit={values => {
             values.photo = imgSrc;
+
             dispatch(requestEditRoom(values));
           }
           }
@@ -85,6 +90,7 @@ export const EditRoom = () => {
               />
 
               <CustomSelect
+                itemList={roomMenuItems}
                 formikProps={props}
                 fieldName={fieldRoom.status}
                 text="Состояние meeting room-a"
@@ -123,7 +129,7 @@ export const EditRoom = () => {
                 width='250px'
                 height='auto'
               />
-             
+
               {
                 editError
                 &&

@@ -1,4 +1,5 @@
 import { loginType } from "../../actions/login/interfaces";
+import { IAction } from "../interfaces";
 import { ILoginReducer } from "./interfaces";
 
 const initialState: ILoginReducer = {
@@ -8,7 +9,11 @@ const initialState: ILoginReducer = {
   user_role: '',
 };
 
-export const loginReducer = (state = initialState, action: any) => {
+export const loginReducer = (
+  state = initialState, 
+  action: IAction<string>
+  ): ILoginReducer => {
+    
   switch (action.type) {
     case loginType.LOGIN_REQUEST:
       return {

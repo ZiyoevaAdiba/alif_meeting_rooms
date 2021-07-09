@@ -2,6 +2,8 @@ import { Box, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { History } from 'history';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { reservationSuccess } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
@@ -32,7 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ReserveRoom = ({ selectedCity, history, selectedBuilding, open, setOpen }: any) => {
+interface IReserveRoom {
+  selectedCity: string, 
+  history: History, 
+  selectedBuilding: string, 
+  open: boolean, 
+  setOpen: (state: boolean) => void
+}
+
+export const ReserveRoom: FC<IReserveRoom> = ({ selectedCity, history, selectedBuilding, open, setOpen }) => {
   const classes = useStyles();
   const {
     booking,
@@ -63,7 +73,7 @@ export const ReserveRoom = ({ selectedCity, history, selectedBuilding, open, set
 
           <Form
             setOpen={setOpen}
-            booking={booking}
+            booking={booking} 
             addError={addError}
             selectedCity={selectedCity}
             history={history}

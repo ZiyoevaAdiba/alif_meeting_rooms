@@ -20,14 +20,14 @@ const getBuildingsReqFail = () => {
   }
 }
 
-const getBuildingsReqSuccess = (data: any) => {
+const getBuildingsReqSuccess = (data: IBuilding[]) => {
   return {
     type: getBuildingsType.GET_BUILDINGS_SUCCESS,
     payload: data
   }
 }
 
-export const showBuildingData = (data: IUser) => {
+export const showBuildingData = (data: IBuilding) => {
   return {
     type: getBuildingsType.SHOW_BUILDING,
     payload: data
@@ -82,7 +82,7 @@ export const addBuildingSuccess = () => {
   }
 }
 
-export const getAllBuildings = () => async(dispatch: Dispatch<any>) => {
+export const getAllBuildings = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getBuildingsReq());
     const res = await Axios.get(`${api.apiBuildings}`);
@@ -93,7 +93,7 @@ export const getAllBuildings = () => async(dispatch: Dispatch<any>) => {
   }
 };
 
-export const getBuildingsByCityId = (city_id: string) => async(dispatch: Dispatch<any>) => {
+export const getBuildingsByCityId = (city_id: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getBuildingsReq());
     const res = await Axios.get(`${api.adminBuildings}/${city_id}/city`);
@@ -104,7 +104,11 @@ export const getBuildingsByCityId = (city_id: string) => async(dispatch: Dispatc
   }
 };
 
-export const requestAddBuilding = (buildingData: IBuilding, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddBuilding = (
+  buildingData: IBuilding,
+  setSubmitting: (state: boolean) => void,
+  setOpen: (state: boolean) => void
+) => async (dispatch: Dispatch<any>) => {
   try {
     await Axios.post(`${api.adminBuildings}`, buildingData);
     dispatch(addBuildingSuccess());
@@ -123,34 +127,33 @@ export const requestAddBuilding = (buildingData: IBuilding, setSubmitting: any, 
       }
     });
     dispatch(getAllBuildings());
-    
+
   } catch (error) {
     dispatch(addBuildingFail(error.response.data.payload.message));
     setSubmitting(false);
   }
 }
 
-export const requestDeleteBuilding = (buildingId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteBuilding = (buildingId: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getBuildingsReq());
     await Axios.delete(`${api.adminBuildings}/${buildingId}`);
     dispatch(getAllBuildings());
-    
+
   } catch (error) {
     dispatch(getBuildingsReqFail());
   }
 }
 
-export const requestEditBuilding = (buildingData: any) => async(dispatch: Dispatch<any>) => {
+export const requestEditBuilding = (buildingData: IBuilding) => async (dispatch: Dispatch<any>) => {
   try {
     const buildingId = buildingData.id;
     delete buildingData.id;
-    delete buildingData.created_at;
     await Axios.put(`${api.adminBuildings}/${buildingId}`, buildingData);
     dispatch(editBuildingReqSuccess());
     dispatch(resetBuildingEditing());
     dispatch(getAllBuildings());
-    
+
   } catch (error) {
     dispatch(editBuildingReqFail(error.response.data.payload.message));
   }

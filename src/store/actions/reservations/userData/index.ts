@@ -2,6 +2,7 @@ import { getUserDataType } from "./interfaces";
 import { Dispatch } from "react";
 import { api } from "../../../../routes/urls";
 import { Axios } from "../../../../shared/axios";
+import { IUserData } from "../../signUp/interfaces";
 
 const getUserInfoReq = () => {
   return {
@@ -17,7 +18,7 @@ const getUserInfoFail = () => {
   }
 }
 
-const getUserInfoSuccess = (data?: any) => {
+const getUserInfoSuccess = (data?: IUserData) => {
   return {
     type: getUserDataType.GET_USERS_INFO_SUCCESS,
     payload: data

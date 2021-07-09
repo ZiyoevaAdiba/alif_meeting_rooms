@@ -38,7 +38,11 @@ export const removeToken = () => {
 }
 
 
-export const requestLogin = (userData: ILoginData, setSubmitting: any, history: History) => async(dispatch: Dispatch<any>) => {
+export const requestLogin = (
+  userData: ILoginData, 
+  setSubmitting: (state: boolean) => void, 
+  history: History
+  ) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(loginReqSent());
     const res = await Axios.post(`${api.login}`, userData);

@@ -4,6 +4,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { getMRReservations } from "../../../store/actions/reservations/";
 
@@ -31,10 +32,17 @@ const useStyles = makeStyles({
     backgroundSize: 'cover'
   },
 });
-
-export const MeetingRoomCard = ({ name, number, mrID, isBusy, setOpen, photo }: any,) => {
+interface IMeetinfRoomCard {
+  name: string | undefined,
+  number: string | undefined,
+  mrID: string | undefined, 
+  isBusy: boolean  | undefined, 
+  setOpen: (state: boolean) => void, 
+  photo: string | undefined 
+}
+export const MeetingRoomCard: FC<IMeetinfRoomCard> = ({ name, number, mrID, isBusy, setOpen, photo }) => {
   const classes = useStyles();
-  const titleText: string = name;
+  const titleText = name;
   const dispatch = useDispatch();
 
   const getMRReservationData = () => {

@@ -22,7 +22,7 @@ const getUsersReqFail = () => {
   }
 }
 
-const getUsersReqSuccess = (data: any) => {
+const getUsersReqSuccess = (data: IUser) => {
   return {
     type: getUsersType.GET_USERS_SUCCESS,
     payload: data
@@ -83,7 +83,14 @@ export const getAllUsers = (page: number, search: string, history: History) => a
   }
 }
 
-export const requestAddUser = (page: number, search: string, history: History, userData: IUserData, setSubmitting: any, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddUser = (
+  page: number, 
+  search: string, 
+  history: History, 
+  userData: IUserData, 
+  setSubmitting: (state: boolean) => void, 
+  setOpen: (state: boolean) => void
+  ) => async(dispatch: Dispatch<any>) => {
   try {
     delete userData.department;
     dispatch(getUsersReq());
@@ -125,12 +132,11 @@ export const requestEditUser = (
   page: number, 
   search: string, 
   history: History, 
-  userData: any
+  userData: IUser
   ) => async(dispatch: Dispatch<any>) => {
   try {
     const userId = userData.id;
     delete userData.id;
-    delete userData.created_at;
     await Axios.put(`${api.users}/${userId}`, userData);
     dispatch(editUserReqSuccess());
     dispatch(resetUserEditing());

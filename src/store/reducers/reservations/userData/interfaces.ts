@@ -7,7 +7,7 @@ export interface IGetUserData {
 
 export interface IGetUserDataReducer {
   loading: boolean,
-  error: null | any,
+  error: null | string,
   userData: IGetUserData,
 }
 

@@ -57,7 +57,7 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 const ForgetSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Заполните поле'),
+  email: Yup.string().email('Почта недействительна').required('Заполните поле'),
 });
 
 const fieldInput: IForgetData = {
@@ -88,6 +88,8 @@ export const ForgetPasswordForm = () => {
       <Formik
         initialValues={user}
         validationSchema={ForgetSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestPassword(values, setSubmitting, history));
         }

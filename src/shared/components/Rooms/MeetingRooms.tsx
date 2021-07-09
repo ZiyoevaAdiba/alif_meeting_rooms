@@ -32,7 +32,6 @@ export const room: IRoom = {
   photo: '',
   place: '',
   color: '',
-  // photo: new File([], ''),
   status: true,
 };
 

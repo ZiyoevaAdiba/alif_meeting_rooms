@@ -7,9 +7,10 @@ export interface IRoom {
       name: string,
     }
   }
+  id?: string
   name?: string,
   number?: number,
-  photo?: any,   
+  photo?: string,
   place?: string,
   color?: string,
   status?: boolean | string,
@@ -18,11 +19,11 @@ export interface IRoom {
 
 export interface IroomsReducer {
   loading: boolean,
-  roomsError: null | any,
-  editError: null | any,
-  addError: null | any,
-  deleteError: null | any,
-  uploadError: null | any,
+  roomsError: null | string,
+  editError: null | string,
+  addError: null | string,
+  deleteError: null | string,
+  uploadError: null | string,
   rooms: IRoom[],
   room: IRoom, 
   showAlert: string,

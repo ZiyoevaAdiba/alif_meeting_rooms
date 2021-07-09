@@ -1,5 +1,6 @@
 import { getDepartmentsType } from "../../actions/departments/interfaces";
-import { IdepartmentsReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { IDepartment, IdepartmentsReducer } from "./interfaces";
 
 const initialState: IdepartmentsReducer = {
   department: {},
@@ -11,7 +12,11 @@ const initialState: IdepartmentsReducer = {
   showAlert: '',
 };
 
-export const departmentsReducer = (state = initialState, action: any) => {
+export const departmentsReducer = (
+  state = initialState, 
+  action: IAction<IDepartment | IDepartment[] | string >
+  ): IdepartmentsReducer => {
+
   switch (action.type) {
     case getDepartmentsType.GET_DEPARTMENTS:
       return {
@@ -27,7 +32,7 @@ export const departmentsReducer = (state = initialState, action: any) => {
         error: 'Проверьте доступ. Попробуйте снова.',
       };
     case getDepartmentsType.GET_DEPARTMENTS_SUCCESS:
-      const payload = action.payload
+      const payload = action.payload as IDepartment[]
       return {
         ...state,
         loading: false,
@@ -37,7 +42,7 @@ export const departmentsReducer = (state = initialState, action: any) => {
     case getDepartmentsType.SHOW_DEPARTMENT:
       return {
         ...state,
-        department: action.payload,
+        department: action.payload as IDepartment,
       };
     case getDepartmentsType.RESET_EDITING:
       return {
@@ -48,12 +53,12 @@ export const departmentsReducer = (state = initialState, action: any) => {
     case getDepartmentsType.EDIT_DEP_FAIL:
       return {
         ...state,
-        editError: action.payload,
+        editError: action.payload as string,
       };
     case getDepartmentsType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload
+        showAlert: action.payload as string
       }
     case getDepartmentsType.CANCEL_DELETE:
       return {
@@ -63,7 +68,7 @@ export const departmentsReducer = (state = initialState, action: any) => {
     case getDepartmentsType.ADD_DEP_FAIL:
       return {
         ...state,
-        addError: action.payload,
+        addError: action.payload as string,
       };
     case getDepartmentsType.RESET_DEPARTMENTS_ERRORS:
       return {

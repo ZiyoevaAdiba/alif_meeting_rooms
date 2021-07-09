@@ -5,7 +5,7 @@ import { cancelReservationDelete, requestDeleteReservation } from '../../../stor
 import { useState } from 'react';
 import { CustomDelWarningDialog } from '../CustomDelWarningDialog';
 
-export const ConfirmDelReservation: FC<{mrID: string}> = ({mrID}) => {
+export const ConfirmDelReservation: FC<{mrID?: string}> = ({mrID}) => {
   const { showAlert } = useSelector((state: IRootReducer) => state.reservationsReducer)
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const ConfirmDelReservation: FC<{mrID: string}> = ({mrID}) => {
   };
 
   const handleConfirm = () => {
-    dispatch(requestDeleteReservation(mrID, showAlert));
+    dispatch(requestDeleteReservation(showAlert, mrID));
     handleClose();
   };
 

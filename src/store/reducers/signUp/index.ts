@@ -1,4 +1,5 @@
-import { signUpType } from "../../actions/signUp/interfaces";
+import { IUserData, signUpType } from "../../actions/signUp/interfaces";
+import { IAction } from "../interfaces";
 import { ISignUpReducer } from "./interfaces";
 
 const initialState: ISignUpReducer = {
@@ -7,7 +8,11 @@ const initialState: ISignUpReducer = {
   success: false,
 };
 
-export const signUpReducer = (state = initialState, action: any) => {
+export const signUpReducer = (
+  state = initialState, 
+  action: IAction<string>
+  ): ISignUpReducer => {
+
   switch (action.type) {
     case signUpType.SIGNUP_REQUEST:
       return {

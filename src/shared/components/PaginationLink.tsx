@@ -3,8 +3,16 @@ import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/actions/users';
+import { History } from 'history';
+import { FC } from 'react';
 
-export const PaginationLink = ({ pageNumber, history, page, searchInput }: any) => {
+interface IPaginationLink {
+  pageNumber: number,
+  history: History, 
+  page: number, 
+  searchInput: string
+}
+export const PaginationLink: FC<IPaginationLink> = ({ pageNumber, history, page, searchInput }) => {
 
   const dispatch = useDispatch();
 

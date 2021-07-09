@@ -1,5 +1,6 @@
 import { boolean } from "yup/lib/locale";
 import { emailType } from "../../actions/emailConfirm/interfaces";
+import { IAction } from "../interfaces";
 import { IEmailConfirmReducer } from "./interfaces";
 
 const initialState: IEmailConfirmReducer = {
@@ -9,7 +10,11 @@ const initialState: IEmailConfirmReducer = {
   exist: null,
 };
 
-export const emailConfirmReducer = (state = initialState, action: any) => {
+export const emailConfirmReducer = (
+  state = initialState, 
+  action: IAction<boolean>
+  ): IEmailConfirmReducer => {
+
   switch (action.type) {
     case emailType.EMAIL_REQUEST:
       return {

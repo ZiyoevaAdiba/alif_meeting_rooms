@@ -20,6 +20,7 @@ import { getAllBuildings, getBuildingsByCityId } from "../../../store/actions/bu
 import { getAllCities } from "../../../store/actions/cities";
 import { History } from "history";
 import { getFilteredMRs } from "./getFilteredMRs";
+import { ChangeEvent } from "react";
 
 const useStyles = makeStyles((theme) => ({
   table_users: {
@@ -111,18 +112,22 @@ export const ReservationPage = () => {
     return <LoadingScreen />;
   }
 
-  const handleCitySelect = (e: any, history: History) => {
-    setSelectedCity(e.target.value);
+  const handleCitySelect = (e: ChangeEvent<{ value: unknown }>, history: History) => {
+    setSelectedCity(e.target.value as string);
     setSelectedBuilding('');
 
-    getFilteredMRs(e.target.value, history, '', dispatch);
-    getBuildingsForDropdown(e.target.value);
+    getFilteredMRs(e.target.value as string, history, '', dispatch);
+    getBuildingsForDropdown(e.target.value as string);
 
   };
 
-  const handleBuildingSelect = (e: any, history: History, selectedCity: string) => {
-    setSelectedBuilding(e.target.value);
-    getFilteredMRs(selectedCity, history, e.target.value, dispatch);
+  const handleBuildingSelect = (
+    evt: ChangeEvent<{ value: unknown }>,
+    history: History,
+    selectedCity: string
+  ) => {
+    setSelectedBuilding(evt.target.value as string);
+    getFilteredMRs(selectedCity, history, evt.target.value as string, dispatch);
   };
 
   return (
@@ -171,7 +176,7 @@ export const ReservationPage = () => {
                   <Select
                     id="demo-simple-select"
                     value={selectedBuilding}
-                    onChange={(e) => handleBuildingSelect(e, history, selectedCity)}
+                    onChange={(evt) => handleBuildingSelect(evt, history, selectedCity)}
                     name='building_id'
                     fullWidth
                     displayEmpty

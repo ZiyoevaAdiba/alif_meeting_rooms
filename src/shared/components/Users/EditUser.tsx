@@ -9,15 +9,16 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { requestEditUser, resetUserEditing } from '../../../store/actions/users';
-import { UserSchema } from '../../validations/UserValidation';
 import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
 import { fieldInput, userDataFields } from '../../consts/userConsts';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { IUserPageProps } from './AddUser';
+import { EditUserValidation } from '../../validations/UsersValidation';
+import { userMenuItems } from '../../consts/selectConsts';
 
 
-export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }: any) => {
+export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => {
 
   const {
     user,
@@ -41,7 +42,12 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }: any
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+      fullWidth={true}
+      maxWidth={'sm'}>
       <DialogTitle id="form-dialog-title">Изменение данных о пользователе</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -49,7 +55,9 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }: any
         </DialogContentText>
         <Formik
           initialValues={user}
-          validationSchema={UserSchema}
+          validationSchema={EditUserValidation}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={(values) => {
             delete values.department;
             dispatch(requestEditUser(page, searchInput, history, values));
@@ -71,16 +79,17 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }: any
               }
 
               <CustomSelect
-              itemList={departments}
-              formikProps={props}
-              fieldName={fieldInput.department_id}
-              text="Отдел"
+                itemList={departments}
+                formikProps={props}
+                fieldName={fieldInput.department_id}
+                text="Отдел"
               />
 
               <CustomSelect
-              formikProps={props}
-              fieldName={fieldInput.role}
-              text="Назначить роль"
+                itemList={userMenuItems}
+                formikProps={props}
+                fieldName={fieldInput.role}
+                text="Назначить роль"
               />
 
               {

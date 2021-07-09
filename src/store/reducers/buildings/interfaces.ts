@@ -10,9 +10,9 @@ export interface IBuilding {
 
 export interface IBuildingsReducer {
   loading: boolean,
-  buildingsError: null | any,
-  addBuildingError: null | any,
-  editBuildingError: null | any,
+  buildingsError: null | string,
+  addBuildingError: null | string,
+  editBuildingError: null | string,
   buildings: IBuilding[],
   building: IBuilding, 
   showAlert: string,

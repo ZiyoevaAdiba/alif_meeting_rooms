@@ -13,8 +13,6 @@ import { requestLogin } from '../../../store/actions/login';
 import { CustomInput } from '../CustomInput';
 import { useEffect } from 'react';
 import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
-import { store } from "react-notifications-component";
-
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -93,16 +91,13 @@ export const LoginForm = () => {
     loading,
     error
   } = useSelector((state: IRootReducer) => state.loginReducer);
-  const {
-    exist
-  } = useSelector((state: IRootReducer) => state.emailConfirmReducer);
   const location = useLocation();
   const activationQuery = new URLSearchParams(location.search);
   const activationParam = (activationQuery.get('p') || '');
 
   useEffect(() => {
-    if (activationParam){
-      dispatch(requestEmailConfirm(activationParam)); 
+    if (activationParam) {
+      dispatch(requestEmailConfirm(activationParam));
     }
   }, []);
 
@@ -121,32 +116,14 @@ export const LoginForm = () => {
     history.push(urls.forget);
   }
 
-  const showSuccessMessage = () => {
-    store.addNotification({
-      title: "Выполнено!",
-      message: "Регистрации прошла успешно.",
-      type: "success",
-      insert: "top",
-      container: "top-right",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      dismiss: {
-        duration: 7000,
-        onScreen: true
-      }
-    })
-  }
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Meeting Rooms</h1>
-      {
-        (exist === false)
-        &&
-        showSuccessMessage()
-      }
       <Formik
         initialValues={user}
         validationSchema={LoginSchema}
+        validateOnBlur={false}
+        // validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestLogin(values, setSubmitting, history));
         }}

@@ -1,5 +1,6 @@
 import { getRoomsType } from "../../actions/rooms/interfaces";
-import { IroomsReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { IRoom, IroomsReducer } from "./interfaces";
 
 const initialState: IroomsReducer = {
   room: {},
@@ -15,7 +16,11 @@ const initialState: IroomsReducer = {
 };
 
 
-export const roomsReducer = (state = initialState, action: any) => {
+export const roomsReducer = (
+  state = initialState, 
+  action: IAction<IRoom | IRoom[] | string>
+  ): IroomsReducer => {
+
   switch (action.type) {
     case getRoomsType.GET_ROOMS:
       return {
@@ -34,7 +39,7 @@ export const roomsReducer = (state = initialState, action: any) => {
         roomsError: 'Проверьте доступ. Попробуйте снова',
       };
     case getRoomsType.GET_ROOMS_SUCCESS:
-      const payload = action.payload
+      const payload = action.payload as IRoom[] 
       return {
         ...state,
         loading: false,
@@ -44,11 +49,12 @@ export const roomsReducer = (state = initialState, action: any) => {
         addError: null,      
       };
     case getRoomsType.SHOW_ROOM:
+      const { building } = action.payload as IRoom 
       return {
         ...state,
         room: {
-          ...action.payload,
-          building_id: action.payload.building.id
+          ...action.payload as IRoom,
+          building_id: building?.id
         }
       };
     case getRoomsType.RESET_EDITING:
@@ -60,7 +66,7 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload
+        showAlert: action.payload as string
       }
     case getRoomsType.CANCEL_DELETE:
       return {
@@ -70,7 +76,7 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.GET_URL: {
       return {
         ...state,
-        imgSrc: action.payload
+        imgSrc: action.payload as string
       }
     }
     case getRoomsType.CANCEL_UPLOAD: {
@@ -88,7 +94,7 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.EDIT_ROOM_FAIL:
       return {
         ...state,
-        editError: action.payload,
+        editError: action.payload as string,
       };
     case getRoomsType.EDIT_ROOM_SUCCESS:
       return {
@@ -98,12 +104,12 @@ export const roomsReducer = (state = initialState, action: any) => {
     case getRoomsType.ADD_ROOM_FAIL:
       return {
         ...state,
-        addError: action.payload,
+        addError: action.payload as string,
       };
     case getRoomsType.DELETE_ROOM_FAIL:
       return {
         ...state,
-        deleteError: action.payload,
+        deleteError: action.payload as string,
       };
     case getRoomsType.RESET_ROOMS_ERRORS:
       return {

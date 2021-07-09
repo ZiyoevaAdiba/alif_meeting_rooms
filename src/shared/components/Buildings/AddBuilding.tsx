@@ -15,6 +15,7 @@ import { CustomInput, CustomSelect } from '../CustomInput';
 import { requestAddBuilding } from '../../../store/actions/buildings';
 import { IBuilding } from '../../../store/reducers/buildings/interfaces';
 import { getAllCities } from '../../../store/actions/cities';
+import { BuildingSchema } from '../../validations/BuildingValidation';
 
 export const AddBuilding = () => {
   const [open, setOpen] = useState(false);
@@ -63,6 +64,9 @@ export const AddBuilding = () => {
           </DialogContentText>
           <Formik
             initialValues={initialBuilding}
+            validationSchema={BuildingSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
               dispatch(requestAddBuilding(values, setSubmitting, setOpen));

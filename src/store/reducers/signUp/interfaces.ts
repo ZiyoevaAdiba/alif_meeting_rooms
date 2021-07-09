@@ -1,5 +1,5 @@
 export interface ISignUpReducer {
   loading: boolean,
-  error: null | any,
+  error: null | string,
   success: boolean,
 }

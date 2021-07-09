@@ -17,6 +17,8 @@ import { useStyles } from '../Reservations/Form';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { History } from 'history';
+import { AddUserValidation } from '../../validations/UsersValidation';
+import { userMenuItems } from '../../consts/selectConsts';
 
 export interface IUserPageProps {
   page: number,
@@ -59,7 +61,13 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
       >
         Добавить Пользователя
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth={true}
+        maxWidth={'sm'}
+      >
         <DialogTitle id="form-dialog-title">Добавление пользователя</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -67,7 +75,9 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
           </DialogContentText>
           <Formik
             initialValues={user}
-            validationSchema={SignupSchema}
+            validationSchema={AddUserValidation}
+            validateOnBlur={false}
+            validateOnChange={false}
             onSubmit={(values, { setSubmitting }) => {
               // same shape as initial values
               dispatch(requestAddUser(page, searchInput, history, values, setSubmitting, setOpen));
@@ -95,15 +105,15 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                   fieldName={fieldInput.department_id}
                   text="Отдел"
                 />
-                
+
                 <CustomSelect
+                  itemList={userMenuItems}
                   formikProps={props}
                   fieldName={fieldInput.role}
                   text="Назначить роль"
                 />
 
                 <CustomInput
-                  // style={{ marginTop: '10px' }}
                   fieldData={
                     {
                       name: fieldInput.password,

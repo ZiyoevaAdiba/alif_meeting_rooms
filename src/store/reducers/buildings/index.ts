@@ -1,5 +1,6 @@
 import { getBuildingsType } from "../../actions/buildings/interfaces";
-import { IBuildingsReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { IBuilding, IBuildingsReducer } from "./interfaces";
 
 const initialState: IBuildingsReducer = {
   building: {},
@@ -11,15 +12,19 @@ const initialState: IBuildingsReducer = {
   showAlert: '',
 };
 
-export const buildingsReducer = (state = initialState, action: any) => {
+export const buildingsReducer = (
+  state = initialState, 
+  action: IAction<IBuilding | IBuilding[] | string>
+  ): IBuildingsReducer => {
+
   switch (action.type) {
     case getBuildingsType.GET_BUILDINGS:
       return {
         ...state,
         loading: true,
         buildingsError: null,
-        editError: null,
-        addError: null,      
+        editBuildingError: null,
+        addBuildingError: null,      
       };
     case getBuildingsType.GET_BUILDINGS_FAIL:
       return {
@@ -32,26 +37,27 @@ export const buildingsReducer = (state = initialState, action: any) => {
         ...state,
         loading: false,
         buildingsError: null,
-        buildings: action.payload,
+        buildings: action.payload as IBuilding[],
       };
     case getBuildingsType.SHOW_BUILDING:
+      const { city } = action.payload as IBuilding
       return {
         ...state,
         building: {
-          ...action.payload,
-          city_id: action.payload.city.id
+          ...action.payload as IBuilding,
+          city_id: city?.id
         }
       };
     case getBuildingsType.RESET_EDITING:
       return {
         ...state,
         building: {},
-        buildingError: null,
+        buildingsError: null,
       };
     case getBuildingsType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload,
+        showAlert: action.payload as string,
       };
     case getBuildingsType.CANCEL_DELETE:
       return {
@@ -61,7 +67,7 @@ export const buildingsReducer = (state = initialState, action: any) => {
     case getBuildingsType.EDIT_BUILDING_FAIL:
       return {
         ...state,
-        buildingError: action.payload,
+        editBuildingError: action.payload as string,
       };
     case getBuildingsType.EDIT_BUILDING_SUCCESS:
       return {
@@ -72,14 +78,14 @@ export const buildingsReducer = (state = initialState, action: any) => {
       case getBuildingsType.ADD_BUILDING_FAIL:
       return {
         ...state,
-        addError: action.payload,
+        addBuildingError: action.payload as string,
       };
     case getBuildingsType.RESET_BUILDINGS_ERRORS:
       return {
         ...state,
         buildingsError: null,
-        editError: null,
-        addError: null,      
+        editBuildingError: null,
+        addBuildingError: null,      
       };
     default:
       return state;

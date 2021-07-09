@@ -43,18 +43,27 @@ interface ICustomInput {
 
 export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
   return (
-    <CssTextField
-      style={{ margin: '10px 0px' }}
-      name={fieldData.name}
-      label={fieldData.label}
-      fullWidth
-      error={Boolean(formikProps.touched[fieldData.name] && formikProps.errors[fieldData.name])}
-      helperText={formikProps.touched[fieldData.name] && formikProps.errors[fieldData.name]}
-      value={formikProps.values[fieldData.name]}
-      onChange={formikProps.handleChange}
-      onBlur={formikProps.handleBlur}
-      type={fieldData.type}
-    />
+    <>
+      <CssTextField
+        style={{ margin: '10px 0px' }}
+        name={fieldData.name}
+        label={fieldData.label}
+        fullWidth
+        value={formikProps.values[fieldData.name]}
+        onChange={formikProps.handleChange}
+        onBlur={formikProps.handleBlur}
+        type={fieldData.type}
+      />
+      {
+        formikProps.errors[fieldData.name]
+        &&
+        formikProps.touched[fieldData.name]
+        &&
+        <div style={{ color: '#f44335', marginTop: '0px'}}>
+          {formikProps.errors[fieldData.name]}
+        </div>
+      }
+    </>
   )
 }
 
@@ -67,32 +76,11 @@ interface ICustomSelect {
 
 export const CustomSelect: FC<ICustomSelect> = ({ itemList, formikProps, fieldName, text }) => {
   const classes = greenStyle();
-  const userMenuItems = [
-    {
-      value: 'user',
-      name: 'Пользователь'
-    },
-    {
-      value: 'admin',
-      name: 'Админ'
-    }
-  ];
-
-  const roomMenuItems = [
-    {
-      value: 'true',
-      name: 'Доступен'
-    },
-    {
-      value: 'false',
-      name: 'Недоступен'
-    }
-  ];
 
   return (
     <>
       <InputLabel
-        style={{ marginTop: '10px' }}
+        style={{ marginTop: '15px' }}
         id="select"
       >
         {text}
@@ -100,41 +88,31 @@ export const CustomSelect: FC<ICustomSelect> = ({ itemList, formikProps, fieldNa
       <Select
         className={classes.select}
         id="select"
-        value={formikProps.values[fieldName] || ''}
+        value={formikProps.values[fieldName]}
         onChange={formikProps.handleChange}
         name={fieldName}
         fullWidth
       >
         {
-          (fieldName === 'role')
-            ?
-            userMenuItems.map(item =>
-              <MenuItem key={item.value} value={item.value}>
-                {item.name}
-              </MenuItem>
-            )
-            :
-            (
-              (fieldName === 'status')
-                ?
-                roomMenuItems.map(item =>
-                  <MenuItem key={item.value} value={item.value}>
-                    {item.name}
-                  </MenuItem>
-                )
-                :
-                itemList?.map(item => {
-                  return <MenuItem
-                    key={item.id}
-                    value={item.id}
-                  >
-                    {item.name}
-                  </MenuItem>
-                }
-                )
-            )
+          itemList?.map(item => {
+            return <MenuItem
+              key={item.id}
+              value={item.id}
+            >
+              {item.name}
+            </MenuItem>
+          })
         }
       </Select>
+      {
+        formikProps.errors[fieldName]
+        &&
+        formikProps.touched[fieldName]
+        &&
+        <div style={{ color: '#f44335', marginTop: '0px'}}>
+          {formikProps.errors[fieldName]}
+        </div>
+      }
     </>
   )
 }

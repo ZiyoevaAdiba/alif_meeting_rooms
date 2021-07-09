@@ -18,6 +18,8 @@ import { ErrorDiv } from '../ErrorDiv';
 import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
 import { addEditRoomFields } from './roomFields';
 import { getAllBuildings } from '../../../store/actions/buildings';
+import { ChangeEvent } from 'react';
+import { roomMenuItems } from '../../consts/selectConsts';
 
 
 export const AddRoom = () => {
@@ -46,8 +48,9 @@ export const AddRoom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleImageUpload = (evt: any) => {
-    const photo = evt.target.files[0];
+  const handleImageUpload = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = evt.target as HTMLInputElement;
+    const photo: File = (target.files as FileList)[0];
     const fd = new FormData();
     fd.append('image', photo);
     dispatch(addMRPhoto(fd));
@@ -72,13 +75,15 @@ export const AddRoom = () => {
           <Formik
             initialValues={room}
             validationSchema={RoomSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            validateOnBlur={false}
+            validateOnChange={false}
+            onSubmit={(values) => {
               values.photo = imgSrc
               values.status = (values.status === 'true')
                 ? true
                 : false;
-              delete values.status;
-              dispatch(requestAddRoom(values, setSubmitting, setOpen));
+              // delete values.status;
+              dispatch(requestAddRoom(values, setOpen));
             }}
           >
             {props => (
@@ -101,14 +106,15 @@ export const AddRoom = () => {
                   fieldName='building_id'
                   text="Выбрать офис"
                 />
-                
+
                 <CustomSelect
+                  itemList={roomMenuItems}
                   formikProps={props}
                   fieldName={fieldRoom.status}
                   text="Состояние meeting room-a"
                 />
 
-                
+
                 <CssTextField
                   name={fieldRoom.photo}
                   onChange={(evt) => handleImageUpload(evt)}

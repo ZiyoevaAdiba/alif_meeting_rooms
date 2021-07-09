@@ -19,7 +19,7 @@ const getReservationsFail = () => {
     payload: {}
   };
 }
-const getReservationsSuccess = (data?: any) => {
+const getReservationsSuccess = (data?: IReservation[]) => {
   return {
     type: getReservationsType.GET_RESERVATIONS_SUCCESS,
     payload: data
@@ -55,7 +55,13 @@ export const reservationSuccess = () => {
   }
 }
 
-export const requestAddReservation = (reservationData: IReservation, setOpen: any, selectedCity: string, history: History, selectedBuilding: string) => async (dispatch: Dispatch<any>) => {
+export const requestAddReservation = (
+  reservationData: IReservation,
+  setOpen: (state: boolean) => void,
+  selectedCity: string,
+  history: History,
+  selectedBuilding: string
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getReservationsReq());
     await Axios.post(`${api.reservations}`, reservationData);
@@ -69,7 +75,7 @@ export const requestAddReservation = (reservationData: IReservation, setOpen: an
   }
 }
 
-export const requestDeleteReservation = (mrID: string, reservationId: string) => async (dispatch: Dispatch<any>) => {
+export const requestDeleteReservation = (reservationId: string, mrID?: string) => async (dispatch: Dispatch<any>) => {
   try {
     await Axios.delete(`${api.reservations}/${reservationId}`);
     dispatch(getMRReservations(mrID));
@@ -78,11 +84,17 @@ export const requestDeleteReservation = (mrID: string, reservationId: string) =>
   }
 }
 
-export const getMRReservations = (mrID: string) => async (dispatch: Dispatch<any>) => {
+export const getMRReservations = (mrID?: string) => async (dispatch: Dispatch<any>) => {
   try {
     const res = await Axios.get(`${api.mrReservations}/${mrID}/meeting`);
-    dispatch(getReservationsSuccess(res.data.payload));
-  } catch (error) {    
+    const { payload } = res.data;
+
+    const reservationData = (typeof payload.id === 'string')
+      ? [payload]
+      : payload;
+
+    dispatch(getReservationsSuccess(reservationData));
+  } catch (error) {
     dispatch(getReservationsFail());
   }
 }

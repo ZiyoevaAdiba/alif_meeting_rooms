@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     margin: '0 auto',
-    // overflow: 'visible',
     display: 'flex',
     maxWidth: '500px',
+    width: 'inherit',
     position: 'relative',
     boxShadow: '0px 0px 15px 1px rgba(0,0,0,0.2)',
     '& > *': {

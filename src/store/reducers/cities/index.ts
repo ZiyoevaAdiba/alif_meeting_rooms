@@ -1,5 +1,6 @@
 import { getCitiesType } from "../../actions/cities/interfaces";
-import { ICityReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { ICity, ICityReducer } from "./interfaces";
 
 const initialState: ICityReducer = {
   city: {},
@@ -11,7 +12,11 @@ const initialState: ICityReducer = {
   showAlert: '',
 };
 
-export const citiesReducer = (state = initialState, action: any) => {
+export const citiesReducer = (
+  state = initialState, 
+  action: IAction<ICity | ICity[] | string >
+  ): ICityReducer => {
+
   switch (action.type) {
     case getCitiesType.GET_CITIES:
       return {
@@ -27,7 +32,7 @@ export const citiesReducer = (state = initialState, action: any) => {
         error: 'Проверьте доступ. Попробуйте снова.',
       };
     case getCitiesType.GET_CITIES_SUCCESS:
-      const payload = action.payload
+      const payload = action.payload as ICity[]
       return {
         ...state,
         loading: false,
@@ -37,7 +42,7 @@ export const citiesReducer = (state = initialState, action: any) => {
     case getCitiesType.SHOW_CITY:
       return {
         ...state,
-        city: action.payload,
+        city: action.payload as ICity,
       };
     case getCitiesType.RESET_EDITING:
       return {
@@ -48,12 +53,12 @@ export const citiesReducer = (state = initialState, action: any) => {
     case getCitiesType.EDIT_CITY_FAIL:
       return {
         ...state,
-        editError: action.payload,
+        editError: action.payload as string,
       };
     case getCitiesType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload
+        showAlert: action.payload as string
       }
     case getCitiesType.CANCEL_DELETE:
       return {
@@ -63,7 +68,7 @@ export const citiesReducer = (state = initialState, action: any) => {
     case getCitiesType.ADD_CITY_FAIL:
       return {
         ...state,
-        addError: action.payload,
+        addError: action.payload as string,
       };
     case getCitiesType.RESET_CITIES_ERRORS:
       return {

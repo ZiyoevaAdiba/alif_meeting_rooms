@@ -24,6 +24,7 @@ import { ICityReducer } from './cities/interfaces';
 import { citiesReducer } from './cities';
 import { IBuildingsReducer } from './buildings/interfaces';
 import { buildingsReducer } from './buildings';
+import { History } from 'history';
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
@@ -40,7 +41,7 @@ export interface IRootReducer {
     buildingsReducer: IBuildingsReducer,
 }
 
-export const rootReducer = (history: any) => combineReducers({
+export const rootReducer = (history: History) => combineReducers({
     router: connectRouter(history),
     signUpReducer,
     loginReducer,

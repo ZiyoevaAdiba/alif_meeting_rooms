@@ -7,7 +7,7 @@ interface ICustomDelWarningDialog {
   handleClose: () => void,
   dialogText: string,
   handleConfirm: () => void,
-  deleteError?: null | any,
+  deleteError?: null | string,
 }
 export const CustomDelWarningDialog: FC<ICustomDelWarningDialog> = ({open, handleClose, dialogText, handleConfirm, deleteError}) => {
   return (

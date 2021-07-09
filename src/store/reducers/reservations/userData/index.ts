@@ -1,5 +1,6 @@
 import { getUserDataType } from "../../../actions/reservations/userData/interfaces";
-import { IGetUserDataReducer } from "./interfaces";
+import { IAction } from "../../interfaces";
+import { IGetUserData, IGetUserDataReducer } from "./interfaces";
 
 const initialState: IGetUserDataReducer = {
   loading: false,
@@ -7,7 +8,11 @@ const initialState: IGetUserDataReducer = {
   userData: {},
 };
 
-export const getUserDataReducer = (state = initialState, action: any) => {
+export const getUserDataReducer = (
+  state = initialState, 
+  action: IAction<IGetUserData>
+  ): IGetUserDataReducer => {
+
   switch (action.type) {
     case getUserDataType.GET_USERS_INFO:
       return {

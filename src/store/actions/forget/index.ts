@@ -26,7 +26,11 @@ const forgetReqSuccess = (userRole?: string) => {
   }
 }
 
-export const requestPassword = (userData: IForgetData, setSubmitting: any, history: History) => async(dispatch: Dispatch<any>) => {
+export const requestPassword = (
+  userData: IForgetData,
+  setSubmitting: (state: boolean) => void,
+  history: History
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(forgetReqSent());
     await Axios.post(`${api.forget}`, userData);

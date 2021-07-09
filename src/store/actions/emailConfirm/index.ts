@@ -18,7 +18,7 @@ const emailReqFail = () => {
   }
 }
 
-const emailReqSuccess = (data?: any) => {
+const emailReqSuccess = (data?: boolean) => {
   return {
     type: emailType.EMAIL_SUCCESS,
     payload: data
@@ -26,11 +26,26 @@ const emailReqSuccess = (data?: any) => {
 }
 
 
-export const requestEmailConfirm = (id: string) => async(dispatch: Dispatch<any>) => {
+export const requestEmailConfirm = (id: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(emailReqSent());
     const res = await Axios.get(`${api.registrationAlert}/${id}`);
-    dispatch(emailReqSuccess(res.data.payload.exist));    
+    dispatch(emailReqSuccess(res.data.payload.exist));
+    if (res.data.payload.exist === false) {
+      store.addNotification({
+        title: "Выполнено!",
+        message: "Регистрации прошла успешно.",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 7000,
+          onScreen: true
+        }
+      })
+    }
 
   } catch (error) {
     dispatch(emailReqFail());
@@ -46,6 +61,6 @@ export const requestEmailConfirm = (id: string) => async(dispatch: Dispatch<any>
         duration: 7000,
         onScreen: true
       }
-    }) 
+    })
   }
 }

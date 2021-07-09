@@ -9,7 +9,7 @@ export interface IMeetingRoomsInfo {
 
 export interface IMeetingRoomsInfoReducer {
   loading: boolean,
-  error: null | any,
+  error: null | string,
   meetingRoomsInfo: IMeetingRoomsInfo[],
 }
 

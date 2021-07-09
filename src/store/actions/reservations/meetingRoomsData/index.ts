@@ -3,6 +3,7 @@ import { Dispatch } from "react";
 import { api, urls } from "../../../../routes/urls";
 import { Axios } from "../../../../shared/axios";
 import { History } from "history";
+import { IRoom } from "../../../reducers/rooms/interfaces";
 
 const getMRsInfoReq = () => {
   return {
@@ -18,7 +19,7 @@ const getMRsInfoFail = () => {
   }
 }
 
-const getMRsInfoSuccess = (data?: any) => {
+const getMRsInfoSuccess = (data?: IRoom[]) => {
   return {
     type: getMeetingRoomsDataType.GET_MEETING_ROOMS_INFO_SUCCESS,
     payload: data
@@ -38,7 +39,7 @@ export const getMRsInfo = (history: History) => async(dispatch: Dispatch<any>) =
   }
 };
 
-export const getMRsByCityId = (city_id: any, history: History, selectedBuilding: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByCityId = (city_id: string, history: History, selectedBuilding: string) => async(dispatch: Dispatch<any>) => {
   try {    
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
@@ -50,7 +51,7 @@ export const getMRsByCityId = (city_id: any, history: History, selectedBuilding:
   }
 };
 
-export const getMRsByBuildingId = (building_id: any, history: History, selectedCity: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByBuildingId = (building_id: string, history: History, selectedCity: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${building_id}/building`);

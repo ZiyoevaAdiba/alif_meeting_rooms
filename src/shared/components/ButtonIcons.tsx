@@ -19,6 +19,14 @@ import Popup from 'reactjs-popup';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { citiesWarningDelete, showCityData } from '../../store/actions/cities';
 import { buildingWarningDelete, showBuildingData } from '../../store/actions/buildings';
+import { IGetUserData } from '../../store/reducers/reservations/userData/interfaces';
+import { FC } from 'react';
+import { IUser } from '../../store/reducers/users/interfaces';
+import { string } from 'yup';
+import { IBuilding } from '../../store/reducers/buildings/interfaces';
+import { IDepartment } from '../../store/reducers/departments/interfaces';
+import { ICity } from '../../store/reducers/cities/interfaces';
+import { IRoom } from '../../store/reducers/rooms/interfaces';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -64,7 +72,11 @@ const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any
   }
 }
 
-const handleEdit = (row: any, btnLocation: string, dispatch: Dispatch<any>) => {
+const handleEdit = (
+  row: IUser | IRoom | IBuilding | IDepartment | ICity, 
+  btnLocation: string, 
+  dispatch: Dispatch<any>
+  ) => {
   if (btnLocation === 'users'){
     dispatch(showUserData(row));
     return;
@@ -87,7 +99,12 @@ const handleEdit = (row: any, btnLocation: string, dispatch: Dispatch<any>) => {
   }
 }
 
-export const ButtonEdit = ({ row, btnLocation }: any) => {
+interface IButtonEdit {
+  row: IUser | IRoom | IBuilding | IDepartment | ICity,
+  btnLocation: string
+}
+
+export const ButtonEdit: FC<IButtonEdit> = ({ row, btnLocation }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -102,8 +119,13 @@ export const ButtonEdit = ({ row, btnLocation }: any) => {
   )
 }
 
+interface IButtonDelete {
+  id: string, 
+  btnLocation: string,
+  columnUserId?: string, 
+}
 
-export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
+export const ButtonDelete: FC<IButtonDelete> = ({ id, columnUserId = '', btnLocation }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)
@@ -123,16 +145,20 @@ export const ButtonDelete = ({ id, columnUserId = '', btnLocation }: any) => {
   )
 }
 
+interface IButtonPoppup {
+  params: IUser,
+  btnLocation: string
+}
 
-export const ButtonPoppup = ({ params, btnLocation }: any) => {
+export const ButtonPoppup: FC<IButtonPoppup> = ({ params, btnLocation }) => {
 
   const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)
 
-  if (params.user.id === userData.id && btnLocation === 'reservations') {
+  if (params.id === userData.id && btnLocation === 'reservations') {
     return <></>;
   }
 
-  const telegramLink = `https://t.me/${params.user.tg_account}`
+  const telegramLink = `https://t.me/${params.tg_account}`
 
   return (
     <Popup
@@ -142,11 +168,11 @@ export const ButtonPoppup = ({ params, btnLocation }: any) => {
       nested
     >
       {
-        `${params.user.last_name} 
-          ${params.user.name} `
+        `${params.last_name} 
+          ${params.name} `
       }
       <Link href={telegramLink} target="_blank">
-        @{params.user.tg_account}
+        @{params.tg_account}
       </Link>
 
     </Popup >

@@ -1,5 +1,6 @@
 import { getMeetingRoomsDataType } from "../../../actions/reservations/meetingRoomsData/interfaces";
-import { IMeetingRoomsInfoReducer } from "./interfaces";
+import { IAction } from "../../interfaces";
+import { IMeetingRoomsInfo, IMeetingRoomsInfoReducer } from "./interfaces";
 
 const initialState: IMeetingRoomsInfoReducer = {
   loading: false,
@@ -7,7 +8,11 @@ const initialState: IMeetingRoomsInfoReducer = {
   meetingRoomsInfo: [],
 };
 
-export const getMRsDataReducer = (state = initialState, action: any) => {
+export const getMRsDataReducer = (
+  state = initialState, 
+  action: IAction<IMeetingRoomsInfo[]>
+  ): IMeetingRoomsInfoReducer => {
+
   switch (action.type) {
     case getMeetingRoomsDataType.GET_MEETING_ROOMS_INFO:
       return {

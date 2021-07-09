@@ -26,7 +26,11 @@ const requestSuccess = () => {
   }
 }
 
-export const requestRegistration = (userData: IUserData, history: History, setSubmitting: any) => async (dispatch: Dispatch<any>) => {
+export const requestRegistration = (
+  userData: IUserData, 
+  history: History, 
+  setSubmitting: (state: boolean) => void
+  ) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(requestSent());
     

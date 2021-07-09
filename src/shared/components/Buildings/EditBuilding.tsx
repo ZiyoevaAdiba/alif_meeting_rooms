@@ -12,6 +12,7 @@ import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { requestEditBuilding, resetBuildingEditing } from '../../../store/actions/buildings';
+import { BuildingSchema } from '../../validations/BuildingValidation';
 
 export const EditBuilding = () => {
   const {
@@ -44,6 +45,9 @@ export const EditBuilding = () => {
         </DialogContentText>
         <Formik
           initialValues={building}
+          validationSchema={BuildingSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={(values) => {
             delete values.city;
             dispatch(requestEditBuilding(values));

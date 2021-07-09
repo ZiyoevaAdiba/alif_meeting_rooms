@@ -18,7 +18,7 @@ import { getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
 import { Page } from '../../../layouts/Page';
-import { CustomInput, greenStyle } from '../CustomInput';
+import { CustomInput, CustomSelect, greenStyle } from '../CustomInput';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
 
 const useStyles = makeStyles(() => createStyles({
@@ -65,7 +65,6 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 export const SignUpForm = () => {
-  const greenClass = greenStyle();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.signUpReducer);
@@ -79,7 +78,6 @@ export const SignUpForm = () => {
     departments
   } = useSelector((state: IRootReducer) => state.departmentsReducer);
 
-
   const history = useHistory();
 
   const loginClick = () => {
@@ -92,6 +90,8 @@ export const SignUpForm = () => {
       <Formik
         initialValues={user}
         validationSchema={SignupSchema}
+        validateOnBlur={false}
+        // validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestRegistration(values, history, setSubmitting));
         }
@@ -110,30 +110,12 @@ export const SignUpForm = () => {
                 />
               )
             }
-            <InputLabel
-              style={{ marginTop: '18px' }}
-              id="demo-simple-select-label"
-              error={Boolean(props.touched.department && props.errors.department)}
-              onBlur={props.handleBlur}
-            >Выбрать отдел
-            </InputLabel>
-            <Select
-              className={greenClass.select}
-              id="demo-simple-select"
-              value={props.values.department}
-              onChange={props.handleChange}
-              name={fieldInput.department}
-              fullWidth
-            >
-              {
-                departments.map(
-                  (item) => {
-                    return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
-                  }
-                )
-              }
-
-            </Select>
+            <CustomSelect
+              itemList={departments}
+              formikProps={props}
+              fieldName={fieldInput.department_id}
+              text="Выбрать отдел"
+            />            
             <CustomInput
               fieldData={
                 {

@@ -3,6 +3,7 @@ import { Dispatch } from "react";
 import { api } from "../../../routes/urls";
 import { Axios } from "../../../shared/axios";
 import { IDepartment } from "../../reducers/departments/interfaces";
+import { ICity } from "../../reducers/cities/interfaces";
 
 const getCitiesReq = () => {
   return {
@@ -25,7 +26,7 @@ const getCitiesSuccess = (data?: IDepartment[]) => {
   }
 }
 
-export const showCityData = (data: IDepartment) => {
+export const showCityData = (data: ICity) => {
   return {
     type: getCitiesType.SHOW_CITY,
     payload: data
@@ -77,7 +78,7 @@ export const editCityFail = (message: string) => {
 }
 
 
-export const getAllCities = () => async(dispatch: Dispatch<any>) => {
+export const getAllCities = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getCitiesReq());
     const res = await Axios.get(`${api.apiCities}`);
@@ -88,19 +89,22 @@ export const getAllCities = () => async(dispatch: Dispatch<any>) => {
   }
 }
 
-export const requestAddCity = (depData: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddCity = (
+  depData: string,
+  setOpen: (state: boolean) => void
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getCitiesReq());
-    
+
     const data = {
       name: depData
     };
-    
+
     await Axios.post(`${api.adminCities}`, data);
     dispatch(addCitySuccess())
     setOpen(false)
     dispatch(getAllCities());
-    
+
   } catch (error) {
     dispatch(addCityFail(error.response.data.payload.message));
   }
@@ -109,11 +113,11 @@ export const requestAddCity = (depData: string, setOpen: any) => async(dispatch:
 
 
 export const requestEditCity = (
-  depData: string | undefined, 
-  setOpen: any,
+  depData: string | undefined,
+  setOpen: (state: boolean) => void,
   id: string | undefined,
-  ) => async(dispatch: Dispatch<any>) => {
-  try {    
+) => async (dispatch: Dispatch<any>) => {
+  try {
     const data = {
       name: depData
     };
@@ -123,18 +127,18 @@ export const requestEditCity = (
     dispatch(addCitySuccess());
     dispatch(resetCityEditing());
     dispatch(getAllCities());
-    
+
   } catch (error) {
     dispatch(editCityFail(error.response.data.payload.message));
   }
 }
 
-export const requestDeleteCity = (depId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteCity = (depId: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getCitiesReq());
     await Axios.delete(`${api.adminCities}/${depId}`);
     dispatch(getAllCities());
-    
+
   } catch (error) {
     dispatch(getCitiesFail());
   }

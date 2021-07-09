@@ -1,5 +1,6 @@
 import { getReservationsType } from "../../actions/reservations/interfaces";
-import { IreservationsReducer } from "./interfaces";
+import { IAction } from "../interfaces";
+import { IReservation, IReservationEmpty, IreservationsReducer } from "./interfaces";
 
 const initialState: IreservationsReducer = {
   loading: false,
@@ -10,7 +11,11 @@ const initialState: IreservationsReducer = {
 };
 
 
-export const reservationsReducer = (state = initialState, action: any) => {
+export const reservationsReducer = (
+  state = initialState,
+  action: IAction<IReservation[] | string>
+): IreservationsReducer => {
+
   switch (action.type) {
     case getReservationsType.GET_RESERVATIONS:
       return {
@@ -26,19 +31,16 @@ export const reservationsReducer = (state = initialState, action: any) => {
         error: 'Проверьте доступ. Попробуйте снова',
       };
     case getReservationsType.GET_RESERVATIONS_SUCCESS:
-      const reservationData = (typeof action.payload.id === 'string')
-        ? action.payload.id
-        : action.payload;
       return {
         ...state,
         loading: false,
         error: null,
-        booking: reservationData,
+        booking: action.payload as IReservation[],
       };
     case getReservationsType.SHOW_WARNING:
       return {
         ...state,
-        showAlert: action.payload
+        showAlert: action.payload as string
       }
     case getReservationsType.CANCEL_DELETE:
       return {
@@ -48,7 +50,7 @@ export const reservationsReducer = (state = initialState, action: any) => {
     case getReservationsType.ADD_RESERVATION_FAIL:
       return {
         ...state,
-        addError: action.payload,
+        addError: action.payload as string,
       };
     case getReservationsType.RESET_RESERVATION_ERRORS:
       return {

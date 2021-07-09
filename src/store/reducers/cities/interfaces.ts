@@ -5,9 +5,9 @@ export interface ICity {
 
 export interface ICityReducer {
   loading: boolean,
-  error: null | any,
-  addError: null | any,
-  editError: null | any,
+  error: null | string,
+  addError: null | string,
+  editError: null | string,
   cities: ICity[],
   city: ICity,
   showAlert: string,

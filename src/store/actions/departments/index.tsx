@@ -77,7 +77,7 @@ export const editDepFail = (message: string) => {
 }
 
 
-export const getAllDepartments = () => async(dispatch: Dispatch<any>) => {
+export const getAllDepartments = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
     const res = await Axios.get(`${api.departments}`);
@@ -88,7 +88,7 @@ export const getAllDepartments = () => async(dispatch: Dispatch<any>) => {
   }
 }
 
-export const getDepartments = () => async(dispatch: Dispatch<any>) => {
+export const getDepartments = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
     const res = await Axios.get(`${api.departmentsForDropdown}`);
@@ -100,19 +100,22 @@ export const getDepartments = () => async(dispatch: Dispatch<any>) => {
 }
 
 
-export const requestAddDepartment = (depData: string, setOpen: any) => async(dispatch: Dispatch<any>) => {
+export const requestAddDepartment = (
+  depData: string,
+  setOpen: (state: boolean) => void
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
-    
+
     const data = {
       name: depData
     };
-    
+
     await Axios.post(`${api.departments}`, data);
     dispatch(addDepSuccess())
     setOpen(false)
     dispatch(getAllDepartments());
-    
+
   } catch (error) {
     dispatch(addDepFail(error.response.data.payload.message));
   }
@@ -121,11 +124,11 @@ export const requestAddDepartment = (depData: string, setOpen: any) => async(dis
 
 
 export const requestEditDepartment = (
-  depData: string | undefined, 
-  setOpen: any,
+  depData: string | undefined,
+  setOpen: (state: boolean) => void,
   id: string | undefined,
-  ) => async(dispatch: Dispatch<any>) => {
-  try {    
+) => async (dispatch: Dispatch<any>) => {
+  try {
     const data = {
       name: depData
     };
@@ -135,18 +138,18 @@ export const requestEditDepartment = (
     dispatch(addDepSuccess());
     dispatch(resetDepartmentEditing());
     dispatch(getAllDepartments());
-    
+
   } catch (error) {
     dispatch(editDepFail(error.response.data.payload.message));
   }
 }
 
-export const requestDeleteDepartment = (depId: string) => async(dispatch: Dispatch<any>) => {
+export const requestDeleteDepartment = (depId: string) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
     await Axios.delete(`${api.departments}/${depId}`);
     dispatch(getAllDepartments());
-    
+
   } catch (error) {
     dispatch(getDepartmentsFail());
   }
