@@ -11,18 +11,18 @@ import { fieldRoom } from './MeetingRooms';
 import { addMRPhoto, cancelImgUpload, requestEditRoom, resetRoomEditing } from '../../../store/actions/rooms';
 import { IRootReducer } from '../../../store/reducers';
 import { RoomSchema } from '../../validations/RoomValidation';
-import { useStyles } from '../Reservations/Form';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
 import { addEditRoomFields } from './roomFields';
 import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
 import { roomMenuItems } from '../../consts/selectConsts';
+import { buttonStyles } from '../styles/buttonStyles';
 
 
 export const EditRoom = () => {
   const { room } = useSelector((state: IRootReducer) => state.roomsReducer)
   const [open, setOpen] = useState(true);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,7 +71,6 @@ export const EditRoom = () => {
           {props => (
             <Form
               onSubmit={props.handleSubmit}
-              className={classes.signUpForm}
             >
               {
                 addEditRoomFields.map(
@@ -148,13 +147,13 @@ export const EditRoom = () => {
                 <Button
                   type='submit'
                   variant='contained'
-                  className={classes.btnReserve}
+                  className={buttonClasses.btnReserve}
                 >
                   Сохранить изменения
                 </Button>
                 <Button
                   onClick={handleClose}
-                  className={classes.btnCancel}
+                  className={buttonClasses.btnCancel}
                 >
                   отмена
                 </Button>

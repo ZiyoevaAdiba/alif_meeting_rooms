@@ -6,13 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDepSuccess, requestAddDepartment } from '../../../store/actions/departments';
-import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import { ErrorDiv } from '../ErrorDiv';
 import { CssTextField } from '../CustomInput';
+import { buttonStyles } from '../styles/buttonStyles';
 
 export const AddDepartment = () => {
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
   const [open, setOpen] = React.useState(false);
   const [depInput, setDepInput] = React.useState('');
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const AddDepartment = () => {
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        className={classes.btnReserve}
+        className={buttonClasses.btnReserve}
       >
         Добавить Отдел
       </Button>
@@ -73,13 +73,13 @@ export const AddDepartment = () => {
             <Button
               variant='contained'
               type='submit'
-              className={classes.btnReserve}
+              className={buttonClasses.btnReserve}
             >
               Добавить
             </Button>
             <Button
               onClick={handleClose}
-              className={classes.btnCancel}
+              className={buttonClasses.btnCancel}
             >
               Отмена
             </Button>

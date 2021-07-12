@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   Grid,
-  makeStyles,
 } from "@material-ui/core";
 import {
   DataGrid,
@@ -21,27 +20,7 @@ import { ConfirmDelBuilding } from "./ConfirmDelBuilding";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
 import { getAllBuildings } from "../../../store/actions/buildings";
-
-const useStyles = makeStyles((theme) => ({
-  CardsContainer: {
-    marginTop: 15,
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    height: 'auto',
-    flexDirection: 'column',
-    rowGap: 20,
-    marginBottom: 40,
-  },
-  topRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  requests_header: {
-    fontSize: 30
-  },
-
-}));
+import { commonStyles } from "../styles/mainPagesStyles";
 
 const columns: GridColumns = [
   {
@@ -92,7 +71,7 @@ const columns: GridColumns = [
 ];
 
 export const Buildings = () => {
-  const classes = useStyles();
+  const commonClasses = commonStyles();
   const {
     buildings,
     buildingsError,
@@ -119,21 +98,23 @@ export const Buildings = () => {
             />
             :
             <Grid
-              className={classes.CardsContainer}
+              className={commonClasses.CardsContainer}
               container
               spacing={6}
             >
               <Box
-                className={classes.topRow}
+                className={commonClasses.topRow}
               >
-                <Box className={classes.requests_header}>
+                <Box className={commonClasses.requests_header}>
                    Офисы Алифа
                 </Box>
             
-                <AddBuilding/>
+                <AddBuilding />
               </Box>
-              <EditBuilding/>
-              <ConfirmDelBuilding/>
+              
+              <EditBuilding />
+              <ConfirmDelBuilding />
+
               <DataGrid
                 rows={buildings || []}
                 columns={columns}

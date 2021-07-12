@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fieldRoom, room } from './MeetingRooms';
 import { addMRPhoto, resetRoomErrors, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
 import { RoomSchema } from '../../validations/RoomValidation';
-import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { ErrorDiv } from '../ErrorDiv';
@@ -20,11 +19,11 @@ import { addEditRoomFields } from './roomFields';
 import { getAllBuildings } from '../../../store/actions/buildings';
 import { ChangeEvent } from 'react';
 import { roomMenuItems } from '../../consts/selectConsts';
-
+import { buttonStyles } from '../styles/buttonStyles';
 
 export const AddRoom = () => {
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,7 +59,7 @@ export const AddRoom = () => {
     <Box>
       <Button
         variant="contained"
-        className={classes.btnReserve}
+        className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
         Добавить Meeting Room
@@ -82,14 +81,12 @@ export const AddRoom = () => {
               values.status = (values.status === 'true')
                 ? true
                 : false;
-              // delete values.status;
               dispatch(requestAddRoom(values, setOpen));
             }}
           >
             {props => (
               <Form
                 onSubmit={props.handleSubmit}
-                className={classes.signUpForm}
               >
                 {
                   addEditRoomFields.map(
@@ -155,13 +152,13 @@ export const AddRoom = () => {
                   <Button
                     type='submit'
                     variant='contained'
-                    className={classes.btnReserve}
+                    className={buttonClasses.btnReserve}
                   >
                     Добавить
                   </Button>
                   <Button
                     onClick={handleClose}
-                    className={classes.btnCancel}
+                    className={buttonClasses.btnCancel}
                   >
                     отмена
                   </Button>

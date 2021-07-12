@@ -1,7 +1,3 @@
-import {
-  createStyles,
-  makeStyles,
-} from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,32 +11,12 @@ import { getDepartments } from '../../../store/actions/departments';
 import { useEffect } from 'react';
 import { ErrorDiv } from '../ErrorDiv';
 import { Page } from '../../../layouts/Page';
-import { CustomInput, CustomSelect, greenStyle } from '../CustomInput';
+import { CustomInput, CustomSelect } from '../CustomInput';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
-
-const useStyles = makeStyles(() => createStyles({
-  authBtn: {
-    marginTop: 30,
-    fontSize: '1.2rem',
-    color: 'white',
-    backgroundColor: '#39b97f',
-    '& img': {
-      width: '30px',
-      height: 'auto',
-    }
-  },
-
-  btnsText: {
-    marginTop: '20px',
-    fontSize: 12,
-    fontWeight: 550,
-    color: '#39b97f',
-  }
-
-}));
+import { authStyles } from './authStyles';
 
 export const SignUpForm = () => {
-  const classes = useStyles();
+  const authClasses = authStyles();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state: IRootReducer) => state.signUpReducer);
 
@@ -102,7 +78,7 @@ export const SignUpForm = () => {
             />
 
             <Button
-              className={classes.authBtn}
+              className={authClasses.authBtn}
               disabled={props.isSubmitting}
               fullWidth
               type="submit"
@@ -123,7 +99,7 @@ export const SignUpForm = () => {
               />
             }
             <Button
-              className={classes.btnsText}
+              className={authClasses.btnsText}
               disabled={props.isSubmitting}
               fullWidth
               type="button"

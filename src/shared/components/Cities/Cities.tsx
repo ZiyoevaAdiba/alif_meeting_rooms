@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   Grid,
-  makeStyles,
 } from "@material-ui/core"
 import {
   DataGrid,
@@ -17,36 +16,10 @@ import { IRootReducer } from "../../../store/reducers";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
 import { ErrorDiv } from "../ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
+import { commonStyles } from "../styles/mainPagesStyles";
 import { AddCity } from "./AddCity";
 import { ConfirmDelCity } from "./ConfirmDelCity";
 import { EditCity } from "./EditCity";
-
-const useStyles = makeStyles((theme) => ({
-  table_users: {
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-
-  CardsContainer: {
-    marginTop: 15,
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    height: 'auto',
-    width: 900,
-    flexDirection: 'column',
-    rowGap: 10,
-    marginBottom: 40,
-  },
-  topRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  requests_header: {
-    fontSize: 30
-  },
-}));
 
 const columns: GridColumns = [
   {
@@ -93,7 +66,7 @@ export const Cities = () => {
     dispatch(getAllCities());
   }, [dispatch]);
 
-  const classes = useStyles();
+  const commonClasses = commonStyles();
 
   if (loading && !error) {
     return <LoadingScreen />;
@@ -109,21 +82,24 @@ export const Cities = () => {
               error={error}
             />
             :
-            <Grid className={classes.CardsContainer}
+            <Grid
+              className={commonClasses.CardsContainer}
+              style={{ width: '900px' }}
               container spacing={6}
             >
               <Box
-                className={classes.topRow}
+                className={commonClasses.topRow}
               >
-                <Box className={classes.requests_header}>
+                <Box className={commonClasses.requests_header}>
                   Города
                 </Box>
                 <AddCity />
               </Box>
+
               <EditCity />
               <ConfirmDelCity />
+              
               <DataGrid
-                className={classes.table_users}
                 rows={cities || []}
                 columns={columns}
                 rowsPerPageOptions={[]}
