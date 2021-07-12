@@ -158,7 +158,7 @@ export const ButtonPoppup: FC<IButtonPoppup> = ({ params, btnLocation }) => {
     return <></>;
   }
 
-  const telegramLink = `https://t.me/${params.tg_account}`
+  const telegramLink = `https://t.me/${params.tg_account}`;
 
   return (
     <Popup
