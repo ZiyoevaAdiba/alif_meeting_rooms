@@ -11,13 +11,31 @@ import logo from '../../../assets/images/alif_logo.png';
 import { removeToken } from '../../../store/actions/login';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    html: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+      width: '100%',
+      height: '100%'
+    },
+    body: {
+      height: '100%',
+      width: '100%',
+      margin: 0,
+      padding: 0
+    },
+    '#root': {
+      height: '100%',
+      width: '100%'
+    },
+  },
   authFormContainer: {
     height: '100%',
     display: 'flex',
     alignItems: 'center'
   },
   card: {
-    margin: '0 auto',
+    margin: '20px auto',
     display: 'flex',
     maxWidth: '500px',
     width: 'inherit',

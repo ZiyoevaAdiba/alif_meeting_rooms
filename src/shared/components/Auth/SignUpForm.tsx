@@ -1,9 +1,6 @@
 import {
   createStyles,
-  InputLabel,
   makeStyles,
-  MenuItem,
-  Select
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core'
@@ -22,28 +19,6 @@ import { CustomInput, CustomSelect, greenStyle } from '../CustomInput';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
 
 const useStyles = makeStyles(() => createStyles({
-  '@global': {
-    html: {
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%'
-    },
-    body: {
-      height: '100%',
-      width: '100%',
-      margin: 0,
-      padding: 0
-    },
-    '#root': {
-      height: '100%',
-      width: '100%',
-      '& .MuiFormControl-fullWidth': {
-        marginBottom: 10,
-      }
-    },
-  },
-
   authBtn: {
     marginTop: 30,
     fontSize: '1.2rem',
@@ -91,7 +66,6 @@ export const SignUpForm = () => {
         initialValues={user}
         validationSchema={SignupSchema}
         validateOnBlur={false}
-        // validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestRegistration(values, history, setSubmitting));
         }

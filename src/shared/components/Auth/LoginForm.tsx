@@ -15,27 +15,6 @@ import { useEffect } from 'react';
 import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
 
 const useStyles = makeStyles(() => createStyles({
-  '@global': {
-    html: {
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%'
-    },
-    body: {
-      height: '100%',
-      width: '100%',
-      margin: 0,
-      padding: 0
-    },
-    '#root': {
-      height: '100%',
-      width: '100%',
-      '& .MuiFormControl-fullWidth': {
-        marginBottom: 20,
-      }
-    },
-  },
   signUpForm: {
     marginBottom: 20,
   },
