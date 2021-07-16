@@ -5,14 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { useStyles } from '../Reservations/Form';
 import { IRootReducer } from '../../../store/reducers';
 import { ErrorDiv } from '../ErrorDiv';
 import { addCitySuccess, requestAddCity } from '../../../store/actions/cities';
 import { CssTextField } from '../CustomInput';
+import { buttonStyles } from '../styles/buttonStyles';
 
 export const AddCity = () => {
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
   const [open, setOpen] = React.useState(false);
   const [cityInput, setCityInput] = React.useState('');
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const AddCity = () => {
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        className={classes.btnReserve}
+        className={buttonClasses.btnReserve}
       >
         Добавить Город
       </Button>
@@ -73,13 +73,13 @@ export const AddCity = () => {
             <Button
               variant='contained'
               type='submit'
-              className={classes.btnReserve}
+              className={buttonClasses.btnReserve}
             >
               Добавить
             </Button>
             <Button
               onClick={handleClose}
-              className={classes.btnCancel}
+              className={buttonClasses.btnCancel}
             >
               Отмена
             </Button>

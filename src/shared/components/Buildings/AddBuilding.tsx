@@ -10,16 +10,16 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { ErrorDiv } from '../ErrorDiv';
 import { IRootReducer } from '../../../store/reducers';
-import { useStyles } from '../Reservations/Form';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { requestAddBuilding } from '../../../store/actions/buildings';
 import { IBuilding } from '../../../store/reducers/buildings/interfaces';
 import { getAllCities } from '../../../store/actions/cities';
 import { BuildingSchema } from '../../validations/BuildingValidation';
+import { buttonStyles } from '../styles/buttonStyles';
 
 export const AddBuilding = () => {
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
 
   const { addBuildingError } = useSelector((state: IRootReducer) => state.buildingsReducer)
 
@@ -51,7 +51,7 @@ export const AddBuilding = () => {
     <Box>
       <Button
         variant="contained"
-        className={classes.btnReserve}
+        className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
         Добавить Офис
@@ -105,14 +105,14 @@ export const AddBuilding = () => {
                   <Button
                     type='submit'
                     variant='contained'
-                    className={classes.btnReserve}
+                    className={buttonClasses.btnReserve}
                   >
                     Добавить
                   </Button>
                   <Button
                     onClick={handleClose}
                     color="primary"
-                    className={classes.btnCancel}
+                    className={buttonClasses.btnCancel}
                   >
                     отмена
                   </Button>

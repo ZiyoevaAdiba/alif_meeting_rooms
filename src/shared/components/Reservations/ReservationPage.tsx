@@ -23,11 +23,6 @@ import { getFilteredMRs } from "./getFilteredMRs";
 import { ChangeEvent } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  table_users: {
-    '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
   cardsRoot: {
     marginTop: 30,
     gap: 30,
@@ -50,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
   requests_header: {
     fontSize: 30,
     display: 'flex',
-    // textAlign: 'center',
     color: '#444444',
     justifyContent: 'space-between'
   },

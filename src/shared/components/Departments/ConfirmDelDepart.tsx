@@ -21,7 +21,6 @@ export const ConfirmDelDepart = () => {
   const handleConfirm = () => {
     dispatch(requestDeleteDepartment(showAlert))
     handleClose();
-    // handleClose();
   };
 
   return (
