@@ -10,8 +10,8 @@ import { getMRReservations } from "../../../store/actions/reservations/";
 
 const useStyles = makeStyles({
   mrRoot: {
-    maxWidth: 345,
-    minWidth: 280,
+    height: 200,
+    width: 300,
     color: 'white',
     boxShadow: `0px 2px 10px 3px rgb(0 0 0 / 20%), 
                 0px 1px 1px 0px rgb(0 0 0 / 14%), 
@@ -31,18 +31,21 @@ const useStyles = makeStyles({
     backgroundPosition: 'center',
     backgroundSize: 'cover'
   },
+  cardText: {
+    fontSize: 18,
+  },
 });
 interface IMeetinfRoomCard {
   name: string | undefined,
   number: string | undefined,
-  mrID: string | undefined, 
-  isBusy: boolean  | undefined, 
-  setOpen: (state: boolean) => void, 
-  photo: string | undefined 
+  mrID: string | undefined,
+  isBusy: boolean | undefined,
+  setOpen: (state: boolean) => void,
+  photo: string | undefined
 }
 export const MeetingRoomCard: FC<IMeetinfRoomCard> = ({ name, number, mrID, isBusy, setOpen, photo }) => {
   const classes = useStyles();
-  const titleText = name;
+  const titleText = `${name} № ${number}`;
   const dispatch = useDispatch();
 
   const getMRReservationData = () => {
@@ -51,7 +54,7 @@ export const MeetingRoomCard: FC<IMeetinfRoomCard> = ({ name, number, mrID, isBu
   }
 
   return (
-    <Grid item>
+    <Grid item title={titleText}>
       <Card
         className={
           isBusy
@@ -66,10 +69,14 @@ export const MeetingRoomCard: FC<IMeetinfRoomCard> = ({ name, number, mrID, isBu
           <CardMedia
             className={classes.media}
             image={photo}
-            title={titleText}
+            // title={titleText}
           />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+          <CardContent
+          >
+            <Typography
+              noWrap
+              className={classes.cardText}
+            >
               {name} № {number}
             </Typography>
           </CardContent>
