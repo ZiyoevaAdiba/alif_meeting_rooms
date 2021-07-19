@@ -1,4 +1,3 @@
-import { createStyles, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Button } from '@material-ui/core'
@@ -11,50 +10,7 @@ import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { IForgetData } from '../../../store/actions/forget/interfaces';
 import { ErrorDiv } from '../ErrorDiv';
 import { CustomInput } from '../CustomInput';
-
-const useStyles = makeStyles(() => createStyles({
-  '@global': {
-    html: {
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%'
-    },
-    body: {
-      height: '100%',
-      width: '100%',
-      margin: 0,
-      padding: 0
-    },
-    '#root': {
-      height: '100%',
-      width: '100%'
-    },
-  },
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
-  authBtn: {
-    marginTop: 30,
-    fontSize: '1.2rem',
-    color: 'white',
-    backgroundColor: '#39b97f',
-    '& img': {
-      width: '30px',
-      height: 'auto',
-    }
-  },
-
-  btnsText: {
-    marginTop: '10px',
-    fontSize: 12,
-    fontWeight: 550,
-    color: '#39b97f',
-  },
-
-}));
+import { authStyles } from './authStyles';
 
 const ForgetSchema = Yup.object().shape({
   email: Yup.string().email('Почта недействительна').required('Заполните поле'),
@@ -65,7 +21,7 @@ const fieldInput: IForgetData = {
 }
 
 export const ForgetPasswordForm = () => {
-  const classes = useStyles();
+  const authClasses = authStyles();
   const dispatch = useDispatch();
   const {
     loading,
@@ -109,7 +65,7 @@ export const ForgetPasswordForm = () => {
               formikProps={props}
             />
             <Button
-              className={classes.authBtn}
+              className={authClasses.authBtn}
               disabled={props.isSubmitting}
               fullWidth
               type="submit"
@@ -130,7 +86,7 @@ export const ForgetPasswordForm = () => {
               />
             }
             <Button
-              className={classes.btnsText}
+              className={authClasses.btnsText}
               disabled={props.isSubmitting}
               fullWidth
               type="button"

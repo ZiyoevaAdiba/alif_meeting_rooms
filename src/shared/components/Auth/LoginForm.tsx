@@ -13,42 +13,11 @@ import { requestLogin } from '../../../store/actions/login';
 import { CustomInput } from '../CustomInput';
 import { useEffect } from 'react';
 import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
+import { authStyles } from './authStyles';
 
 const useStyles = makeStyles(() => createStyles({
-  '@global': {
-    html: {
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%'
-    },
-    body: {
-      height: '100%',
-      width: '100%',
-      margin: 0,
-      padding: 0
-    },
-    '#root': {
-      height: '100%',
-      width: '100%',
-      '& .MuiFormControl-fullWidth': {
-        marginBottom: 20,
-      }
-    },
-  },
-  signUpForm: {
+  loginForm: {
     marginBottom: 20,
-  },
-
-  authBtn: {
-    marginTop: 20,
-    fontSize: '1.2rem',
-    color: 'white',
-    backgroundColor: '#39b97f',
-    '& img': {
-      width: '30px',
-      height: 'auto',
-    },
   },
 
   btns: {
@@ -56,12 +25,6 @@ const useStyles = makeStyles(() => createStyles({
     display: 'flex',
     justifyContent: 'space-between',
     marginTop: '10px'
-  },
-
-  btnsText: {
-    fontSize: 12,
-    fontWeight: 550,
-    color: '#39b97f'
   },
 
 }));
@@ -86,6 +49,7 @@ const loginFields = [
 
 export const LoginForm = () => {
   const classes = useStyles();
+  const authClasses = authStyles();
   const dispatch = useDispatch();
   const {
     loading,
@@ -123,7 +87,6 @@ export const LoginForm = () => {
         initialValues={user}
         validationSchema={LoginSchema}
         validateOnBlur={false}
-        // validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(requestLogin(values, setSubmitting, history));
         }}
@@ -131,7 +94,7 @@ export const LoginForm = () => {
         {props => (
           <Form
             onSubmit={props.handleSubmit}
-            className={classes.signUpForm}
+            className={classes.loginForm}
           >
             {
               loginFields.map(
@@ -144,7 +107,7 @@ export const LoginForm = () => {
             }
 
             <Button
-              className={classes.authBtn}
+              className={authClasses.authBtn}
               disabled={props.isSubmitting}
               fullWidth
               type="submit"
@@ -166,7 +129,7 @@ export const LoginForm = () => {
             }
             <ButtonGroup className={classes.btns}>
               <Button
-                className={classes.btnsText}
+                className={authClasses.btnsText}
                 disabled={props.isSubmitting}
                 fullWidth
                 type="button"
@@ -176,7 +139,7 @@ export const LoginForm = () => {
                 Зарегистрироваться
               </Button>
               <Button
-                className={classes.btnsText}
+                className={authClasses.btnsText}
                 disabled={props.isSubmitting}
                 fullWidth
                 type="button"

@@ -8,11 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
-import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { requestEditBuilding, resetBuildingEditing } from '../../../store/actions/buildings';
 import { BuildingSchema } from '../../validations/BuildingValidation';
+import { buttonStyles } from '../styles/buttonStyles';
 
 export const EditBuilding = () => {
   const {
@@ -24,7 +24,7 @@ export const EditBuilding = () => {
   } = useSelector((state: IRootReducer) => state.citiesReducer);
 
   const [open, setOpen] = useState(true);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,7 +56,6 @@ export const EditBuilding = () => {
           {props => (
             <Form
               onSubmit={props.handleSubmit}
-              className={classes.signUpForm}
             >
               <CustomInput
                 fieldData={
@@ -86,14 +85,14 @@ export const EditBuilding = () => {
                 <Button
                   type='submit'
                   variant='contained'
-                  className={classes.btnReserve}
+                  className={buttonClasses.btnReserve}
                 >
                   Сохранить изменения
                 </Button>
                 <Button
                   onClick={handleClose}
                   color="primary"
-                  className={classes.btnCancel}
+                  className={buttonClasses.btnCancel}
                 >
                   Отмена
                 </Button>

@@ -9,16 +9,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Form, Formik } from 'formik';
 import { requestAddUser } from '../../../store/actions/users';
 import { useDispatch, useSelector } from 'react-redux';
-import { SignupSchema } from '../../validations/SignUpValidation';
 import { ErrorDiv } from '../ErrorDiv';
 import { IRootReducer } from '../../../store/reducers';
 import { getDepartments } from '../../../store/actions/departments';
-import { useStyles } from '../Reservations/Form';
 import { fieldInput, user, userDataFields } from '../../consts/userConsts';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { History } from 'history';
 import { AddUserValidation } from '../../validations/UsersValidation';
 import { userMenuItems } from '../../consts/selectConsts';
+import { buttonStyles } from '../styles/buttonStyles';
 
 export interface IUserPageProps {
   page: number,
@@ -28,7 +27,7 @@ export interface IUserPageProps {
 
 export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
 
   const { error } = useSelector((state: IRootReducer) => state.signUpReducer)
 
@@ -56,7 +55,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
     <Box>
       <Button
         variant="contained"
-        className={classes.btnReserve}
+        className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
         Добавить Пользователя
@@ -86,7 +85,6 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
             {props => (
               <Form
                 onSubmit={props.handleSubmit}
-                className={classes.signUpForm}
               >
                 {
                   userDataFields.map(
@@ -134,14 +132,14 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                   <Button
                     type='submit'
                     variant='contained'
-                    className={classes.btnReserve}
+                    className={buttonClasses.btnReserve}
                   >
                     Добавить
                   </Button>
                   <Button
                     onClick={handleClose}
                     color="primary"
-                    className={classes.btnCancel}
+                    className={buttonClasses.btnCancel}
                   >
                     отмена
                   </Button>

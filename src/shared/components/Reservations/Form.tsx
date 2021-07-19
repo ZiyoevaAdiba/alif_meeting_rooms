@@ -3,7 +3,6 @@ import {
   Button,
   DialogActions,
   Grid,
-  makeStyles,
 } from '@material-ui/core';
 import {
   KeyboardDatePicker,
@@ -22,27 +21,7 @@ import { CssTextField } from '../CustomInput';
 import { ErrorDiv } from '../ErrorDiv';
 import { getFilteredMRs } from './getFilteredMRs';
 import { History } from "history";
-
-export const useStyles = makeStyles((theme) => ({
-  signUpForm: {
-    '& input': {
-      marginTop: 5,
-    }
-  },
-
-  inputGap: {
-    margin: 5,
-  },
-
-  btnReserve: {
-    color: 'white',
-    backgroundColor: 'rgb(57 185 127)',
-  },
-
-  btnCancel: {
-    color: 'rgb(57 185 127)',
-  }
-}));
+import { buttonStyles } from '../styles/buttonStyles';
 
 interface IForm {
   selectedCity: string
@@ -62,7 +41,7 @@ export const Form: FC<IForm> = ({
   addError
 }) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
 
   const {
     userData,
@@ -125,7 +104,6 @@ dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedB
 
     <form
       onSubmit={handleSubmit}
-      className={classes.signUpForm}
     >
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid
@@ -133,7 +111,6 @@ dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedB
           justify="space-around"
         >
           <CssTextField
-            className={classes.inputGap}
             name='purpose'
             label="Цель брони"
             fullWidth
@@ -193,13 +170,13 @@ dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedB
         <Button
           type='submit'
           variant='contained'
-          className={classes.btnReserve}
+          className={buttonClasses.btnReserve}
         >
           Забронировать
         </Button>
         <Button
           onClick={handleClose}
-          className={classes.btnCancel}
+          className={buttonClasses.btnCancel}
         >
           отмена
         </Button>

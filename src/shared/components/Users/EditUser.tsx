@@ -9,13 +9,13 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../../store/reducers';
 import { requestEditUser, resetUserEditing } from '../../../store/actions/users';
-import { useStyles } from '../Reservations/Form';
 import { ErrorDiv } from '../ErrorDiv';
 import { fieldInput, userDataFields } from '../../consts/userConsts';
 import { CustomInput, CustomSelect } from '../CustomInput';
 import { IUserPageProps } from './AddUser';
 import { EditUserValidation } from '../../validations/UsersValidation';
 import { userMenuItems } from '../../consts/selectConsts';
+import { buttonStyles } from '../styles/buttonStyles';
 
 
 export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => {
@@ -29,7 +29,7 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
   } = useSelector((state: IRootReducer) => state.departmentsReducer);
 
   const [open, setOpen] = useState(true);
-  const classes = useStyles();
+  const buttonClasses = buttonStyles();
 
   const dispatch = useDispatch();
 
@@ -66,7 +66,6 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
           {props => (
             <Form
               onSubmit={props.handleSubmit}
-              className={classes.signUpForm}
             >
               {
                 userDataFields.map(
@@ -103,14 +102,14 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
                 <Button
                   type='submit'
                   variant='contained'
-                  className={classes.btnReserve}
+                  className={buttonClasses.btnReserve}
                 >
                   Сохранить изменения
                 </Button>
                 <Button
                   onClick={handleClose}
                   color="primary"
-                  className={classes.btnCancel}
+                  className={buttonClasses.btnCancel}
                 >
                   Отмена
                 </Button>
