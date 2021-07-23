@@ -26,6 +26,14 @@ const forgetReqSuccess = (userRole?: string) => {
   }
 }
 
+export const forgetResetError = () => {
+  return {
+    type: forgetType.RESET_ERRORS,
+    payload: {}
+  }
+}
+
+
 export const requestPassword = (
   userData: IForgetData,
   setSubmitting: (state: boolean) => void,

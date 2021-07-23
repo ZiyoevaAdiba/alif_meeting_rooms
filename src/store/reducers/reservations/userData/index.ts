@@ -4,14 +4,15 @@ import { IGetUserData, IGetUserDataReducer } from "./interfaces";
 
 const initialState: IGetUserDataReducer = {
   loading: false,
-  error: null ,
+  error: null,
   userData: {},
+  editError: null,
 };
 
 export const getUserDataReducer = (
-  state = initialState, 
+  state = initialState,
   action: IAction<IGetUserData>
-  ): IGetUserDataReducer => {
+): IGetUserDataReducer => {
 
   switch (action.type) {
     case getUserDataType.GET_USERS_INFO:
@@ -19,6 +20,7 @@ export const getUserDataReducer = (
         ...state,
         loading: true,
         error: null,
+        editError: null,
       };
     case getUserDataType.GET_USERS_INFO_FAIL:
       return {
@@ -33,15 +35,38 @@ export const getUserDataReducer = (
         loading: false,
         error: null,
         userData: payload,
+        editError: null,
       };
-
     case getUserDataType.DATA_DELETE:
       return {
         ...state,
         error: null,
         loading: false,
         userData: {}
-      }
+      };
+
+    case getUserDataType.EDIT_PROFILE_FAIL:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        editError: action.payload as string,
+      };
+    case getUserDataType.EDIT_PROFILE_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        // userData: {}
+      };
+    case getUserDataType.RESET_EDITING:
+      return {
+        ...state,
+        error: null,
+        editError: null,
+        loading: false,
+      };
+
     default:
       return state;
   }

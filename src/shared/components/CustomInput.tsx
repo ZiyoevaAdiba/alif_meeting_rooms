@@ -59,7 +59,7 @@ export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
         &&
         formikProps.touched[fieldData.name]
         &&
-        <div style={{ color: '#f44335', marginTop: '0px'}}>
+        <div style={{ color: '#f44335', marginTop: '0px', fontSize:"14px"}}>
           {formikProps.errors[fieldData.name]}
         </div>
       }
@@ -109,7 +109,7 @@ export const CustomSelect: FC<ICustomSelect> = ({ itemList, formikProps, fieldNa
         &&
         formikProps.touched[fieldName]
         &&
-        <div style={{ color: '#f44335', marginTop: '0px'}}>
+        <div style={{ color: '#f44335', marginTop: '0px', fontSize:"14px"}}>
           {formikProps.errors[fieldName]}
         </div>
       }

@@ -9,9 +9,9 @@ const initialState: ISignUpReducer = {
 };
 
 export const signUpReducer = (
-  state = initialState, 
+  state = initialState,
   action: IAction<string>
-  ): ISignUpReducer => {
+): ISignUpReducer => {
 
   switch (action.type) {
     case signUpType.SIGNUP_REQUEST:
@@ -33,6 +33,12 @@ export const signUpReducer = (
         error: null,
         success: true,
       }
+    case signUpType.RESET_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }

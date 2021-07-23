@@ -1,6 +1,6 @@
 import { forgetType } from "../../actions/forget/interfaces";
 import { IAction } from "../interfaces";
-import { IForgetReducer  } from "./interfaces";
+import { IForgetReducer } from "./interfaces";
 
 const initialState: IForgetReducer = {
   loading: false,
@@ -9,9 +9,9 @@ const initialState: IForgetReducer = {
 };
 
 export const forgetReducer = (
-  state = initialState, 
+  state = initialState,
   action: IAction<string>
-  ): IForgetReducer => {
+): IForgetReducer => {
 
   switch (action.type) {
     case forgetType.FORGET_REQUEST:
@@ -32,7 +32,13 @@ export const forgetReducer = (
         loading: false,
         error: null,
         success: true,
-      }
+      };
+    case forgetType.RESET_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }

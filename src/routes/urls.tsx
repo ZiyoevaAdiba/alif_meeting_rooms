@@ -10,6 +10,7 @@ interface IUrls {
     cities: string,
     buildings: string,
     reservations: string,
+    profile: string
 };
 export const urls: IUrls = {
     authPage: '/auth',
@@ -23,6 +24,7 @@ export const urls: IUrls = {
     cities: '/cities',
     buildings: '/buildings',
     reservations: '/reservations',
+    profile: '/profile',
 };
 
 interface IApi {
@@ -43,6 +45,7 @@ interface IApi {
     uploadPhoto: string,
     apiBuildings: string,
     adminBuildings: string,
+    apiUser: string,
 };
 
 export const api: IApi = {
@@ -63,4 +66,5 @@ export const api: IApi = {
     uploadPhoto: '/admin/photo/meeting-room',
     apiBuildings: '/api/building',
     adminBuildings: '/admin/building',
+    apiUser: '/api/user'
 };

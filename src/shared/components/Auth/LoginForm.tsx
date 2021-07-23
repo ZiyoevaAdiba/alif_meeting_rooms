@@ -9,7 +9,7 @@ import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { LoginSchema } from '../../validations/LoginValidation';
 import { ErrorDiv } from '../ErrorDiv';
-import { requestLogin } from '../../../store/actions/login';
+import { loginResetError, requestLogin } from '../../../store/actions/login';
 import { CustomInput } from '../CustomInput';
 import { useEffect } from 'react';
 import { requestEmailConfirm } from '../../../store/actions/emailConfirm';
@@ -74,10 +74,12 @@ export const LoginForm = () => {
 
   const signUpClick = () => {
     history.push(urls.signUp);
+    dispatch(loginResetError());
   }
 
   const forgetPasswordClick = () => {
     history.push(urls.forget);
+    dispatch(loginResetError());
   }
 
   return (

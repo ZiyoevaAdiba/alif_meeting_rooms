@@ -47,7 +47,7 @@ export const userDataFields = [
   },
   {
     name: fieldInput.tg_account,
-    label: "Аккаунт telegram",
+    label: "Аккаунт telegram (username)",
     type: 'text',
   },
 ]

@@ -26,6 +26,13 @@ const requestSuccess = () => {
   }
 }
 
+export const signUpResetError = () => {
+  return {
+    type: signUpType.RESET_ERRORS,
+    payload: {}
+  }
+}
+
 export const requestRegistration = (
   userData: IUserData, 
   history: History, 

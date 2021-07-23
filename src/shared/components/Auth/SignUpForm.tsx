@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik';
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { requestRegistration } from '../../../store/actions/signUp';
+import { requestRegistration, signUpResetError } from '../../../store/actions/signUp';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { useHistory } from 'react-router';
@@ -33,6 +33,7 @@ export const SignUpForm = () => {
 
   const loginClick = () => {
     history.push(urls.login);
+    dispatch(signUpResetError());
   }
 
   return (

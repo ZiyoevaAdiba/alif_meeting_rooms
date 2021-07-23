@@ -25,6 +25,13 @@ const loginReqSuccess = (userRole?: string) => {
   }
 }
 
+export const loginResetError = () => {
+  return {
+    type: loginType.RESET_ERRORS,
+    payload: {}
+  }
+}
+
 export const getToken = () => {
   return localStorage.getItem('ua_fight!place') || '';
 } 

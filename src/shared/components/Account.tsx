@@ -52,6 +52,11 @@ export const Account = () => {
     dispatch(userDataDelete())
   };
 
+  const goToProfile = () => {
+    history.push(urls.profile);
+    handleClose()
+  }
+
   return (
     <>
       <Box
@@ -83,6 +88,9 @@ export const Account = () => {
       >
         <MenuItem disabled>
           {`${userData.last_name || ''} ${userData.name || ''}`}
+        </MenuItem>
+        <MenuItem onClick={goToProfile}>
+          Профиль
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           Выйти

@@ -10,10 +10,10 @@ const initialState: ILoginReducer = {
 };
 
 export const loginReducer = (
-  state = initialState, 
+  state = initialState,
   action: IAction<string>
-  ): ILoginReducer => {
-    
+): ILoginReducer => {
+
   switch (action.type) {
     case loginType.LOGIN_REQUEST:
       return {
@@ -34,7 +34,13 @@ export const loginReducer = (
         error: null,
         success: true,
         user_role: action.payload,
-      }
+      };
+    case loginType.RESET_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }

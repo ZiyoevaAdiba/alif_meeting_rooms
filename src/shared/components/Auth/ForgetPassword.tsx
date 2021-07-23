@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core'
 import { useHistory } from 'react-router';
 import { urls } from '../../../routes/urls';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestPassword } from '../../../store/actions/forget';
+import { forgetResetError, requestPassword } from '../../../store/actions/forget';
 import { IRootReducer } from '../../../store/reducers';
 import loaderGif from '../../../assets/images/loading-icon.jpeg';
 import { IForgetData } from '../../../store/actions/forget/interfaces';
@@ -36,6 +36,7 @@ export const ForgetPasswordForm = () => {
 
   const cancelPasswordBtn = () => {
     history.push(urls.login);
+    dispatch(forgetResetError());
   }
 
   return (
