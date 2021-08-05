@@ -25,6 +25,7 @@ import { IBuilding } from '../../store/reducers/buildings/interfaces';
 import { IDepartment } from '../../store/reducers/departments/interfaces';
 import { ICity } from '../../store/reducers/cities/interfaces';
 import { IRoom } from '../../store/reducers/rooms/interfaces';
+import { IReservation } from '../../store/reducers/reservations/interfaces';
 
 const useStyles = makeStyles((theme) => ({
   iconSize: {
@@ -61,51 +62,52 @@ const handleDelete = (rowId: string, btnLocation: string, dispatch: Dispatch<any
     return;
   }
   if (btnLocation === 'reservations') {
-    dispatch(reservationWarningDelete(rowId))
+    dispatch(reservationWarningDelete(rowId))    
     return;
   }
-  if (btnLocation === 'buildings'){
+  if (btnLocation === 'buildings') {
     dispatch(buildingWarningDelete(rowId));
     return;
   }
 }
 
 const handleEdit = (
-  row: IUser | IRoom | IBuilding | IDepartment | ICity, 
-  btnLocation: string, 
+  row: IUser | IRoom | IBuilding | IDepartment | ICity,
+  btnLocation: string,
   dispatch: Dispatch<any>
-  ) => {
-  if (btnLocation === 'users'){
+) => {
+  if (btnLocation === 'users') {
     dispatch(showUserData(row));
     return;
   }
-  if (btnLocation === 'meeting-rooms'){
+  if (btnLocation === 'meeting-rooms') {
     dispatch(showRoomData(row));
     return;
   }
-  if (btnLocation === 'departments'){
+  if (btnLocation === 'departments') {
     dispatch(showDepartmentData(row));
     return;
   }
-  if (btnLocation === 'cities'){
+  if (btnLocation === 'cities') {
     dispatch(showCityData(row));
     return;
-  }  
-  if (btnLocation === 'buildings'){
+  }
+  if (btnLocation === 'buildings') {
     dispatch(showBuildingData(row));
     return;
   }
 }
 
 interface IButtonEdit {
-  row: IUser | IRoom | IBuilding | IDepartment | ICity,
-  btnLocation: string
+  row: IUser | IRoom | IBuilding | IDepartment | ICity | IReservation,
+  btnLocation: string,
+  reservationOwner?: string
 }
 
-export const ButtonEdit: FC<IButtonEdit> = ({ row, btnLocation }) => {
+export const ButtonEdit: FC<IButtonEdit> = ({ row, btnLocation, reservationOwner='' }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+ 
   return (
     <Button
       onClick={() => handleEdit(row, btnLocation, dispatch)}
@@ -118,19 +120,13 @@ export const ButtonEdit: FC<IButtonEdit> = ({ row, btnLocation }) => {
 }
 
 interface IButtonDelete {
-  id: string, 
+  id: string,
   btnLocation: string,
-  columnUserId?: string, 
-}
+};
 
-export const ButtonDelete: FC<IButtonDelete> = ({ id, columnUserId = '', btnLocation }) => {
+export const ButtonDelete: FC<IButtonDelete> = ({ id, btnLocation }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { userData } = useSelector((state: IRootReducer) => state.getUserDataReducer)
-
-  if (columnUserId !== userData.id && btnLocation === 'reservations') {
-    return <></>;
-  }
 
   return (
     <Button
@@ -145,7 +141,7 @@ export const ButtonDelete: FC<IButtonDelete> = ({ id, columnUserId = '', btnLoca
 
 interface IButtonPoppup {
   params: IUser,
-  btnLocation: string
+  btnLocation: string,
 }
 
 export const ButtonPoppup: FC<IButtonPoppup> = ({ params, btnLocation }) => {

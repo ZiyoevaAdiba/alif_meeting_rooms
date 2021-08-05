@@ -12,7 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import { Divider } from '@material-ui/core';
-import { useState } from 'react';
 
 const drawerWidth = 240;
 
@@ -91,7 +90,7 @@ export const SideBar = () => {
       }}
     >
       {
-        sections.map((item, index) =>
+        sections.map((item) =>
           <NavLink
             key={item.url}
             to={item.url}

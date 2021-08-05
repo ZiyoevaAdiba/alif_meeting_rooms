@@ -7,11 +7,9 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { reservationSuccess } from '../../../store/actions/reservations';
 import { IRootReducer } from '../../../store/reducers';
-import { Form } from './Form';
-import { getFilteredMRs } from './getFilteredMRs';
-import { ReservationTable } from './ReservationTable';
+import { AddReservationForm } from './AddReservationForm';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   content: {
     display: "flex",
     columnGap: 70,
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
   CardsContainer: {
     '& .MuiDialog-paperWidthSm': {
-      maxWidth: '1000px',
+      maxWidth: 500,
       minHeight: 500,
       padding: 20,
     },
@@ -29,31 +27,30 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
 
-  requests_header: {
-    fontSize: 40
-  },
 }));
 
 interface IReserveRoom {
-  selectedCity: string, 
-  history: History, 
-  selectedBuilding: string, 
-  open: boolean, 
-  setOpen: (state: boolean) => void
+  selectedCity: string,
+  history: History,
+  selectedBuilding: string,
+  open: boolean,
+  setOpen: (state: boolean) => void,
+  startTime: Date | null,
+  endTime: Date | null,
+  selectedRooms: string,
 }
 
-export const ReserveRoom: FC<IReserveRoom> = ({ selectedCity, history, selectedBuilding, open, setOpen }) => {
+export const ReserveRoom: FC<IReserveRoom> = ({
+  selectedCity, history, selectedBuilding, open, setOpen, startTime, endTime, selectedRooms
+}) => {
   const classes = useStyles();
   const {
-    booking,
     addError,
-    error
   } = useSelector((state: IRootReducer) => state.reservationsReducer);
   const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
-    getFilteredMRs(selectedCity, history, selectedBuilding, dispatch);
     dispatch(reservationSuccess())
   };
 
@@ -71,18 +68,17 @@ export const ReserveRoom: FC<IReserveRoom> = ({ selectedCity, history, selectedB
 
         <DialogContent className={classes.content}>
 
-          <Form
+          <AddReservationForm
             setOpen={setOpen}
-            booking={booking} 
             addError={addError}
             selectedCity={selectedCity}
             history={history}
             selectedBuilding={selectedBuilding}
+            startTime={startTime}
+            endTime={endTime}
+            selectedRooms={selectedRooms}
           />
-          <ReservationTable
-            booking={booking}
-            error={error}
-          />
+          
         </DialogContent>
 
       </Dialog>

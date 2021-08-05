@@ -36,6 +36,7 @@ interface IFieldData {
   label: string,
   type: string,
 }
+
 interface ICustomInput {
   fieldData: IFieldData,
   formikProps: FormikProps<any>
@@ -68,7 +69,7 @@ export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
 }
 
 interface ICustomSelect {
-  itemList?: IDepartment[],
+  itemList?: IDepartment[] ,
   formikProps: FormikProps<any>,
   fieldName: string,
   text: string,

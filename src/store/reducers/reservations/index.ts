@@ -6,7 +6,8 @@ const initialState: IreservationsReducer = {
   loading: false,
   error: null,
   addError: null,
-  booking: [],
+  editError: null,
+  booking: {},
   showAlert: '',
 };
 
@@ -17,25 +18,25 @@ export const reservationsReducer = (
 ): IreservationsReducer => {
 
   switch (action.type) {
-    case getReservationsType.GET_RESERVATIONS:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-        addError: null,
-      };
+    // case getReservationsType.GET_RESERVATIONS:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //     error: null,
+    //     addError: null,
+    //   };
     case getReservationsType.GET_RESERVATIONS_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Проверьте доступ. Попробуйте снова',
       };
-    case getReservationsType.GET_RESERVATIONS_SUCCESS:
+    case getReservationsType.GET_CURRENT_RESERVATION:
       return {
         ...state,
         loading: false,
         error: null,
-        booking: action.payload as IReservation[],
+        booking: action.payload as IReservation,
       };
     case getReservationsType.SHOW_WARNING:
       return {
@@ -51,6 +52,11 @@ export const reservationsReducer = (
       return {
         ...state,
         addError: action.payload as string,
+      };
+      case getReservationsType.EDIT_RESERVATION_FAIL:
+      return {
+        ...state,
+        editError: action.payload as string,
       };
     case getReservationsType.RESET_RESERVATION_ERRORS:
       return {

@@ -4,14 +4,15 @@ import { IMeetingRoomsInfo, IMeetingRoomsInfoReducer } from "./interfaces";
 
 const initialState: IMeetingRoomsInfoReducer = {
   loading: false,
-  error: null ,
+  error: null,
   meetingRoomsInfo: [],
+  checkedRooms: []
 };
 
 export const getMRsDataReducer = (
-  state = initialState, 
-  action: IAction<IMeetingRoomsInfo[]>
-  ): IMeetingRoomsInfoReducer => {
+  state = initialState,
+  action: IAction<IMeetingRoomsInfo[] | string[]>
+): IMeetingRoomsInfoReducer => {
 
   switch (action.type) {
     case getMeetingRoomsDataType.GET_MEETING_ROOMS_INFO:
@@ -32,7 +33,14 @@ export const getMRsDataReducer = (
         ...state,
         loading: false,
         error: null,
-        meetingRoomsInfo: payload,
+        meetingRoomsInfo: payload as IMeetingRoomsInfo[],
+      };
+    case getMeetingRoomsDataType.GET_CHECKED_MRS_ID:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        checkedRooms: action.payload as string[],
       };
     default:
       return state;

@@ -6,16 +6,16 @@ import {
     removeToken
 } from "../../store/actions/login";
 import { getUnixTime } from "date-fns";
+import { FC, ReactNode } from "react";
 
-
-export const AuthGuard = ({ children }: any) => {
+export const AuthGuard: FC<{ children: ReactNode }> = ({ children }) => {
 
     const token: string = getToken();
     const expToken = jwt.decode(token, { complete: true })?.payload.exp;
     const currentDate = getUnixTime(Date.now());
 
     if (expToken > currentDate) {
-        return children;
+        return <>{children}</>;
     }
     removeToken();
 

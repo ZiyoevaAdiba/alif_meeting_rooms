@@ -1,6 +1,11 @@
+import { FC, ReactNode } from 'react';
 import { Helmet } from 'react-helmet';
 
-export const Page = ({ title, children }: any) => {
+interface IPage{
+    title: string,
+    children: ReactNode
+}
+export const Page: FC<IPage> = ({ title, children }) => {
     return (
         <>
             <Helmet>

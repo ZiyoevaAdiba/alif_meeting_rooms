@@ -44,13 +44,13 @@ const routesConfig = [
                 path: '/',
                 component: () => <Redirect to={urls.reservations} />
             },
-            // {
-            //     exact: true,
-            //     path: '/calendar',
-            //     component: lazy(() => import('../shared/components/CalendarView/CalendarPage').then(module => ({
-            //         default: module.CalendarPage
-            //     })))
-            // },
+            {
+                exact: true,
+                path: urls.reservations,
+                component: lazy(() => import('../shared/components/CalendarView/CalendarPage').then(module => ({
+                    default: module.CalendarPage
+                })))
+            },
             {
                 exact: true,
                 path: urls.users,
@@ -84,13 +84,6 @@ const routesConfig = [
                 path: urls.buildings,
                 component: lazy(() => import('../shared/components/Buildings/Buildings').then(module => ({
                     default: module.Buildings
-                })))
-            },
-            {
-                exact: true,
-                path: urls.reservations,
-                component: lazy(() => import('../shared/components/Reservations/ReservationPage').then(module => ({
-                    default: module.ReservationPage
                 })))
             },
             {

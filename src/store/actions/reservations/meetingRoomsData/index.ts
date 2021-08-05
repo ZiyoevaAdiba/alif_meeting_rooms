@@ -4,6 +4,7 @@ import { api, urls } from "../../../../routes/urls";
 import { Axios } from "../../../../shared/axios";
 import { History } from "history";
 import { IRoom } from "../../../reducers/rooms/interfaces";
+import { IReservation } from "../../../reducers/reservations/interfaces";
 
 const getMRsInfoReq = () => {
   return {
@@ -26,38 +27,42 @@ const getMRsInfoSuccess = (data?: IRoom[]) => {
   }
 }
 
+export const getCheckedMRs = (data?: string[]) => {
+  return {
+    type: getMeetingRoomsDataType.GET_CHECKED_MRS_ID,
+    payload: data
+  }
+}
 
-export const getMRsInfo = (history: History) => async(dispatch: Dispatch<any>) => {
+export const getMRsInfo = (history: History, selectedRooms?: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=&building=`) 
+    history.push(`${urls.reservations}?city=&building=&rooms=${selectedRooms || ''}`) 
 
   } catch (error) {
     dispatch(getMRsInfoFail());
   }
 };
 
-export const getMRsByCityId = (city_id: string, history: History, selectedBuilding: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByCityId = (city_id: string, history: History, selectedBuilding: string, selectedRooms: string) => async(dispatch: Dispatch<any>) => {
   try {    
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=${city_id}&building=${selectedBuilding}`)
-
+    history.push(`${urls.reservations}?city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`)
   } catch (error) {
     dispatch(getMRsInfoFail());
   }
 };
 
-export const getMRsByBuildingId = (building_id: string, history: History, selectedCity: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByBuildingId = (building_id: string, history: History, selectedCity: string, selectedRooms: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${building_id}/building`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=${selectedCity}&building=${building_id}`)
-
+    history.push(`${urls.reservations}?city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`)
   } catch (error) {
     dispatch(getMRsInfoFail());
   }

@@ -10,7 +10,8 @@ interface IUrls {
     cities: string,
     buildings: string,
     reservations: string,
-    profile: string
+    profile: string,
+    oldVersion: string
 };
 export const urls: IUrls = {
     authPage: '/auth',
@@ -25,6 +26,7 @@ export const urls: IUrls = {
     buildings: '/buildings',
     reservations: '/reservations',
     profile: '/profile',
+    oldVersion: 'oldVersion'
 };
 
 interface IApi {
