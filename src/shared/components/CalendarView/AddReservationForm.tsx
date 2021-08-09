@@ -1,38 +1,37 @@
-import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
-import {
-  Button,
-  DialogActions,
-  Grid,
-} from '@material-ui/core';
+import { Button, DialogActions, Grid } from "@material-ui/core";
 import {
   DatePicker,
   MuiPickersUtilsProvider,
-  TimePicker
-} from '@material-ui/pickers';
-import { addHours, addMinutes, format } from 'date-fns';
-import { Formik } from 'formik';
-import { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { reservationSuccess, requestAddReservation } from '../../../store/actions/reservations';
-import { IRootReducer } from '../../../store/reducers';
-import { IReservation } from '../../../store/reducers/reservations/interfaces';
-import { ReserveSchema } from '../../validations/Reservation';
-import { CssTextField, CustomSelect } from '../CustomInput';
-import { ErrorDiv } from '../ErrorDiv';
+  TimePicker,
+} from "@material-ui/pickers";
+import { addHours, addMinutes, format } from "date-fns";
+import { Formik } from "formik";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  reservationSuccess,
+  requestAddReservation,
+} from "../../../store/actions/reservations";
+import { IRootReducer } from "../../../store/reducers";
+import { IReservation } from "../../../store/reducers/reservations/interfaces";
+import { ReserveSchema } from "../../validations/Reservation";
+import { CssTextField, CustomSelect } from "../CustomInput";
+import { ErrorDiv } from "../ErrorDiv";
 import { History } from "history";
-import { buttonStyles } from '../styles/buttonStyles';
-import { ReserRepeat } from './ReserRepeat';
+import { buttonStyles } from "../styles/buttonStyles";
+import { ReserRepeat } from "./ReserRepeat";
 
 interface IForm {
-  selectedCity: string
-  history: History,
-  selectedBuilding: string,
-  setOpen: (state: boolean) => void,
-  addError: null | string,
-  startTime: Date | null,
-  endTime: Date | null,
-  selectedRooms: string
+  selectedCity: string;
+  history: History;
+  selectedBuilding: string;
+  setOpen: (state: boolean) => void;
+  addError: null | string;
+  startTime: Date | null;
+  endTime: Date | null;
+  selectedRooms: string;
 }
 
 export const AddReservationForm: FC<IForm> = ({
@@ -43,36 +42,38 @@ export const AddReservationForm: FC<IForm> = ({
   addError,
   startTime,
   endTime,
-  selectedRooms
+  selectedRooms,
 }) => {
   const dispatch = useDispatch();
   const buttonClasses = buttonStyles();
 
-  const {
-    userData,
-  } = useSelector((state: IRootReducer) => state.getUserDataReducer);
-  const {
-    meetingRoomsInfo,
-  } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
+  const { userData } = useSelector(
+    (state: IRootReducer) => state.getUserDataReducer
+  );
+  const { meetingRoomsInfo } = useSelector(
+    (state: IRootReducer) => state.getMRsDataReducer
+  );
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
-    new Date(startTime || 0),
+    new Date(startTime || 0)
   );
   const [selectedStartTime, setSelectedStartTime] = useState<Date | null>(
-    addMinutes(new Date(startTime || 0) || 0, 1),
+    addMinutes(new Date(startTime || 0) || 0, 1)
   );
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
-    addHours(new Date(endTime || 0) || 0, 0),
+    addHours(new Date(endTime || 0) || 0, 0)
   );
+  const [checkedDays, setCheckedDays] = useState<string[]>([]);
 
   const initBooking: IReservation = {
     start_time: selectedStartTime,
     end_time: selectedEndTime,
     date: selectedDate,
-    purpose: '',
-    user_id: '',
-    meeting_room_id: ''
-  }
+    purpose: "",
+    user_id: "",
+    meeting_room_id: "",
+    repeatDays: checkedDays,
+  };
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
     setSelectedStartTime(date);
@@ -82,51 +83,56 @@ export const AddReservationForm: FC<IForm> = ({
   const handleClose = () => {
     dispatch(reservationSuccess());
     // getFilteredMRs(selectedCity, history, selectedBuilding, selectedRooms, dispatch)
-    setOpen(false)
-  }
-
+    setOpen(false);
+  };
 
   return (
-
     <Formik
       initialValues={initBooking}
       validationSchema={ReserveSchema}
       onSubmit={(values) => {
-
         delete values.date;
 
-        values.start_time = format(selectedStartTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        values.end_time = format(selectedEndTime || 0, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        values.start_time = format(
+          selectedStartTime || 0,
+          "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        );
+        values.end_time = format(
+          selectedEndTime || 0,
+          "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        );
         values.user_id = userData.id;
+        values.repeatDays = checkedDays;
         console.log(values);
-        
-        dispatch(requestAddReservation(values, setOpen, selectedCity, history, selectedBuilding, selectedRooms));
-      }
-      }
+        dispatch(
+          requestAddReservation(
+            values,
+            setOpen,
+            selectedCity,
+            history,
+            selectedBuilding,
+            selectedRooms
+          )
+        );
+      }}
     >
-      {props => (
-
-        <form
-          onSubmit={props.handleSubmit}
-        >
+      {(props) => (
+        <form onSubmit={props.handleSubmit}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
-            <Grid
-              container
-              justify="space-around"
-            >
+            <Grid container justify="space-around">
               <CssTextField
-                name='purpose'
+                name="purpose"
                 label="Цель брони"
                 fullWidth
                 onChange={props.handleChange}
                 value={props.values.purpose}
-                type='text'
+                type="text"
                 error={Boolean(props.touched.purpose && props.errors.purpose)}
               />
               <CustomSelect
                 itemList={meetingRoomsInfo}
                 formikProps={props}
-                fieldName={'meeting_room_id'}
+                fieldName={"meeting_room_id"}
                 text="Миттинг рум"
               />
               <DatePicker
@@ -134,7 +140,7 @@ export const AddReservationForm: FC<IForm> = ({
                 variant="inline"
                 format="dd/MM/yyyy"
                 margin="normal"
-                name='date'
+                name="date"
                 label="Выберите дату"
                 value={selectedDate}
                 fullWidth
@@ -149,11 +155,12 @@ export const AddReservationForm: FC<IForm> = ({
                 name="start_time"
                 fullWidth
                 ampm={false}
-                error={Boolean(props.touched.start_time && props.errors.start_time)}
+                error={Boolean(
+                  props.touched.start_time && props.errors.start_time
+                )}
                 label="Выберите время начала"
                 value={selectedStartTime}
                 onChange={(date) => setSelectedStartTime(date)}
-                
                 autoOk
               />
 
@@ -168,33 +175,28 @@ export const AddReservationForm: FC<IForm> = ({
                 onChange={(date) => setSelectedEndTime(date)}
                 autoOk
               />
-              <ReserRepeat/>
+              <ReserRepeat
+                checkedDays={checkedDays}
+                setCheckedDays={setCheckedDays}
+              />
             </Grid>
           </MuiPickersUtilsProvider>
 
           <DialogActions>
             <Button
-              type='submit'
-              variant='contained'
+              type="submit"
+              variant="contained"
               className={buttonClasses.btnReserve}
             >
               Забронировать
             </Button>
-            <Button
-              onClick={handleClose}
-              className={buttonClasses.btnCancel}
-            >
+            <Button onClick={handleClose} className={buttonClasses.btnCancel}>
               отмена
             </Button>
           </DialogActions>
-          {
-            addError
-            &&
-            <ErrorDiv error={addError} />
-          }
+          {addError && <ErrorDiv error={addError} />}
         </form>
-
       )}
-    </Formik >
-  )
-}
+    </Formik>
+  );
+};
