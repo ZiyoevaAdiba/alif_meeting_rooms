@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import { FormGroup } from "@material-ui/core";
@@ -29,8 +29,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface IReserRepeat {
-  checkedDays: string[];
-  setCheckedDays: (state: string[]) => void;
+  checkedDays: number[];
+  setCheckedDays: (state: number[]) => void;
 }
 
 export const ReserRepeat: FC<IReserRepeat> = ({
@@ -41,9 +41,11 @@ export const ReserRepeat: FC<IReserRepeat> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      setCheckedDays([...checkedDays, event.target.value]);
+      setCheckedDays([...checkedDays, Number(event.target.value)]);
     } else {
-      setCheckedDays(checkedDays.filter((item) => item !== event.target.value));
+      setCheckedDays(
+        checkedDays.filter((item) => item !== Number(event.target.value))
+      );
     }
   };
 
@@ -91,6 +93,18 @@ export const ReserRepeat: FC<IReserRepeat> = ({
     },
   ];
 
+  interface IChecked {
+    [key: number]: boolean;
+  }
+
+  const markedList: IChecked = repeatDays.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.value]: checkedDays.includes(item.value),
+    }),
+    {}
+  );
+
   return (
     <div className={classes.constainer}>
       <FormLabel> Дни повторения</FormLabel>
@@ -104,6 +118,7 @@ export const ReserRepeat: FC<IReserRepeat> = ({
               value={item.value}
               onChange={handleChange}
               key={item.id}
+              checked={markedList[item.value] || false}
             />
             <label htmlFor={item.id} className={classes.label} key={item.value}>
               {item.label}

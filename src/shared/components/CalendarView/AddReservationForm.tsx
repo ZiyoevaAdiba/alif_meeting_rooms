@@ -24,6 +24,7 @@ import { buttonStyles } from "../styles/buttonStyles";
 import { ReserRepeat } from "./ReserRepeat";
 
 interface IForm {
+  date: string;
   selectedCity: string;
   history: History;
   selectedBuilding: string;
@@ -35,6 +36,7 @@ interface IForm {
 }
 
 export const AddReservationForm: FC<IForm> = ({
+  date,
   selectedCity,
   history,
   selectedBuilding,
@@ -63,7 +65,7 @@ export const AddReservationForm: FC<IForm> = ({
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
     addHours(new Date(endTime || 0) || 0, 0)
   );
-  const [checkedDays, setCheckedDays] = useState<string[]>([]);
+  const [checkedDays, setCheckedDays] = useState<number[]>([]);
 
   const initBooking: IReservation = {
     start_time: selectedStartTime,
@@ -72,7 +74,7 @@ export const AddReservationForm: FC<IForm> = ({
     purpose: "",
     user_id: "",
     meeting_room_id: "",
-    repeatDays: checkedDays,
+    repeat_days: checkedDays,
   };
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
@@ -102,8 +104,7 @@ export const AddReservationForm: FC<IForm> = ({
           "yyyy-MM-dd'T'HH:mm:ss'Z'"
         );
         values.user_id = userData.id;
-        values.repeatDays = checkedDays;
-        console.log(values);
+        values.repeat_days = checkedDays;
         dispatch(
           requestAddReservation(
             values,
@@ -111,7 +112,8 @@ export const AddReservationForm: FC<IForm> = ({
             selectedCity,
             history,
             selectedBuilding,
-            selectedRooms
+            selectedRooms,
+            date,
           )
         );
       }}

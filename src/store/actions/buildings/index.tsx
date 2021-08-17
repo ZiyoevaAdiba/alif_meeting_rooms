@@ -1,7 +1,6 @@
 import { getBuildingsType } from "./interfaces";
 import { Dispatch } from "react";
 import { api } from "../../../routes/urls";
-import { IUser } from '../../reducers/users/interfaces'
 import { Axios } from "../../../shared/axios";
 import { store } from "react-notifications-component";
 import { IBuilding } from "../../reducers/buildings/interfaces";

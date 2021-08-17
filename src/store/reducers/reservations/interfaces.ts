@@ -22,7 +22,8 @@ export interface IReservation {
   user_id?: string;
   user?: IUser;
   date?: string | Date | null;
-  repeatDays?: string[];
+  repeat_days?: number[] | null;
+  repeat_id?: string;
 }
 export interface IReservationEmpty {
   id: string;

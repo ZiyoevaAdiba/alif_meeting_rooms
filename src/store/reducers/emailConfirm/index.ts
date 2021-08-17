@@ -1,4 +1,3 @@
-import { boolean } from "yup/lib/locale";
 import { emailType } from "../../actions/emailConfirm/interfaces";
 import { IAction } from "../interfaces";
 import { IEmailConfirmReducer } from "./interfaces";

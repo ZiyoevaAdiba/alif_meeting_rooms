@@ -1,8 +1,5 @@
 import {
   Box,
-  Button,
-  Container,
-  Grid,
   Link,
   makeStyles,
 } from "@material-ui/core";
@@ -14,7 +11,9 @@ import Instructions from "../assets/Instructions.docx";
 const useStyles = makeStyles(() => ({
   footer: {
     zIndex: 1200,
+    width: '100%',
     position: "relative",
+    bottom: 0,
     display: "flex",
     justifyContent: "space-around",
     fontSize: "16px",

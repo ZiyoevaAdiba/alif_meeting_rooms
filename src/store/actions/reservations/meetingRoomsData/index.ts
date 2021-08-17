@@ -34,35 +34,35 @@ export const getCheckedMRs = (data?: string[]) => {
   }
 }
 
-export const getMRsInfo = (history: History, selectedRooms?: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsInfo = (history: History, selectedRooms?: string, date?: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=&building=&rooms=${selectedRooms || ''}`) 
+    history.push(`${urls.reservations}?date=${date || ''}&city=&building=&rooms=${selectedRooms || ''}`) 
 
   } catch (error) {
     dispatch(getMRsInfoFail());
   }
 };
 
-export const getMRsByCityId = (city_id: string, history: History, selectedBuilding: string, selectedRooms: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByCityId = (city_id: string, history: History, selectedBuilding: string, selectedRooms: string, date?: string) => async(dispatch: Dispatch<any>) => {
   try {    
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${city_id}/city`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`)
+    history.push(`${urls.reservations}?date=${date}&city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`)
   } catch (error) {
     dispatch(getMRsInfoFail());
   }
 };
 
-export const getMRsByBuildingId = (building_id: string, history: History, selectedCity: string, selectedRooms: string) => async(dispatch: Dispatch<any>) => {
+export const getMRsByBuildingId = (building_id: string, history: History, selectedCity: string, selectedRooms: string, date?: string) => async(dispatch: Dispatch<any>) => {
   try {
     dispatch(getMRsInfoReq());
     const res = await Axios.get(`${api.meetingRooms}/${building_id}/building`);
     dispatch(getMRsInfoSuccess(res.data.payload));
-    history.push(`${urls.reservations}?city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`)
+    history.push(`${urls.reservations}?date=${date}&city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`)
   } catch (error) {
     dispatch(getMRsInfoFail());
   }
