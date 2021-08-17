@@ -99,7 +99,6 @@ const columns: GridColumns = [
     disableColumnMenu: true,
     flex: 1.5,
     renderCell: (params: GridValueGetterParams) => {
-      // ()
       return <CardMedia
         style={{ width: 'auto', height: '52px' }}
         component={"img"}
@@ -130,7 +129,6 @@ const columns: GridColumns = [
     align: 'center',
     headerAlign: 'center',
     disableColumnMenu: true,
-    // width: 130,
     flex: 2,
     renderCell: (params: GridCellParams) => (
       <>

@@ -52,7 +52,6 @@ export const AddDepartment = () => {
         >
           <DialogContent>
             <CssTextField
-              // autoFocus
               name="name"
               fullWidth
               label="Наименование"

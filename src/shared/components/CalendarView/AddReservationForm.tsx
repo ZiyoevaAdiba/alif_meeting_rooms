@@ -21,7 +21,7 @@ import { CssTextField, CustomSelect } from "../CustomInput";
 import { ErrorDiv } from "../ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
-import { ReserRepeat } from "./ReserRepeat";
+import { ReservationRepeat } from "./ReservationRepeat";
 
 interface IForm {
   date: string;
@@ -84,7 +84,6 @@ export const AddReservationForm: FC<IForm> = ({
 
   const handleClose = () => {
     dispatch(reservationSuccess());
-    // getFilteredMRs(selectedCity, history, selectedBuilding, selectedRooms, dispatch)
     setOpen(false);
   };
 
@@ -177,7 +176,7 @@ export const AddReservationForm: FC<IForm> = ({
                 onChange={(date) => setSelectedEndTime(date)}
                 autoOk
               />
-              <ReserRepeat
+              <ReservationRepeat
                 checkedDays={checkedDays}
                 setCheckedDays={setCheckedDays}
               />

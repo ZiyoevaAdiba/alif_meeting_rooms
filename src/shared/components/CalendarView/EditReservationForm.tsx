@@ -28,7 +28,7 @@ import { ErrorDiv } from "../ErrorDiv";
 import { getFilteredMRs } from "./getFilteredMRs";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
-import { ReserRepeat } from "./ReserRepeat";
+import { ReservationRepeat } from "./ReservationRepeat";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -97,7 +97,6 @@ export const EditReservationForm: FC<IForm> = ({
     setSelectedEndTime(addHours(new Date(booking.end_time || 0), -5));
     setCheckedDays(booking.repeat_days as number[]);
   }, [booking]);
-  // console.log(booking);
 
   const initBooking = {
     start_time: selectedStartTime,
@@ -115,7 +114,6 @@ export const EditReservationForm: FC<IForm> = ({
 
   const handleClose = () => {
     dispatch(reservationSuccess());
-    // getFilteredMRs(date, selectedCity, history, selectedBuilding, selectedRooms, dispatch)
     setOpenEdit(false);
   };
 
@@ -148,7 +146,6 @@ export const EditReservationForm: FC<IForm> = ({
               repeat_days: checkedDays,
               repeat_id: booking.repeat_id,
             };
-            console.log(EditData);
             dispatch(
               requestEditReservation(
                 EditData,
@@ -226,7 +223,7 @@ export const EditReservationForm: FC<IForm> = ({
                     onChange={(date) => setSelectedEndTime(date)}
                     autoOk
                   />
-                  <ReserRepeat
+                  <ReservationRepeat
                     checkedDays={checkedDays}
                     setCheckedDays={setCheckedDays}
                   />

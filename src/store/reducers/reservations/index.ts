@@ -18,13 +18,6 @@ export const reservationsReducer = (
 ): IreservationsReducer => {
 
   switch (action.type) {
-    // case getReservationsType.GET_RESERVATIONS:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //     error: null,
-    //     addError: null,
-    //   };
     case getReservationsType.GET_RESERVATIONS_FAIL:
       return {
         ...state,

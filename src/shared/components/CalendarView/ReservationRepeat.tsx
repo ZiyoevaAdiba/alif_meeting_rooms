@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
-import { FormGroup } from "@material-ui/core";
+import { Box, FormGroup } from "@material-ui/core";
+import { repeatDays } from "../../consts/daysCheckbox";
 
 const useStyles = makeStyles(() => ({
   constainer: {
@@ -28,12 +29,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface IReserRepeat {
+interface IReservationRepeat {
   checkedDays: number[];
   setCheckedDays: (state: number[]) => void;
 }
 
-export const ReserRepeat: FC<IReserRepeat> = ({
+export const ReservationRepeat: FC<IReservationRepeat> = ({
   checkedDays,
   setCheckedDays,
 }) => {
@@ -48,51 +49,6 @@ export const ReserRepeat: FC<IReserRepeat> = ({
       );
     }
   };
-
-  interface IRepeatDays {
-    id: string;
-    value: number;
-    label: string;
-  }
-
-  const repeatDays: IRepeatDays[] = [
-    {
-      id: "ch1",
-      value: 1,
-      label: "Пн",
-    },
-    {
-      id: "ch2",
-      value: 2,
-      label: "Вт",
-    },
-    {
-      id: "ch3",
-      value: 3,
-      label: "Ср",
-    },
-    {
-      id: "ch4",
-      value: 4,
-      label: "Чт",
-    },
-    {
-      id: "ch5",
-      value: 5,
-      label: "Пт",
-    },
-    {
-      id: "ch6",
-      value: 6,
-      label: "Сб",
-    },
-    {
-      id: "ch7",
-      value: 7,
-      label: "Вс",
-    },
-  ];
-
   interface IChecked {
     [key: number]: boolean;
   }
@@ -110,7 +66,7 @@ export const ReserRepeat: FC<IReserRepeat> = ({
       <FormLabel> Дни повторения</FormLabel>
       <FormGroup row>
         {repeatDays.map((item) => (
-          <div key={item.value}>
+          <Box key={item.value}>
             <input
               type="checkbox"
               className={classes.inp}
@@ -123,7 +79,7 @@ export const ReserRepeat: FC<IReserRepeat> = ({
             <label htmlFor={item.id} className={classes.label} key={item.value}>
               {item.label}
             </label>
-          </div>
+          </Box>
         ))}
       </FormGroup>
     </div>

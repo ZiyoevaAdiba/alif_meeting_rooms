@@ -38,7 +38,6 @@ export const UserProfile: FC = () => {
   }, [userData]);
 
   const handleClose = () => {
-    // dispatch(());
     history.push(urls.reservations)
   };
 
@@ -61,7 +60,6 @@ export const UserProfile: FC = () => {
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={(values) => {
-        // delete values?.repeat_new_password;
         dispatch(requestEditProfile(values, history, token));
       }}
     >
