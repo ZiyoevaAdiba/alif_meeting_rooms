@@ -57,7 +57,6 @@ export const getUserDataReducer = (
         ...state,
         error: null,
         loading: false,
-        // userData: {}
       };
     case getUserDataType.RESET_EDITING:
       return {

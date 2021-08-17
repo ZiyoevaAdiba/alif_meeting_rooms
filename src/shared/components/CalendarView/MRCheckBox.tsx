@@ -55,7 +55,7 @@ export const MRCheckBox: FC<IMRCheckBox> = ({ colors, selectedCity, selectedBuil
 
   useEffect(() => {
     dispatch(getCheckedMRs(selectedRooms))
-    window.history.pushState({},"",`${urls.reservations}?city=${selectedCity}&building=${selectedBuilding}&rooms=${selectedRooms.toString()}`)
+    window.history.pushState({},"",`${urls.reservations}?date=&city=${selectedCity}&building=${selectedBuilding}&rooms=${selectedRooms.toString()}`)
   }, [checked, dispatch])
 
   return (

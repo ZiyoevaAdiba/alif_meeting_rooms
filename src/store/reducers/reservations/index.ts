@@ -1,6 +1,6 @@
 import { getReservationsType } from "../../actions/reservations/interfaces";
 import { IAction } from "../interfaces";
-import { IReservation, IReservationEmpty, IreservationsReducer } from "./interfaces";
+import { IReservation, IreservationsReducer } from "./interfaces";
 
 const initialState: IreservationsReducer = {
   loading: false,
@@ -18,13 +18,6 @@ export const reservationsReducer = (
 ): IreservationsReducer => {
 
   switch (action.type) {
-    // case getReservationsType.GET_RESERVATIONS:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //     error: null,
-    //     addError: null,
-    //   };
     case getReservationsType.GET_RESERVATIONS_FAIL:
       return {
         ...state,
@@ -37,6 +30,7 @@ export const reservationsReducer = (
         loading: false,
         error: null,
         booking: action.payload as IReservation,
+        
       };
     case getReservationsType.SHOW_WARNING:
       return {

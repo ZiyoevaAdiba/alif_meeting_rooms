@@ -52,7 +52,6 @@ export const AddCity = () => {
         >
           <DialogContent>
             <CssTextField
-              // autoFocus
               name="name"
               fullWidth
               label="Наименование"

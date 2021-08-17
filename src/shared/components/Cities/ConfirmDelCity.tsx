@@ -21,7 +21,6 @@ export const ConfirmDelCity = () => {
   const handleConfirm = () => {
     dispatch(requestDeleteCity(showAlert))
     handleClose();
-    // handleClose();
   };
 
   return (

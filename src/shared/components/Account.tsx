@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   ButtonBase,
-  Hidden,
   Menu,
   MenuItem,
   Typography,

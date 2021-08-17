@@ -1,29 +1,40 @@
-import { Dispatch, FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootReducer } from '../../../store/reducers';
-import { cancelReservationDelete, requestDeleteReservation } from '../../../store/actions/reservations';
-import { useState } from 'react';
-import { CustomDelWarningDialog } from '../CustomDelWarningDialog';
+import { FC, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootReducer } from "../../../store/reducers";
+import {
+  cancelReservationDelete,
+  requestDeleteReservation,
+} from "../../../store/actions/reservations";
+import { useState } from "react";
+import { CustomDelWarningDialog } from "../CustomDelWarningDialog";
 import { History } from "history";
 
 interface IConfirmDelReservation {
-  selectedCity: string,
-  history: History,
-  selectedBuilding: string,
-  selectedRooms: string ,
-  setOpenActions: (state: boolean) => void,
+  date: string;
+  selectedCity: string;
+  history: History;
+  selectedBuilding: string;
+  selectedRooms: string;
+  setOpenActions: (state: boolean) => void;
 }
 
 export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
-  selectedCity, history, selectedBuilding, selectedRooms, setOpenActions
+  date,
+  selectedCity,
+  history,
+  selectedBuilding,
+  selectedRooms,
+  setOpenActions,
 }) => {
-  const { showAlert } = useSelector((state: IRootReducer) => state.reservationsReducer)
+  const { showAlert, booking } = useSelector(
+    (state: IRootReducer) => state.reservationsReducer
+  );
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setOpen(!open);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAlert]);
 
   const handleClose = () => {
@@ -32,19 +43,29 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
   };
 
   const handleConfirm = () => {
-    dispatch(requestDeleteReservation(showAlert, selectedCity, history, selectedBuilding, selectedRooms));
+    dispatch(
+      requestDeleteReservation(
+        showAlert,
+        booking.repeat_id as string,
+        selectedCity,
+        history,
+        selectedBuilding,
+        selectedRooms,
+        date,
+      )
+    );
     handleClose();
     setOpenActions(false);
   };
 
   return (
     <>
-    <CustomDelWarningDialog
+      <CustomDelWarningDialog
         open={open}
         handleClose={handleClose}
-        dialogText='Вы уверены, что хотите удалить бронь?'
+        dialogText="Вы уверены, что хотите удалить бронь?"
         handleConfirm={handleConfirm}
       />
     </>
   );
-}
+};

@@ -1,13 +1,13 @@
-import { Box, makeStyles } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { History } from 'history';
-import { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { reservationSuccess } from '../../../store/actions/reservations';
-import { IRootReducer } from '../../../store/reducers';
-import { AddReservationForm } from './AddReservationForm';
+import { Box, makeStyles } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { History } from "history";
+import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { reservationSuccess } from "../../../store/actions/reservations";
+import { IRootReducer } from "../../../store/reducers";
+import { AddReservationForm } from "./AddReservationForm";
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -16,42 +16,50 @@ const useStyles = makeStyles(() => ({
   },
 
   CardsContainer: {
-    '& .MuiDialog-paperWidthSm': {
+    "& .MuiDialog-paperWidthSm": {
       maxWidth: 500,
       minHeight: 500,
       padding: 20,
     },
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-    width: '100%',
+    justifyContent: "space-evenly",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    width: "100%",
   },
-
 }));
 
 interface IReserveRoom {
-  selectedCity: string,
-  history: History,
-  selectedBuilding: string,
-  open: boolean,
-  setOpen: (state: boolean) => void,
-  startTime: Date | null,
-  endTime: Date | null,
-  selectedRooms: string,
+  date: string;
+  selectedCity: string;
+  history: History;
+  selectedBuilding: string;
+  open: boolean;
+  setOpen: (state: boolean) => void;
+  startTime: Date | null;
+  endTime: Date | null;
+  selectedRooms: string;
 }
 
 export const ReserveRoom: FC<IReserveRoom> = ({
-  selectedCity, history, selectedBuilding, open, setOpen, startTime, endTime, selectedRooms
+  date,
+  selectedCity,
+  history,
+  selectedBuilding,
+  open,
+  setOpen,
+  startTime,
+  endTime,
+  selectedRooms,
 }) => {
   const classes = useStyles();
-  const {
-    addError,
-  } = useSelector((state: IRootReducer) => state.reservationsReducer);
+  const { addError } = useSelector(
+    (state: IRootReducer) => state.reservationsReducer
+  );
   const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpen(false);
-    dispatch(reservationSuccess())
+    dispatch(reservationSuccess());
   };
 
   return (
@@ -67,8 +75,8 @@ export const ReserveRoom: FC<IReserveRoom> = ({
         </DialogTitle>
 
         <DialogContent className={classes.content}>
-
           <AddReservationForm
+            date={date}
             setOpen={setOpen}
             addError={addError}
             selectedCity={selectedCity}
@@ -78,10 +86,8 @@ export const ReserveRoom: FC<IReserveRoom> = ({
             endTime={endTime}
             selectedRooms={selectedRooms}
           />
-          
         </DialogContent>
-
       </Dialog>
     </Box>
   );
-}
+};

@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flex: "1 1 auto",
     paddingTop: 70,
+    minHeight : 'calc(100vh - 73px)',
     [theme.breakpoints.up("lg")]: {
       padding: "70px 50px 0",
     },
