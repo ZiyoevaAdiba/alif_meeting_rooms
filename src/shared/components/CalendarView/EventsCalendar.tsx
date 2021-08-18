@@ -70,7 +70,7 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
         ref={calendarComponentRef}
         allDaySlot={false}
         selectable
-        contentHeight="900px"
+        contentHeight="1475px"
         plugins={[timeGridWeekPlugin, dayGridPlugin, interactionPlugin]}
         dateClick={function (info: any) {
           setSelectedStartTime(info.dateStr);

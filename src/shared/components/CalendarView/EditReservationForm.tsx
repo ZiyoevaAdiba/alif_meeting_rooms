@@ -89,7 +89,7 @@ export const EditReservationForm: FC<IForm> = ({
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
     new Date()
   );
-  const [checkedDays, setCheckedDays] = useState<number[]>([]);
+  const [checkedDays, setCheckedDays] = useState<number[] | null>([]);
 
   useEffect(() => {
     setSelectedDate(addHours(new Date(booking.start_time || 0), -5));
@@ -131,7 +131,7 @@ export const EditReservationForm: FC<IForm> = ({
           initialValues={initBooking}
           validationSchema={ReserveSchema}
           onSubmit={(values) => {
-            const EditData = {
+            const editData = {
               start_time: format(
                 selectedStartTime || 0,
                 "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -144,11 +144,12 @@ export const EditReservationForm: FC<IForm> = ({
               purpose: values.purpose,
               meeting_room_id: values.meeting_room_id,
               repeat_days: checkedDays,
-              repeat_id: booking.repeat_id,
+              repeat_id: booking.repeat_id || " ",
             };
+            
             dispatch(
               requestEditReservation(
-                EditData,
+                editData,
                 booking.id as string,
                 setOpenEdit,
                 selectedCity,
@@ -224,7 +225,7 @@ export const EditReservationForm: FC<IForm> = ({
                     autoOk
                   />
                   <ReservationRepeat
-                    checkedDays={checkedDays}
+                    checkedDays={checkedDays || []}
                     setCheckedDays={setCheckedDays}
                   />
                 </Grid>

@@ -65,6 +65,8 @@ export const CalendarPage = () => {
     dateQuery.get("date") || format(new Date(), "yyyy-MM-dd").toString();
   const [choosenDate, setChoosenDate] = useState(new Date(dateParam));
 
+  console.log(dateParam);
+
   const cityQuery = new URLSearchParams(location.search);
   const cityParam = cityQuery.get("city") || "";
 
@@ -92,14 +94,20 @@ export const CalendarPage = () => {
     setChoosenDate(value);
     let calendarApi = calendarComponentRef.current.getApi();
     calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
-    window.history.pushState(
-      {},
-      "",
+    history.push(
       `${urls.reservations}?date=${format(
         value,
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
+    // window.history.pushState(
+    //   {},
+    //   "",
+    //   `${urls.reservations}?date=${format(
+    //     value,
+    //     "yyyy-MM-dd"
+    //   )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
+    // );
   };
 
   const getBuildingsForDropdown = (cityId: string) => {
@@ -122,7 +130,7 @@ export const CalendarPage = () => {
       roomsParam,
       dispatch
     );
-  }, [selectedCity, selectedBuilding, roomsParam, dateParam, dispatch]);
+  }, [selectedCity, selectedBuilding, dateParam, dispatch]);
 
   const [colors, setColors] = useState(colorList(meetingRoomsInfo));
 
@@ -155,10 +163,12 @@ export const CalendarPage = () => {
         />
 
         <MRCheckBox
+          history={history}
           colors={colors}
           selectedCity={selectedCity}
           selectedBuilding={selectedBuilding}
           urlRooms={roomsParam}
+          date={dateParam}
         />
       </Grid>
 

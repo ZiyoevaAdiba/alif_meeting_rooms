@@ -1,4 +1,5 @@
 import { Checkbox, CheckboxProps, FormControlLabel, FormGroup, withStyles } from "@material-ui/core";
+import { History } from "history";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { urls } from "../../../routes/urls";
@@ -18,13 +19,15 @@ export const GreenCheckbox = withStyles({
 })((props: CheckboxProps) => <Checkbox color="default" {...props} />);
 
 interface IMRCheckBox {
+  history: History,
   colors: IColors,
   selectedCity: string,
   selectedBuilding: string,
   urlRooms: string,
+  date: string
 }
 
-export const MRCheckBox: FC<IMRCheckBox> = ({ colors, selectedCity, selectedBuilding, urlRooms }) => {
+export const MRCheckBox: FC<IMRCheckBox> = ({ history, colors, selectedCity, selectedBuilding, urlRooms, date }) => {
   const {
     meetingRoomsInfo
   } = useSelector((state: IRootReducer) => state.getMRsDataReducer);
@@ -55,7 +58,7 @@ export const MRCheckBox: FC<IMRCheckBox> = ({ colors, selectedCity, selectedBuil
 
   useEffect(() => {
     dispatch(getCheckedMRs(selectedRooms))
-    window.history.pushState({},"",`${urls.reservations}?date=&city=${selectedCity}&building=${selectedBuilding}&rooms=${selectedRooms.toString()}`)
+    history.push(`${urls.reservations}?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${selectedRooms.toString()}`)
   }, [checked, dispatch])
 
   return (

@@ -25,7 +25,7 @@ import { commonStyles } from "../styles/mainPagesStyles";
 const columns: GridColumns = [
   {
     field: 'name',
-    headerName: 'Имя/Адрес',
+    headerName: 'Название/Адрес',
     align: 'left',
     headerAlign: 'left',
     disableColumnMenu: true,
