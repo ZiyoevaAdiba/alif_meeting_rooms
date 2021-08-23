@@ -23,12 +23,13 @@ import {
 } from "../../../store/actions/reservations";
 import { IRootReducer } from "../../../store/reducers";
 import { ReserveSchema } from "../../validations/Reservation";
-import { CssTextField, CustomSelect } from "../CustomInput";
-import { ErrorDiv } from "../ErrorDiv";
-import { getFilteredMRs } from "./getFilteredMRs";
+import { CssTextField } from "../CustomInput";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
+import { CustomSelect } from "../CustomSelect";
+import { If } from "../If";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -89,7 +90,7 @@ export const EditReservationForm: FC<IForm> = ({
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
     new Date()
   );
-  const [checkedDays, setCheckedDays] = useState<number[]>([]);
+  const [checkedDays, setCheckedDays] = useState<number[] | null>([]);
 
   useEffect(() => {
     setSelectedDate(addHours(new Date(booking.start_time || 0), -5));
@@ -130,8 +131,10 @@ export const EditReservationForm: FC<IForm> = ({
         <Formik
           initialValues={initBooking}
           validationSchema={ReserveSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={(values) => {
-            const EditData = {
+            const editData = {
               start_time: format(
                 selectedStartTime || 0,
                 "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -144,11 +147,12 @@ export const EditReservationForm: FC<IForm> = ({
               purpose: values.purpose,
               meeting_room_id: values.meeting_room_id,
               repeat_days: checkedDays,
-              repeat_id: booking.repeat_id,
+              repeat_id: booking.repeat_id || " ",
             };
+
             dispatch(
               requestEditReservation(
-                EditData,
+                editData,
                 booking.id as string,
                 setOpenEdit,
                 selectedCity,
@@ -224,7 +228,7 @@ export const EditReservationForm: FC<IForm> = ({
                     autoOk
                   />
                   <ReservationRepeat
-                    checkedDays={checkedDays}
+                    checkedDays={checkedDays || []}
                     setCheckedDays={setCheckedDays}
                   />
                 </Grid>
@@ -245,7 +249,9 @@ export const EditReservationForm: FC<IForm> = ({
                   отмена
                 </Button>
               </DialogActions>
-              {editError && <ErrorDiv error={editError} />}
+              <If condition={editError}>
+                <ErrorDiv error={editError} />
+              </If>
             </form>
           )}
         </Formik>

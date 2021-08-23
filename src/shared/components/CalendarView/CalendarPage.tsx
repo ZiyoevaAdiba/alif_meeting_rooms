@@ -26,7 +26,6 @@ import { urls } from "../../../routes/urls";
 const useStyles = makeStyles(() => ({
   mainPageStyle: {
     marginTop: 0,
-    // gap: 40,
     marginBottom: 0,
   },
   firstColumn: {
@@ -90,16 +89,16 @@ export const CalendarPage = () => {
 
   const gotoWeek = (value: Date) => {
     setChoosenDate(value);
-    let calendarApi = calendarComponentRef.current.getApi();
-    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
-    window.history.pushState(
-      {},
-      "",
+    history.push(
       `${urls.reservations}?date=${format(
         value,
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
+    const calendarApi = calendarComponentRef.current.getApi();
+    console.log(format(value, "yyyy-MM-dd"));
+    
+    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
   };
 
   const getBuildingsForDropdown = (cityId: string) => {
@@ -122,7 +121,7 @@ export const CalendarPage = () => {
       roomsParam,
       dispatch
     );
-  }, [selectedCity, selectedBuilding, roomsParam, dateParam, dispatch]);
+  }, [selectedCity, selectedBuilding, dateParam, dispatch]);
 
   const [colors, setColors] = useState(colorList(meetingRoomsInfo));
 
@@ -140,7 +139,7 @@ export const CalendarPage = () => {
         <Calendar
           value={choosenDate}
           locale="ru"
-          onClickDay={(value: Date) => gotoWeek(value)}
+          onClickDay={(value: Date) => (gotoWeek(value), gotoWeek(value))}
         />
         <Filters
           date={dateParam}
@@ -155,10 +154,12 @@ export const CalendarPage = () => {
         />
 
         <MRCheckBox
+          history={history}
           colors={colors}
           selectedCity={selectedCity}
           selectedBuilding={selectedBuilding}
           urlRooms={roomsParam}
+          date={dateParam}
         />
       </Grid>
 

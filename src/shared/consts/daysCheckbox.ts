@@ -37,7 +37,7 @@ export const repeatDays: IRepeatDays[] = [
   },
   {
     id: "ch7",
-    value: 7,
+    value: 0,
     label: "Вс",
   },
 ];

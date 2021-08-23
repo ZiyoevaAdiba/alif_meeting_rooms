@@ -20,7 +20,7 @@ import { IRoom } from "../../../store/reducers/rooms/interfaces";
 import { AddRoom } from "./AddRoom";
 import { EditRoom } from "./EditRoom";
 import { ConfirmDelRoom } from "./ConfirmDelRoom";
-import { ErrorDiv } from "../ErrorDiv";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { LoadingScreen } from "../LoadingScreen";
 import { commonStyles } from "../styles/mainPagesStyles";
 

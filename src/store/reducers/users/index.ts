@@ -1,4 +1,3 @@
-import { IUserData } from "../../actions/signUp/interfaces";
 import { getUsersType } from "../../actions/users/interfaces";
 import { IAction } from "../interfaces";
 import { IUser, IusersReducer } from "./interfaces";
