@@ -37,17 +37,15 @@ function getMonday(date: string) {
   const dateInDateFormat: Date = new Date(date);
   const day = dateInDateFormat.getDay();
   const diff = dateInDateFormat.getDate() - day + (day == 0 ? -6 : 1);
-  console.log(day);
   
   // adjust when day is sunday
-  return new Date(dateInDateFormat.setDate(diff));
+  return new Date(dateInDateFormat.setDate(diff)).toISOString();
 }
 
 export const getMRsInfo =
   (history: History, selectedRooms?: string, date?: string) =>
   async (dispatch: Dispatch<any>) => {
-    const monday = getMonday(date as string).toISOString().split('.')[0]+"Z";
-console.log(monday);
+    const monday = getMonday(date as string);
 
     try {
       dispatch(getMRsInfoReq());
@@ -74,11 +72,11 @@ export const getMRsByCityId =
   async (dispatch: Dispatch<any>) => {
     const monday = getMonday(date as string);
     try {
-      // dispatch(getMRsInfoReq());
-      // const res = await Axios.get(
-      //   `${api.meetingRooms}/${city_id}/city?week=${monday}`
-      // );
-      // dispatch(getMRsInfoSuccess(res.data.payload));
+      dispatch(getMRsInfoReq());
+      const res = await Axios.get(
+        `${api.meetingRooms}/${city_id}/city?week=${monday}`
+      );
+      dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`
       );
@@ -99,11 +97,11 @@ export const getMRsByBuildingId =
     const monday = getMonday(date as string);
 
     try {
-      // dispatch(getMRsInfoReq());
-      // const res = await Axios.get(
-      //   `${api.meetingRooms}/${building_id}/building?week=${monday}`
-      // );
-      // dispatch(getMRsInfoSuccess(res.data.payload));
+      dispatch(getMRsInfoReq());
+      const res = await Axios.get(
+        `${api.meetingRooms}/${building_id}/building?week=${monday}`
+      );
+      dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`
       );

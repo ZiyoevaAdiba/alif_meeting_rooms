@@ -33,6 +33,9 @@ const useStyles = makeStyles(() => ({
       border: "none",
       backgroundColor: "#fafafa",
     },
+    "& .disableEvents": {
+      pointerEvents: "none"
+    }
   },
   calendarContainer: {
     "& .fc .fc-toolbar.fc-header-toolbar": {
@@ -82,10 +85,9 @@ export const CalendarPage = () => {
 
   const [startTime, setSelectedStartTime] = useState<Date | null>(null);
   const [endTime, setSelectedEndTime] = useState<Date | null>(null);
+  const [calendarApiRef, setCalendarApiRef] = useState<any>(null);
 
-  const calendarComponentRef: RefObject<any> = useRef(
-    format(choosenDate, "yyyy-MM-dd")
-  );
+  const calendarComponentRef: RefObject<any> = useRef(format(choosenDate, "yyyy-MM-dd"));
 
   const gotoWeek = (value: Date) => {
     setChoosenDate(value);
@@ -95,10 +97,8 @@ export const CalendarPage = () => {
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
-    const calendarApi = calendarComponentRef.current.getApi();
-    console.log(format(value, "yyyy-MM-dd"));
     
-    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
+    calendarApiRef && calendarApiRef?.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
   };
 
   const getBuildingsForDropdown = (cityId: string) => {
@@ -121,6 +121,9 @@ export const CalendarPage = () => {
       roomsParam,
       dispatch
     );
+    if (calendarComponentRef.current) {
+      setCalendarApiRef(calendarComponentRef.current.getApi());
+    }
   }, [selectedCity, selectedBuilding, dateParam, dispatch]);
 
   const [colors, setColors] = useState(colorList(meetingRoomsInfo));
@@ -129,17 +132,14 @@ export const CalendarPage = () => {
     setColors(colorList(meetingRoomsInfo));
   }, [meetingRoomsInfo]);
 
-  if (loading && !error) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Grid container spacing={5} className={classes.mainPageStyle}>
       <Grid item xs={3} className={classes.firstColumn}>
         <Calendar
           value={choosenDate}
           locale="ru"
-          onClickDay={(value: Date) => (gotoWeek(value), gotoWeek(value))}
+          onClickDay={(value: Date) => gotoWeek(value)}
+          className={loading ? 'disableEvents' : ''}
         />
         <Filters
           date={dateParam}

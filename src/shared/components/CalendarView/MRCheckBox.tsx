@@ -53,34 +53,42 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
     [key: string]: boolean;
   }
 
-  const checkBoxItems = meetingRoomsInfo.reduce(
-    (o, key) => ({
-      ...o,
-      [key.id as string]: selectedRooms.includes(key.id as string),
-    }),
-    {}
-  ) as ICheckBoxItems;
-
-  const [checked, setChecked] = useState<ICheckBoxItems>(checkBoxItems);
-
+  const [checked, setChecked] = useState<any>([]);
+  
   const mrChecked = (mrId: string) => {
     setChecked({ ...checked, [mrId]: !checked[mrId] });
-
+    
     if (checked[mrId] === false) {
-      setSelectedRooms([...selectedRooms, mrId]);
+      const test = [...selectedRooms, mrId];
+      setSelectedRooms(test);
+      history.push(
+        `${
+          urls.reservations
+        }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${test.toString()}`
+      );
     } else {
-      setSelectedRooms(selectedRooms.filter((room) => room !== mrId));
+      const test = selectedRooms.filter((room) => room !== mrId)
+      setSelectedRooms(test);
+      history.push(
+        `${
+          urls.reservations
+        }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${test.toString()}`
+      );
     }
-  };
 
+  };
+  
   useEffect(() => {
+    const checkBoxItems = meetingRoomsInfo.reduce(
+      (o, key) => ({
+        ...o,
+        [key.id as string]: selectedRooms.includes(key.id as string),
+      }),
+      {}
+      ) as ICheckBoxItems;
+    setChecked(checkBoxItems);
     dispatch(getCheckedMRs(selectedRooms));
-    history.push(
-      `${
-        urls.reservations
-      }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${selectedRooms.toString()}`
-    );
-  }, [checked, dispatch]);
+  }, [meetingRoomsInfo]);
 
   return (
     <>
@@ -89,7 +97,10 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
         <hr />
         <If
           condition={!meetingRoomsInfo}
-          anotherChildren={meetingRoomsInfo.map((item) => (
+          anotherChildren={meetingRoomsInfo.map((item) => {
+            console.log(checked);
+            
+            return(
             <FormControlLabel
               control={
                 <GreenCheckbox
@@ -102,9 +113,9 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
               onChange={() => mrChecked(item.id as string)}
               key={item.id}
             />
-          ))}
+          )})}
         >
-          'На данный момент нет доступных миттинг румов.'
+          На данный момент нет доступных миттинг румов.
         </If>
       </FormGroup>
     </>
