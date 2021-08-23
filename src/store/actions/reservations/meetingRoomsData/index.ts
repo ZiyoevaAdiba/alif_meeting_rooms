@@ -4,7 +4,6 @@ import { api, urls } from "../../../../routes/urls";
 import { Axios } from "../../../../shared/axios";
 import { History } from "history";
 import { IRoom } from "../../../reducers/rooms/interfaces";
-import { IReservation } from "../../../reducers/reservations/interfaces";
 
 const getMRsInfoReq = () => {
   return {
@@ -34,17 +33,22 @@ export const getCheckedMRs = (data?: string[]) => {
   };
 };
 
-function getMonday(d: string) {
-  let b: Date = new Date(d);
-  var day = b.getDay(),
-    diff = b.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-  return new Date(b.setDate(diff));
+function getMonday(date: string) {
+  const dateInDateFormat: Date = new Date(date);
+  const day = dateInDateFormat.getDay();
+  const diff = dateInDateFormat.getDate() - day + (day == 0 ? -6 : 1);
+  console.log(day);
+  
+  // adjust when day is sunday
+  return new Date(dateInDateFormat.setDate(diff));
 }
 
 export const getMRsInfo =
   (history: History, selectedRooms?: string, date?: string) =>
   async (dispatch: Dispatch<any>) => {
-    let monday = getMonday(date as string).toISOString();
+    const monday = getMonday(date as string).toISOString().split('.')[0]+"Z";
+console.log(monday);
+
     try {
       dispatch(getMRsInfoReq());
       const res = await Axios.get(`${api.meetingRooms}?week=${monday}`);
@@ -68,13 +72,13 @@ export const getMRsByCityId =
     date?: string
   ) =>
   async (dispatch: Dispatch<any>) => {
-    let monday = getMonday(date as string).toISOString();
+    const monday = getMonday(date as string);
     try {
-      dispatch(getMRsInfoReq());
-      const res = await Axios.get(
-        `${api.meetingRooms}/${city_id}/city?week=${monday}`
-      );
-      dispatch(getMRsInfoSuccess(res.data.payload));
+      // dispatch(getMRsInfoReq());
+      // const res = await Axios.get(
+      //   `${api.meetingRooms}/${city_id}/city?week=${monday}`
+      // );
+      // dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`
       );
@@ -92,14 +96,14 @@ export const getMRsByBuildingId =
     date?: string
   ) =>
   async (dispatch: Dispatch<any>) => {
-    let monday = getMonday(date as string).toISOString();
+    const monday = getMonday(date as string);
 
     try {
-      dispatch(getMRsInfoReq());
-      const res = await Axios.get(
-        `${api.meetingRooms}/${building_id}/building?week=${monday}`
-      );
-      dispatch(getMRsInfoSuccess(res.data.payload));
+      // dispatch(getMRsInfoReq());
+      // const res = await Axios.get(
+      //   `${api.meetingRooms}/${building_id}/building?week=${monday}`
+      // );
+      // dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`
       );

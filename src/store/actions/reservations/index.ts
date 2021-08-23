@@ -138,7 +138,9 @@ export const requestDeleteReservation =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
-      await Axios.delete(`${api.reservations}/${reservationId}/${repeat_id || " "}`);
+      await Axios.delete(
+        `${api.reservations}/${reservationId}/${repeat_id || " "}`
+      );
       getFilteredMRs(
         date,
         selectedCity,

@@ -23,12 +23,13 @@ import {
 } from "../../../store/actions/reservations";
 import { IRootReducer } from "../../../store/reducers";
 import { ReserveSchema } from "../../validations/Reservation";
-import { CssTextField, CustomSelect } from "../CustomInput";
-import { ErrorDiv } from "../ErrorDiv";
-import { getFilteredMRs } from "./getFilteredMRs";
+import { CssTextField } from "../CustomInput";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
+import { CustomSelect } from "../CustomSelect";
+import { If } from "../If";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -130,6 +131,8 @@ export const EditReservationForm: FC<IForm> = ({
         <Formik
           initialValues={initBooking}
           validationSchema={ReserveSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={(values) => {
             const editData = {
               start_time: format(
@@ -146,7 +149,7 @@ export const EditReservationForm: FC<IForm> = ({
               repeat_days: checkedDays,
               repeat_id: booking.repeat_id || " ",
             };
-            
+
             dispatch(
               requestEditReservation(
                 editData,
@@ -246,7 +249,9 @@ export const EditReservationForm: FC<IForm> = ({
                   отмена
                 </Button>
               </DialogActions>
-              {editError && <ErrorDiv error={editError} />}
+              <If condition={editError}>
+                <ErrorDiv error={editError} />
+              </If>
             </form>
           )}
         </Formik>

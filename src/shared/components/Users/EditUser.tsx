@@ -1,32 +1,38 @@
-import { FC, useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Form, Formik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootReducer } from '../../../store/reducers';
-import { requestEditUser, resetUserEditing } from '../../../store/actions/users';
-import { ErrorDiv } from '../ErrorDiv';
-import { fieldInput, userDataFields } from '../../consts/userConsts';
-import { CustomInput, CustomSelect } from '../CustomInput';
-import { IUserPageProps } from './AddUser';
-import { EditUserValidation } from '../../validations/UsersValidation';
-import { userMenuItems } from '../../consts/selectConsts';
-import { buttonStyles } from '../styles/buttonStyles';
+import { FC, useEffect, useState } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootReducer } from "../../../store/reducers";
+import {
+  requestEditUser,
+  resetUserEditing,
+} from "../../../store/actions/users";
+import { ErrorDiv } from "../Errors/ErrorDiv";
+import { fieldInput, userDataFields } from "../../consts/userConsts";
+import { CustomInput } from "../CustomInput";
+import { IUserPageProps } from "./AddUser";
+import { EditUserValidation } from "../../validations/UsersValidation";
+import { userMenuItems } from "../../consts/selectConsts";
+import { buttonStyles } from "../styles/buttonStyles";
+import { If } from "../If";
+import { CustomSelect } from "../CustomSelect";
 
-
-export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => {
-
-  const {
-    user,
-    userError
-  } = useSelector((state: IRootReducer) => state.usersReducer);
-  const {
-    departments
-  } = useSelector((state: IRootReducer) => state.departmentsReducer);
+export const EditUser: FC<IUserPageProps> = ({
+  page,
+  history,
+  searchInput,
+}) => {
+  const { user, userError } = useSelector(
+    (state: IRootReducer) => state.usersReducer
+  );
+  const { departments } = useSelector(
+    (state: IRootReducer) => state.departmentsReducer
+  );
 
   const [open, setOpen] = useState(true);
   const buttonClasses = buttonStyles();
@@ -47,8 +53,11 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       fullWidth={true}
-      maxWidth={'sm'}>
-      <DialogTitle id="form-dialog-title">Изменение данных о пользователе</DialogTitle>
+      maxWidth={"sm"}
+    >
+      <DialogTitle id="form-dialog-title">
+        Изменение данных о пользователе
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
           Чтобы изменить данные о пользователе отредактируйте нужные поля.
@@ -63,19 +72,15 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
             dispatch(requestEditUser(page, searchInput, history, values));
           }}
         >
-          {props => (
-            <Form
-              onSubmit={props.handleSubmit}
-            >
-              {
-                userDataFields.map(
-                  item => <CustomInput
-                    key={item.name}
-                    fieldData={item}
-                    formikProps={props}
-                  />
-                )
-              }
+          {(props) => (
+            <Form onSubmit={props.handleSubmit}>
+              {userDataFields.map((item) => (
+                <CustomInput
+                  key={item.name}
+                  fieldData={item}
+                  formikProps={props}
+                />
+              ))}
 
               <CustomSelect
                 itemList={departments}
@@ -91,17 +96,14 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
                 text="Назначить роль"
               />
 
-              {
-                (userError)
-                &&
-                <ErrorDiv
-                  error={userError}
-                />
-              }
+              <If condition={userError}>
+                <ErrorDiv error={userError} />
+              </If>
+
               <DialogActions>
                 <Button
-                  type='submit'
-                  variant='contained'
+                  type="submit"
+                  variant="contained"
                   className={buttonClasses.btnReserve}
                 >
                   Сохранить изменения
@@ -114,12 +116,10 @@ export const EditUser: FC<IUserPageProps> = ({ page, history, searchInput }) => 
                   Отмена
                 </Button>
               </DialogActions>
-
             </Form>
           )}
         </Formik>
       </DialogContent>
-
     </Dialog>
   );
-}
+};

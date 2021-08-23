@@ -17,11 +17,13 @@ import {
 import { IRootReducer } from "../../../store/reducers";
 import { IReservation } from "../../../store/reducers/reservations/interfaces";
 import { ReserveSchema } from "../../validations/Reservation";
-import { CssTextField, CustomSelect } from "../CustomInput";
-import { ErrorDiv } from "../ErrorDiv";
+import { CssTextField } from "../CustomInput";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
+import { If } from "../If";
+import { CustomSelect } from "../CustomSelect";
 
 interface IForm {
   date: string;
@@ -91,6 +93,8 @@ export const AddReservationForm: FC<IForm> = ({
     <Formik
       initialValues={initBooking}
       validationSchema={ReserveSchema}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={(values) => {
         delete values.date;
 
@@ -112,7 +116,7 @@ export const AddReservationForm: FC<IForm> = ({
             history,
             selectedBuilding,
             selectedRooms,
-            date,
+            date
           )
         );
       }}
@@ -195,7 +199,10 @@ export const AddReservationForm: FC<IForm> = ({
               отмена
             </Button>
           </DialogActions>
-          {addError && <ErrorDiv error={addError} />}
+
+          <If condition={addError}>
+            <ErrorDiv error={addError} />
+          </If>
         </form>
       )}
     </Formik>

@@ -1,15 +1,11 @@
 import {
   Box,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
   TextField,
   withStyles,
 } from "@material-ui/core";
 import { FormikProps } from "formik";
 import { FC } from "react";
-import { IDepartment } from "../../store/reducers/departments/interfaces";
+import { If } from "./If";
 
 export const CssTextField = withStyles({
   root: {
@@ -29,15 +25,6 @@ export const CssTextField = withStyles({
     },
   },
 })(TextField);
-
-export const greenStyle = makeStyles((theme) => ({
-  select: {
-    marginBottom: 10,
-    "&:after": {
-      borderBottomColor: "rgb(57 185 127)",
-    },
-  },
-}));
 
 interface IFieldData {
   name: string;
@@ -63,57 +50,16 @@ export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
         onBlur={formikProps.handleBlur}
         type={fieldData.type}
       />
-      {formikProps.errors[fieldData.name] &&
-        formikProps.touched[fieldData.name] && (
-          <div style={{ color: "#f44335", marginTop: "0px", fontSize: "14px" }}>
-            {formikProps.errors[fieldData.name]}
-          </div>
-        )}
-    </>
-  );
-};
-
-interface ICustomSelect {
-  itemList?: IDepartment[];
-  formikProps: FormikProps<any>;
-  fieldName: string;
-  text: string;
-}
-
-export const CustomSelect: FC<ICustomSelect> = ({
-  itemList,
-  formikProps,
-  fieldName,
-  text,
-}) => {
-  const classes = greenStyle();
-
-  return (
-    <Box width="100%">
-      <InputLabel style={{ marginTop: "15px" }} id="select">
-        {text}
-      </InputLabel>
-      <Select
-        className={classes.select}
-        id="select"
-        value={formikProps.values[fieldName]}
-        onChange={formikProps.handleChange}
-        name={fieldName}
-        fullWidth
+      <If
+        condition={
+          formikProps.errors[fieldData.name] &&
+          formikProps.touched[fieldData.name]
+        }
       >
-        {itemList?.map((item) => {
-          return (
-            <MenuItem key={item.id} value={item.id}>
-              {item.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
-      {formikProps.errors[fieldName] && formikProps.touched[fieldName] && (
-        <div style={{ color: "#f44335", marginTop: "0px", fontSize: "14px" }}>
-          {formikProps.errors[fieldName]}
-        </div>
-      )}
-    </Box>
+        <Box color="#f44335" marginTop="0px" fontSize="14px">
+          {formikProps.errors[fieldData.name]}
+        </Box>
+      </If>
+    </>
   );
 };

@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../../store/reducers";
 import loaderGif from "../../../assets/images/loading-icon.jpeg";
 import { LoginSchema } from "../../validations/LoginValidation";
-import { ErrorDiv } from "../ErrorDiv";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { loginResetError, requestLogin } from "../../../store/actions/login";
 import { CustomInput } from "../CustomInput";
 import { useEffect } from "react";
 import { requestEmailConfirm } from "../../../store/actions/emailConfirm";
 import { authStyles } from "./authStyles";
+import { If } from "../If";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -112,9 +113,13 @@ export const LoginForm = () => {
               variant="contained"
             >
               Вход
-              {loading && <img src={loaderGif} alt="" />}
+              <If condition={loading}>
+                <img src={loaderGif} alt="" />
+              </If>
             </Button>
-            {error && <ErrorDiv error={error} />}
+            <If condition={error}>
+              <ErrorDiv error={error} />
+            </If>
             <ButtonGroup className={classes.btns}>
               <Button
                 className={authClasses.btnsText}

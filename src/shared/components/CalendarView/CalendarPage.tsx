@@ -26,7 +26,6 @@ import { urls } from "../../../routes/urls";
 const useStyles = makeStyles(() => ({
   mainPageStyle: {
     marginTop: 0,
-    // gap: 40,
     marginBottom: 0,
   },
   firstColumn: {
@@ -65,8 +64,6 @@ export const CalendarPage = () => {
     dateQuery.get("date") || format(new Date(), "yyyy-MM-dd").toString();
   const [choosenDate, setChoosenDate] = useState(new Date(dateParam));
 
-  console.log(dateParam);
-
   const cityQuery = new URLSearchParams(location.search);
   const cityParam = cityQuery.get("city") || "";
 
@@ -92,22 +89,16 @@ export const CalendarPage = () => {
 
   const gotoWeek = (value: Date) => {
     setChoosenDate(value);
-    let calendarApi = calendarComponentRef.current.getApi();
-    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
     history.push(
       `${urls.reservations}?date=${format(
         value,
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
-    // window.history.pushState(
-    //   {},
-    //   "",
-    //   `${urls.reservations}?date=${format(
-    //     value,
-    //     "yyyy-MM-dd"
-    //   )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
-    // );
+    const calendarApi = calendarComponentRef.current.getApi();
+    console.log(format(value, "yyyy-MM-dd"));
+    
+    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
   };
 
   const getBuildingsForDropdown = (cityId: string) => {
@@ -148,7 +139,7 @@ export const CalendarPage = () => {
         <Calendar
           value={choosenDate}
           locale="ru"
-          onClickDay={(value: Date) => gotoWeek(value)}
+          onClickDay={(value: Date) => (gotoWeek(value), gotoWeek(value))}
         />
         <Filters
           date={dateParam}
