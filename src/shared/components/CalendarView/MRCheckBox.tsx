@@ -54,12 +54,12 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
   }
 
   const [checked, setChecked] = useState<any>([]);
-  
+
   const mrChecked = (mrId: string) => {
     setChecked({ ...checked, [mrId]: !checked[mrId] });
-    
+    let test = [];
     if (checked[mrId] === false) {
-      const test = [...selectedRooms, mrId];
+      test = [...selectedRooms, mrId];
       setSelectedRooms(test);
       history.push(
         `${
@@ -67,17 +67,16 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
         }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${test.toString()}`
       );
     } else {
-      const test = selectedRooms.filter((room) => room !== mrId)
+      test = selectedRooms.filter((room) => room !== mrId);
       setSelectedRooms(test);
-      history.push(
-        `${
-          urls.reservations
-        }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${test.toString()}`
-      );
     }
-
+    history.push(
+      `${
+        urls.reservations
+      }?date=${date}&city=${selectedCity}&building=${selectedBuilding}&rooms=${test.toString()}`
+    );
   };
-  
+
   useEffect(() => {
     const checkBoxItems = meetingRoomsInfo.reduce(
       (o, key) => ({
@@ -85,10 +84,10 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
         [key.id as string]: selectedRooms.includes(key.id as string),
       }),
       {}
-      ) as ICheckBoxItems;
+    ) as ICheckBoxItems;
     setChecked(checkBoxItems);
     dispatch(getCheckedMRs(selectedRooms));
-  }, [meetingRoomsInfo]);
+  }, [meetingRoomsInfo, selectedRooms]);
 
   return (
     <>
@@ -98,22 +97,21 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
         <If
           condition={!meetingRoomsInfo}
           anotherChildren={meetingRoomsInfo.map((item) => {
-            console.log(checked);
-            
-            return(
-            <FormControlLabel
-              control={
-                <GreenCheckbox
-                  name={item.id}
-                  style={{ color: colors[item.id as string] }}
-                />
-              }
-              checked={checked[item.id as string] || false}
-              label={item.name}
-              onChange={() => mrChecked(item.id as string)}
-              key={item.id}
-            />
-          )})}
+            return (
+              <FormControlLabel
+                control={
+                  <GreenCheckbox
+                    name={item.id}
+                    style={{ color: colors[item.id as string] }}
+                  />
+                }
+                checked={checked[item.id as string] || false}
+                label={item.name}
+                onChange={() => mrChecked(item.id as string)}
+                key={item.id}
+              />
+            );
+          })}
         >
           На данный момент нет доступных миттинг румов.
         </If>

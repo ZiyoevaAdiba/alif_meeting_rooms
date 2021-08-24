@@ -107,7 +107,7 @@ export const AddReservationForm: FC<IForm> = ({
           "yyyy-MM-dd'T'HH:mm:ss'Z'"
         );
         values.user_id = userData.id;
-        values.repeat_days = checkedDays;
+        values.repeat_days = checkedDays;        
         dispatch(
           requestAddReservation(
             values,
