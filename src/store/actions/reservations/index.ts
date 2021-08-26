@@ -127,6 +127,8 @@ export const requestEditReservation =
         selectedRooms,
         dispatch
       );
+      console.log(222);
+
     } catch (error) {
       console.log(333);
       dispatch(editReservationFail(error.response.data.payload.message));
