@@ -48,6 +48,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "100%",
   },
+  select: {
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: "rgb(57 185 127)",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: "2px solid rgb(57 185 127)",
+    },
+  },
 }));
 
 interface IForm {
@@ -151,7 +159,7 @@ export const EditReservationForm: FC<IForm> = ({
               repeat_days: checkedDays,
               repeat_id: booking.repeat_id || " ",
             };
-console.log(111);
+            console.log(111);
 
             dispatch(
               requestEditReservation(
@@ -201,6 +209,7 @@ console.log(111);
                     onChange={(date) => handleDate(date)}
                     autoOk
                     disablePast
+                    className={classes.select}
                   />
 
                   <TimePicker
@@ -215,6 +224,7 @@ console.log(111);
                     value={selectedStartTime}
                     onChange={(date) => setSelectedStartTime(date)}
                     autoOk
+                    className={classes.select}
                   />
 
                   <TimePicker
@@ -229,6 +239,7 @@ console.log(111);
                     )}
                     onChange={(date) => setSelectedEndTime(date)}
                     autoOk
+                    className={classes.select}
                   />
                   <ReservationRepeat
                     checkedDays={checkedDays || []}

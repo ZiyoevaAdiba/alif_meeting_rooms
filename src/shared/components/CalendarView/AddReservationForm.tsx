@@ -1,6 +1,6 @@
 import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
-import { Button, DialogActions, Grid } from "@material-ui/core";
+import { Button, DialogActions, Grid, makeStyles } from "@material-ui/core";
 import {
   DatePicker,
   MuiPickersUtilsProvider,
@@ -25,6 +25,16 @@ import { ReservationRepeat } from "./ReservationRepeat";
 import { If } from "../If";
 import { CustomSelect } from "../CustomSelect";
 
+export const greenDateStyle = makeStyles(() => ({
+  select: {
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: "rgb(57 185 127)",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: "2px solid rgb(57 185 127)",
+    },
+  },
+}));
 interface IForm {
   date: string;
   selectedCity: string;
@@ -50,6 +60,7 @@ export const AddReservationForm: FC<IForm> = ({
 }) => {
   const dispatch = useDispatch();
   const buttonClasses = buttonStyles();
+  const classes = greenDateStyle();
 
   const { userData } = useSelector(
     (state: IRootReducer) => state.getUserDataReducer
@@ -80,8 +91,6 @@ export const AddReservationForm: FC<IForm> = ({
   };
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
-    setSelectedStartTime(date);
-    setSelectedEndTime(addHours(date || 0, 1));
   };
 
   const handleClose = () => {
@@ -98,16 +107,18 @@ export const AddReservationForm: FC<IForm> = ({
       onSubmit={(values) => {
         delete values.date;
 
-        values.start_time = format(
-          selectedStartTime || 0,
-          "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        );
-        values.end_time = format(
-          selectedEndTime || 0,
-          "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        );
+        values.start_time =
+          format(selectedDate || 0, "yyyy-MM-dd") +
+          "T" +
+          format(selectedStartTime || 0, "HH:mm:ss") +
+          "Z";
+        values.end_time =
+          format(selectedDate || 0, "yyyy-MM-dd") +
+          "T" +
+          format(selectedEndTime || 0, "HH:mm:ss") +
+          "Z";
         values.user_id = userData.id;
-        values.repeat_days = checkedDays;        
+        values.repeat_days = checkedDays;
         dispatch(
           requestAddReservation(
             values,
@@ -153,6 +164,7 @@ export const AddReservationForm: FC<IForm> = ({
                 onChange={(date) => handleDate(date)}
                 autoOk
                 disablePast
+                className={classes.select}
               />
 
               <TimePicker
@@ -167,6 +179,7 @@ export const AddReservationForm: FC<IForm> = ({
                 value={selectedStartTime}
                 onChange={(date) => setSelectedStartTime(date)}
                 autoOk
+                className={classes.select}
               />
 
               <TimePicker
@@ -179,6 +192,7 @@ export const AddReservationForm: FC<IForm> = ({
                 error={Boolean(props.touched.end_time && props.errors.end_time)}
                 onChange={(date) => setSelectedEndTime(date)}
                 autoOk
+                className={classes.select}
               />
               <ReservationRepeat
                 checkedDays={checkedDays}
