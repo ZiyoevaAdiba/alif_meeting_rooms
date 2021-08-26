@@ -91,7 +91,7 @@ export const SignUpForm = () => {
                 <img src={loaderGif} alt="" />{" "}
               </If>
             </Button>
-            <If condition={error}>
+            <If condition={Boolean(error)}>
               <ErrorDiv error={error} />
             </If>
             <Button

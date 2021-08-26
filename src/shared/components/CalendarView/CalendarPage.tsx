@@ -34,8 +34,8 @@ const useStyles = makeStyles(() => ({
       backgroundColor: "#fafafa",
     },
     "& .disableEvents": {
-      pointerEvents: "none"
-    }
+      pointerEvents: "none",
+    },
   },
   calendarContainer: {
     "& .fc .fc-toolbar.fc-header-toolbar": {
@@ -87,7 +87,9 @@ export const CalendarPage = () => {
   const [endTime, setSelectedEndTime] = useState<Date | null>(null);
   const [calendarApiRef, setCalendarApiRef] = useState<any>(null);
 
-  const calendarComponentRef: RefObject<any> = useRef(format(choosenDate, "yyyy-MM-dd"));
+  const calendarComponentRef: RefObject<any> = useRef(
+    format(choosenDate, "yyyy-MM-dd")
+  );
 
   const gotoWeek = (value: Date) => {
     setChoosenDate(value);
@@ -97,7 +99,6 @@ export const CalendarPage = () => {
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
-    
     calendarApiRef && calendarApiRef?.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
   };
 
@@ -126,10 +127,10 @@ export const CalendarPage = () => {
     }
   }, [selectedCity, selectedBuilding, dateParam, dispatch]);
 
-  const [colors, setColors] = useState(colorList(meetingRoomsInfo));
+  const [colors, setColors] = useState({});
 
   useEffect(() => {
-    setColors(colorList(meetingRoomsInfo));
+    !meetingRoomsInfo ? setColors({}) : setColors(colorList(meetingRoomsInfo));
   }, [meetingRoomsInfo]);
 
   return (
@@ -139,7 +140,7 @@ export const CalendarPage = () => {
           value={choosenDate}
           locale="ru"
           onClickDay={(value: Date) => gotoWeek(value)}
-          className={loading ? 'disableEvents' : ''}
+          className={loading ? "disableEvents" : ""}
         />
         <Filters
           date={dateParam}

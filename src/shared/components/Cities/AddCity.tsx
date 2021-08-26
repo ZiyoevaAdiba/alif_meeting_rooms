@@ -65,7 +65,7 @@ export const AddCity = () => {
               onChange={handleChange}
               required
             />
-            <If condition={addError}>
+            <If condition={Boolean(addError)}>
               <ErrorDiv error={addError} />
             </If>
           </DialogContent>

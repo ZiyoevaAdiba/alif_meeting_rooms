@@ -97,7 +97,7 @@ export const AddBuilding = () => {
                   text="Выбрать город"
                 />
 
-                <If condition={addBuildingError}>
+                <If condition={Boolean(addBuildingError)}>
                   <ErrorDiv error={addBuildingError} />
                 </If>
                 <DialogActions>

@@ -43,7 +43,7 @@ export const addReservationFail = (message: string) => {
 
 export const editReservationFail = (message: string) => {
   return {
-    type: getReservationsType.ADD_RESERVATION_FAIL,
+    type: getReservationsType.EDIT_RESERVATION_FAIL,
     payload: message,
   };
 };
@@ -99,6 +99,12 @@ export const requestEditReservation =
         `${api.reservations}/${reservationId}/${editedReservation.repeat_id}`,
         editedReservation
       );
+      // Axios({
+      //   url:'',
+      //   method: "PUT",
+      //   data
+      // })
+      console.log(222);
       setEditOpen(false);
       store.addNotification({
         title: "Успешно!",

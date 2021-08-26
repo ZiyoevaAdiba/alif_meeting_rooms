@@ -75,7 +75,7 @@ export const EditBuilding = () => {
                 fieldName="city_id"
                 text="Город"
               />
-              <If condition={editBuildingError}>
+              <If condition={Boolean(editBuildingError)}>
                 <ErrorDiv error={editBuildingError} />
               </If>
 

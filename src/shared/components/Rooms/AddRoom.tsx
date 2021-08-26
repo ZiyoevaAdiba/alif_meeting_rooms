@@ -147,7 +147,7 @@ export const AddRoom = () => {
                   width="250px"
                   height="auto"
                 />
-                <If condition={addError}>
+                <If condition={Boolean(addError)}>
                   <ErrorDiv error={addError} />
                 </If>
 

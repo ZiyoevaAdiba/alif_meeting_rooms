@@ -80,33 +80,27 @@ export const Buildings = () => {
     <Page title="Офисы">
       <Container maxWidth="xl">
         <If
-          condition={buildingsError}
-          anotherChildren={
-            <Grid
-              className={commonClasses.CardsContainer}
-              container
-              spacing={6}
-            >
-              <Box className={commonClasses.topRow}>
-                <Box className={commonClasses.requests_header}>Офисы Алифа</Box>
-
-                <AddBuilding />
-              </Box>
-
-              <EditBuilding />
-              <ConfirmDelBuilding />
-
-              <DataGrid
-                rows={buildings || []}
-                columns={columns}
-                rowsPerPageOptions={[]}
-                hideFooter
-                autoHeight
-              />
-            </Grid>
-          }
+          condition={!buildingsError}
+          anotherChildren={<ErrorDiv error={buildingsError} />}
         >
-          <ErrorDiv error={buildingsError} />
+          <Grid className={commonClasses.CardsContainer} container spacing={6}>
+            <Box className={commonClasses.topRow}>
+              <Box className={commonClasses.requests_header}>Офисы Алифа</Box>
+
+              <AddBuilding />
+            </Box>
+
+            <EditBuilding />
+            <ConfirmDelBuilding />
+
+            <DataGrid
+              rows={buildings || []}
+              columns={columns}
+              rowsPerPageOptions={[]}
+              hideFooter
+              autoHeight
+            />
+          </Grid>
         </If>
       </Container>
     </Page>

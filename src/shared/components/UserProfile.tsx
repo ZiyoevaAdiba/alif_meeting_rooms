@@ -101,7 +101,7 @@ export const UserProfile: FC = () => {
             }}
             formikProps={props}
           />
-          <If condition={editError}>
+          <If condition={Boolean(editError)}>
             <ErrorDiv error={editError} />
           </If>
 

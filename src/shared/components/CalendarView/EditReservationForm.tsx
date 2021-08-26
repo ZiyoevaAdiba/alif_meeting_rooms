@@ -135,20 +135,23 @@ export const EditReservationForm: FC<IForm> = ({
           validateOnChange={false}
           onSubmit={(values) => {
             const editData = {
-              start_time: format(
-                selectedStartTime || 0,
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"
-              ),
-              end_time: format(
-                selectedEndTime || 0,
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"
-              ),
+              start_time:
+                format(selectedDate || 0, "yyyy-MM-dd") +
+                "T" +
+                format(selectedStartTime || 0, "HH:mm:ss") +
+                "Z",
+              end_time:
+                format(selectedDate || 0, "yyyy-MM-dd") +
+                "T" +
+                format(selectedEndTime || 0, "HH:mm:ss") +
+                "Z",
               user_id: userData.id,
               purpose: values.purpose,
               meeting_room_id: values.meeting_room_id,
               repeat_days: checkedDays,
               repeat_id: booking.repeat_id || " ",
             };
+console.log(111);
 
             dispatch(
               requestEditReservation(
@@ -249,7 +252,7 @@ export const EditReservationForm: FC<IForm> = ({
                   отмена
                 </Button>
               </DialogActions>
-              <If condition={editError}>
+              <If condition={Boolean(editError)}>
                 <ErrorDiv error={editError} />
               </If>
             </form>

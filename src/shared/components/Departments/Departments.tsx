@@ -60,32 +60,27 @@ export const Departments = () => {
   return (
     <Page title="Отделы">
       <Container maxWidth="xl">
-        <If
-          condition={error}
-          anotherChildren={
-            <Grid
-              className={commonClasses.CardsContainer}
-              style={{ width: "900px" }}
-              container
-              spacing={6}
-            >
-              <Box className={commonClasses.topRow}>
-                <Box className={commonClasses.requests_header}>Отделы</Box>
-                <AddDepartment />
-              </Box>
-              <EditDepartment />
-              <ConfirmDelDepart />
-              <DataGrid
-                rows={departments || []}
-                columns={columns}
-                rowsPerPageOptions={[]}
-                hideFooter
-                autoHeight
-              />
-            </Grid>
-          }
-        >
-          <ErrorDiv error={error} />
+        <If condition={!error} anotherChildren={<ErrorDiv error={error} />}>
+          <Grid
+            className={commonClasses.CardsContainer}
+            style={{ width: "900px" }}
+            container
+            spacing={6}
+          >
+            <Box className={commonClasses.topRow}>
+              <Box className={commonClasses.requests_header}>Отделы</Box>
+              <AddDepartment />
+            </Box>
+            <EditDepartment />
+            <ConfirmDelDepart />
+            <DataGrid
+              rows={departments || []}
+              columns={columns}
+              rowsPerPageOptions={[]}
+              hideFooter
+              autoHeight
+            />
+          </Grid>
         </If>
       </Container>
     </Page>

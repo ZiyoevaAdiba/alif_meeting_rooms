@@ -60,34 +60,29 @@ export const Cities = () => {
   return (
     <Page title="Города">
       <Container maxWidth="xl">
-        <If
-          condition={error}
-          anotherChildren={
-            <Grid
-              className={commonClasses.CardsContainer}
-              style={{ width: "900px" }}
-              container
-              spacing={6}
-            >
-              <Box className={commonClasses.topRow}>
-                <Box className={commonClasses.requests_header}>Города</Box>
-                <AddCity />
-              </Box>
+        <If condition={!error} anotherChildren={<ErrorDiv error={error} />}>
+          <Grid
+            className={commonClasses.CardsContainer}
+            style={{ width: "900px" }}
+            container
+            spacing={6}
+          >
+            <Box className={commonClasses.topRow}>
+              <Box className={commonClasses.requests_header}>Города</Box>
+              <AddCity />
+            </Box>
 
-              <EditCity />
-              <ConfirmDelCity />
+            <EditCity />
+            <ConfirmDelCity />
 
-              <DataGrid
-                rows={cities || []}
-                columns={columns}
-                rowsPerPageOptions={[]}
-                hideFooter
-                autoHeight
-              />
-            </Grid>
-          }
-        >
-          <ErrorDiv error={error} />
+            <DataGrid
+              rows={cities || []}
+              columns={columns}
+              rowsPerPageOptions={[]}
+              hideFooter
+              autoHeight
+            />
+          </Grid>
         </If>
       </Container>
     </Page>

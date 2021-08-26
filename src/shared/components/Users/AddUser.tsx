@@ -126,7 +126,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                   formikProps={props}
                 />
 
-                <If condition={error}>
+                <If condition={Boolean(error)}>
                   <ErrorDiv error={error} />
                 </If>
                 <DialogActions>

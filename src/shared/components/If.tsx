@@ -2,7 +2,7 @@ import { FormikTouched } from "formik";
 import { FC, ReactNode } from "react";
 
 interface IIf {
-  condition: boolean | string | null| FormikTouched<any> | FormikTouched<any>[] | undefined;
+  condition: boolean | string | FormikTouched<any> | FormikTouched<any>[];
   children: ReactNode;
   anotherChildren?: ReactNode | null;
 }

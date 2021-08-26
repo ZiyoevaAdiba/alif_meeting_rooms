@@ -144,57 +144,45 @@ export const AllUsers = () => {
     <Page title="Пользователи">
       <Container maxWidth="xl">
         <If
-          condition={usersError}
-          anotherChildren={
-            <Grid
-              className={commonClasses.CardsContainer}
-              container
-              spacing={6}
-            >
-              <Box className={commonClasses.topRow}>
-                <Box className={commonClasses.requests_header}>
-                  Пользователи
-                </Box>
-
-                <SearchForm
-                  page={page}
-                  history={history}
-                  searchInput={searchInput}
-                  setsearchInput={setSearchInput}
-                />
-                <AddUser
-                  page={page}
-                  searchInput={searchInput}
-                  history={history}
-                />
-              </Box>
-              <EditUser
-                page={page}
-                searchInput={searchInput}
-                history={history}
-              />
-              <ConfirmDelUser
-                page={page}
-                searchInput={searchInput}
-                history={history}
-              />
-              <DataGrid
-                rows={users || []}
-                columns={columns}
-                rowsPerPageOptions={[]}
-                hideFooter
-                autoHeight
-              />
-              <PaginationLink
-                pageNumber={pageCount}
-                searchInput={searchInput}
-                history={history}
-                page={page}
-              />
-            </Grid>
-          }
+          condition={!usersError}
+          anotherChildren={<ErrorDiv error={usersError} />}
         >
-          <ErrorDiv error={usersError} />
+          <Grid className={commonClasses.CardsContainer} container spacing={6}>
+            <Box className={commonClasses.topRow}>
+              <Box className={commonClasses.requests_header}>Пользователи</Box>
+
+              <SearchForm
+                page={page}
+                history={history}
+                searchInput={searchInput}
+                setsearchInput={setSearchInput}
+              />
+              <AddUser
+                page={page}
+                searchInput={searchInput}
+                history={history}
+              />
+            </Box>
+            <EditUser page={page} searchInput={searchInput} history={history} />
+            <ConfirmDelUser
+              page={page}
+              searchInput={searchInput}
+              history={history}
+            />
+            <DataGrid
+              rows={users || []}
+              columns={columns}
+              rowsPerPageOptions={[]}
+              hideFooter
+              autoHeight
+            />
+            <PaginationLink
+              pageNumber={pageCount}
+              searchInput={searchInput}
+              history={history}
+              page={page}
+            />
+          </Grid>
         </If>
       </Container>
     </Page>

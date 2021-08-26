@@ -127,10 +127,10 @@ export const EditRoom = () => {
                 width="250px"
                 height="auto"
               />
-              <If condition={editError}>
+              <If condition={Boolean(editError)}>
                 <ErrorDiv error={editError} />
               </If>
-              <If condition={uploadError}>
+              <If condition={Boolean(uploadError)}>
                 <ErrorDiv error={uploadError} />
               </If>
 

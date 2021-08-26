@@ -117,7 +117,7 @@ export const LoginForm = () => {
                 <img src={loaderGif} alt="" />
               </If>
             </Button>
-            <If condition={error}>
+            <If condition={Boolean(error)}>
               <ErrorDiv error={error} />
             </If>
             <ButtonGroup className={classes.btns}>

@@ -91,7 +91,7 @@ export const Filters: FC<IFilters> = ({
         displayEmpty
         style={{ marginBottom: 20 }}
       >
-        {cities.map((item) => (
+        {cities?.map((item) => (
           <MenuItem key={item.id} value={item.id}>
             {item.name}
           </MenuItem>
@@ -107,7 +107,7 @@ export const Filters: FC<IFilters> = ({
         fullWidth
         displayEmpty
       >
-        {buildings.map((item) => (
+        {buildings?.map((item) => (
           <MenuItem key={item.id} value={item.id}>
             {item.name}
           </MenuItem>

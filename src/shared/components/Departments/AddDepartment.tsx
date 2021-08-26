@@ -69,7 +69,7 @@ export const AddDepartment = () => {
               required
             />
 
-            <If condition={addError}>
+            <If condition={Boolean(addError)}>
               <ErrorDiv error={addError} />
             </If>
           </DialogContent>

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../../store/reducers";
 import ruLocale from "@fullcalendar/core/locales/ru";
 import { IColors } from "./colorGenerator";
-import { calendarStyles } from "./Styles";
 import { addHours } from "date-fns";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
@@ -32,16 +31,15 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
   setSelectedStartTime,
   setSelectedEndTime,
 }) => {
-  const classes = calendarStyles();
   const { checkedRooms, meetingRoomsInfo } = useSelector(
     (state: IRootReducer) => state.getMRsDataReducer
   );
   const dispatch = useDispatch();
 
-  const checkedRoomInfo = meetingRoomsInfo.filter((room) =>
+  const checkedRoomInfo = meetingRoomsInfo?.filter((room) =>
     checkedRooms.includes(room.id as string)
   );
-  const reservation = checkedRoomInfo.map((room) => room.reservations || []);
+  const reservation = checkedRoomInfo?.map((room) => room.reservations || []);
 
   const info = reservation
     ?.map((item) =>

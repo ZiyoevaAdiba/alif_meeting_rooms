@@ -96,7 +96,7 @@ export const EditUser: FC<IUserPageProps> = ({
                 text="Назначить роль"
               />
 
-              <If condition={userError}>
+              <If condition={Boolean(userError)}>
                 <ErrorDiv error={userError} />
               </If>
 

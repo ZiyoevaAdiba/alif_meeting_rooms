@@ -52,8 +52,8 @@ export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
       />
       <If
         condition={
-          formikProps.errors[fieldData.name] &&
-          formikProps.touched[fieldData.name]
+          Boolean((formikProps.errors[fieldData.name] &&
+          formikProps.touched[fieldData.name]))
         }
       >
         <Box color="#f44335" marginTop="0px" fontSize="14px">

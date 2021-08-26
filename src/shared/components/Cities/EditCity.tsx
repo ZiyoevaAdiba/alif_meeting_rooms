@@ -65,7 +65,7 @@ export const EditCity = () => {
             required
           />
 
-          <If condition={editError}>
+          <If condition={Boolean(editError)}>
             <ErrorDiv error={editError} />
           </If>
         </DialogContent>

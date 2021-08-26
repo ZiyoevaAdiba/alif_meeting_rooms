@@ -200,7 +200,7 @@ export const AddReservationForm: FC<IForm> = ({
             </Button>
           </DialogActions>
 
-          <If condition={addError}>
+          <If condition={Boolean(addError)}>
             <ErrorDiv error={addError} />
           </If>
         </form>

@@ -38,7 +38,7 @@ export const CustomDelWarningDialog: FC<ICustomDelWarningDialog> = ({
           <DialogContentText id="alert-dialog-description">
             {dialogText}
           </DialogContentText>
-          <If condition={deleteError}>
+          <If condition={Boolean(deleteError)}>
             <ErrorDiv error={deleteError} />
           </If>
         </DialogContent>

@@ -50,7 +50,7 @@ export const CustomSelect: FC<ICustomSelect> = ({
 
       <If
         condition={
-          formikProps.errors[fieldName] && formikProps.touched[fieldName]
+          Boolean(formikProps.errors[fieldName] && formikProps.touched[fieldName])
         }
       >
         <Box color="#f44335" marginTop="0px" fontSize="14px">
