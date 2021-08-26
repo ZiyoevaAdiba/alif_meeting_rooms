@@ -37,7 +37,7 @@ function getMonday(date: string) {
   const dateInDateFormat: Date = new Date(date);
   const day = dateInDateFormat.getDay();
   const diff = dateInDateFormat.getDate() - day + (day == 0 ? -6 : 1);
-  
+
   // adjust when day is sunday
   return new Date(dateInDateFormat.setDate(diff)).toISOString();
 }
@@ -49,7 +49,10 @@ export const getMRsInfo =
 
     try {
       dispatch(getMRsInfoReq());
-      const res = await Axios.get(`${api.meetingRooms}?week=${monday}`);
+      const res = await Axios({
+        url: `${api.meetingRooms}?week=${monday}`,
+        method: "GET",
+      });
       dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date || ""}&city=&building=&rooms=${
@@ -73,9 +76,11 @@ export const getMRsByCityId =
     const monday = getMonday(date as string);
     try {
       dispatch(getMRsInfoReq());
-      const res = await Axios.get(
-        `${api.meetingRooms}/${city_id}/city?week=${monday}`
-      );
+
+      const res = await Axios({
+        url: `${api.meetingRooms}/${city_id}/city?week=${monday}`,
+        method: "GET",
+      });
       dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${city_id}&building=${selectedBuilding}&rooms=${selectedRooms}`
@@ -98,9 +103,11 @@ export const getMRsByBuildingId =
 
     try {
       dispatch(getMRsInfoReq());
-      const res = await Axios.get(
-        `${api.meetingRooms}/${building_id}/building?week=${monday}`
-      );
+
+      const res = await Axios({
+        url: `${api.meetingRooms}/${building_id}/building?week=${monday}`,
+        method: "GET",
+      });
       dispatch(getMRsInfoSuccess(res.data.payload));
       history.push(
         `${urls.reservations}?date=${date}&city=${selectedCity}&building=${building_id}&rooms=${selectedRooms}`
