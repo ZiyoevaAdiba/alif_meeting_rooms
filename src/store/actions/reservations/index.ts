@@ -104,7 +104,6 @@ export const requestEditReservation =
         method: "PUT",
         data: editedReservation,
       });
-      console.log(222);
       setEditOpen(false);
       store.addNotification({
         title: "Успешно!",
@@ -127,9 +126,7 @@ export const requestEditReservation =
         selectedRooms,
         dispatch
       );
-      console.log(222);
     } catch (error) {
-      console.log(333);
       dispatch(editReservationFail(error.response.data.payload.message));
     }
   };

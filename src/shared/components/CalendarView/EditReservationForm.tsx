@@ -31,7 +31,7 @@ import { ReservationRepeat } from "./ReservationRepeat";
 import { CustomSelect } from "../CustomSelect";
 import { If } from "../If";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   content: {
     display: "flex",
     columnGap: 70,
@@ -159,7 +159,6 @@ export const EditReservationForm: FC<IForm> = ({
               repeat_days: checkedDays,
               repeat_id: booking.repeat_id || " ",
             };
-            console.log(111);
 
             dispatch(
               requestEditReservation(
