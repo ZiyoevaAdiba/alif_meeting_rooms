@@ -72,7 +72,7 @@ export const AddRoom = () => {
         className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
-        Добавить Meeting Room
+        Добавить meeting room
       </Button>
 
       <Dialog
@@ -86,7 +86,7 @@ export const AddRoom = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Чтобы добавить Meeting Room заполните форму.
+            Чтобы добавить meeting room заполните форму.
           </DialogContentText>
           <Formik
             initialValues={room}

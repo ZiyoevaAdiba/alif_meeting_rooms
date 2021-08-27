@@ -59,7 +59,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
         className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
-        Добавить Пользователя
+        Добавить пользователя
       </Button>
       <Dialog
         open={open}

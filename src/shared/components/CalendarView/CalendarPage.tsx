@@ -173,6 +173,11 @@ export const CalendarPage = () => {
           calendarComponentRef={calendarComponentRef}
           setSelectedStartTime={setSelectedStartTime}
           setSelectedEndTime={setSelectedEndTime}
+          dateParam={dateParam}
+          selectedCity={selectedCity}
+          selectedBuilding={selectedBuilding}
+          roomsParam={checkedRooms.join()}
+          gotoWeek = {gotoWeek}
         />
       </Grid>
       <ReserveRoom

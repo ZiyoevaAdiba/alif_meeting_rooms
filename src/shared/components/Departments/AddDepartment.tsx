@@ -49,7 +49,7 @@ export const AddDepartment = () => {
         onClick={handleClickOpen}
         className={buttonClasses.btnReserve}
       >
-        Добавить Отдел
+        Добавить отдел
       </Button>
       <Dialog
         open={open}

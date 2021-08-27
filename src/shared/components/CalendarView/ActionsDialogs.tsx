@@ -43,7 +43,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
-      {onClose ? (
+      <If condition={onClose}>
         <IconButton
           aria-label="close"
           className={classes.closeButton}
@@ -51,7 +51,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
         >
           <CloseIcon />
         </IconButton>
-      ) : null}
+      </If>
     </MuiDialogTitle>
   );
 });
@@ -91,6 +91,15 @@ export const ActionsDialogs: FC<IActionsDialogs> = ({
     setOpenActions(false);
   };
 
+  const DialogMessage = (
+    <DialogContent dividers>
+      <Typography gutterBottom>
+        Вы можете редактировать либо удалять только свои брони. Чтобы получить
+        информацию о владельце брони, наведите курсор на бронь.
+      </Typography>
+    </DialogContent>
+  );
+
   return (
     <div>
       <Dialog
@@ -104,14 +113,7 @@ export const ActionsDialogs: FC<IActionsDialogs> = ({
 
         <If
           condition={userData.id === booking.user_id}
-          anotherChildren={
-            <DialogContent dividers>
-              <Typography gutterBottom>
-                Вы можете редактировать либо удалять только свои брони. Чтобы
-                получить информацию о владельце брони, наведите курсор на бронь.
-              </Typography>
-            </DialogContent>
-          }
+          anotherChildren={DialogMessage}
         >
           <>
             <DialogContent dividers>

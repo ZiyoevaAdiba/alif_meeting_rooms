@@ -106,17 +106,12 @@ export const AddReservationForm: FC<IForm> = ({
       validateOnChange={false}
       onSubmit={(values) => {
         delete values.date;
+        const dateSelected = format(selectedDate || 0, "yyyy-MM-dd");
+        const startTimeSelected = format(selectedStartTime || 0, "HH:mm:ss");
+        const endTimeSelected = format(selectedEndTime || 0, "HH:mm:ss");
 
-        values.start_time =
-          format(selectedDate || 0, "yyyy-MM-dd") +
-          "T" +
-          format(selectedStartTime || 0, "HH:mm:ss") +
-          "Z";
-        values.end_time =
-          format(selectedDate || 0, "yyyy-MM-dd") +
-          "T" +
-          format(selectedEndTime || 0, "HH:mm:ss") +
-          "Z";
+        values.start_time = dateSelected + "T" + startTimeSelected + "Z";
+        values.end_time = dateSelected + "T" + endTimeSelected + "Z";
         values.user_id = userData.id;
         values.repeat_days = checkedDays;
         dispatch(

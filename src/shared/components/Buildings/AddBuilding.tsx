@@ -56,7 +56,7 @@ export const AddBuilding = () => {
         className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
-        Добавить Офис
+        Добавить офис
       </Button>
       <Dialog
         open={open}
@@ -67,7 +67,7 @@ export const AddBuilding = () => {
         <DialogTitle id="form-dialog-title">Добавление Офиса</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Чтобы добавить Офис заполните форму.
+            Чтобы добавить офис заполните форму.
           </DialogContentText>
           <Formik
             initialValues={initialBuilding}

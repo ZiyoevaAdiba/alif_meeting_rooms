@@ -46,7 +46,7 @@ export const AddCity = () => {
         onClick={handleClickOpen}
         className={buttonClasses.btnReserve}
       >
-        Добавить Город
+        Добавить город
       </Button>
       <Dialog
         open={open}
