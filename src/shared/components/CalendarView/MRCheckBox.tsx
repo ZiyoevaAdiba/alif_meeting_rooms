@@ -74,20 +74,21 @@ export const MRCheckBox: FC<IMRCheckBox> = ({
 
   useEffect(() => {
     dispatch(getCheckedMRs(selectedRooms));
-  }, [meetingRoomsInfo, selectedRooms]);
 
-  useEffect(() => {
-    !meetingRoomsInfo
-      ? setChecked({})
-      : setChecked(
-          meetingRoomsInfo?.reduce(
-            (o, key) => ({
-              ...o,
-              [key.id as string]: selectedRooms.includes(key.id as string),
-            }),
-            {}
-          ) as ICheckBoxItems
-        );
+    if(!meetingRoomsInfo){
+      setChecked({})
+    } else {
+      setChecked(
+        meetingRoomsInfo?.reduce(
+          (o, key) => ({
+            ...o,
+            [key.id as string]: selectedRooms.includes(key.id as string),
+          }),
+          {}
+        ) as ICheckBoxItems
+      );
+    }
+    
   }, [meetingRoomsInfo, selectedRooms]);
 
   return (

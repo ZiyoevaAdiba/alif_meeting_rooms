@@ -163,7 +163,7 @@ export const AddRoom = () => {
                     onClick={handleClose}
                     className={buttonClasses.btnCancel}
                   >
-                    отмена
+                    Отмена
                   </Button>
                 </DialogActions>
               </Form>

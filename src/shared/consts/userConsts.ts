@@ -1,53 +1,70 @@
-import { IUserData } from "../../store/actions/signUp/interfaces"
-
+import { IUserData } from "../../store/actions/signUp/interfaces";
 
 export const user: IUserData = {
-  name: '',
-  last_name: '',
-  email: '',
-  phone: '',
+  name: "",
+  last_name: "",
+  email: "",
+  phone: "",
   department: {},
-  department_id: '',
-  tg_account: '',
-  password: '',
-  role: '',
+  department_id: "",
+  tg_account: "",
+  password: "",
+  role: "",
 };
 export const fieldInput = {
-  name: 'name',
-  last_name: 'last_name',
-  email: 'email',
-  phone: 'phone',
-  department: 'department',
-  department_id: 'department_id',
-  tg_account: 'tg_account',
-  password: 'password',
-  role: 'role',
-} 
+  name: "name",
+  last_name: "last_name",
+  email: "email",
+  phone: "phone",
+  department: "department",
+  department_id: "department_id",
+  tg_account: "tg_account",
+  password: "password",
+  role: "role",
+};
 
 export const userDataFields = [
   {
     name: fieldInput.name,
     label: "Имя",
-    type: 'text',
+    type: "text",
   },
   {
     name: fieldInput.last_name,
     label: "Фамилия",
-    type: 'text',
+    type: "text",
   },
   {
     name: fieldInput.email,
     label: "E-mail",
-    type: 'email'
+    type: "email",
   },
   {
     name: fieldInput.phone,
     label: "Телефон",
-    type: 'text',
+    type: "text",
   },
   {
     name: fieldInput.tg_account,
     label: "Аккаунт telegram (username)",
-    type: 'text',
+    type: "text",
   },
-]
+];
+
+export const passwordFields = [
+  {
+    name: "password",
+    label: "Действующий пароль",
+    type: "password",
+  },
+  {
+    name: "new_password",
+    label: "Новый пароль",
+    type: "password",
+  },
+  {
+    name: "repeat_new_password",
+    label: "Повторите пароль",
+    type: "password",
+  },
+];

@@ -56,11 +56,11 @@ export const EditUser: FC<IUserPageProps> = ({
       maxWidth={"sm"}
     >
       <DialogTitle id="form-dialog-title">
-        Изменение данных о пользователе
+        Изменение данных пользователя
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Чтобы изменить данные о пользователе отредактируйте нужные поля.
+          Чтобы изменить данные пользователя отредактируйте нужные поля.
         </DialogContentText>
         <Formik
           initialValues={user}

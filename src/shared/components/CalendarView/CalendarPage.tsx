@@ -130,7 +130,11 @@ export const CalendarPage = () => {
   const [colors, setColors] = useState({});
 
   useEffect(() => {
-    !meetingRoomsInfo ? setColors({}) : setColors(colorList(meetingRoomsInfo));
+    if(!meetingRoomsInfo) {
+      setColors({});
+    } else {
+      setColors(colorList(meetingRoomsInfo));
+    }
   }, [meetingRoomsInfo]);
 
   return (

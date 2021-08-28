@@ -5,7 +5,11 @@ import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../store/reducers";
 import { ErrorDiv } from "./Errors/ErrorDiv";
-import { fieldInput, userDataFields } from "../consts/userConsts";
+import {
+  fieldInput,
+  passwordFields,
+  userDataFields,
+} from "../consts/userConsts";
 import { CustomInput } from "./CustomInput";
 import { buttonStyles } from "./styles/buttonStyles";
 import { getDepartments } from "../../store/actions/departments";
@@ -77,30 +81,9 @@ export const UserProfile: FC = () => {
             fieldName={fieldInput.department_id}
             text="Отдел"
           />
-          <CustomInput
-            fieldData={{
-              name: "password",
-              label: "Действующий пароль",
-              type: "password",
-            }}
-            formikProps={props}
-          />
-          <CustomInput
-            fieldData={{
-              name: "new_password",
-              label: "Новый пароль",
-              type: "password",
-            }}
-            formikProps={props}
-          />
-          <CustomInput
-            fieldData={{
-              name: "repeat_new_password",
-              label: "Повторите пароль",
-              type: "password",
-            }}
-            formikProps={props}
-          />
+          {passwordFields.map((item) => (
+            <CustomInput key={item.name} fieldData={item} formikProps={props} />
+          ))}
           <If condition={Boolean(editError)}>
             <ErrorDiv error={editError} />
           </If>
