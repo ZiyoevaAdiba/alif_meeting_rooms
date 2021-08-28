@@ -72,7 +72,7 @@ export const ForgetPasswordForm = () => {
             >
               Подтвердить
               <If condition={loading}>
-                <img src={loaderGif} alt="" />
+                <img src={loaderGif} alt="img" />
               </If>
             </Button>
             <If condition={Boolean(error)}>
@@ -86,7 +86,7 @@ export const ForgetPasswordForm = () => {
               variant="text"
               onClick={cancelPasswordBtn}
             >
-              отмена
+              Отмена
             </Button>
           </Form>
         )}

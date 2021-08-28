@@ -146,7 +146,7 @@ export const EditRoom = () => {
                   onClick={handleClose}
                   className={buttonClasses.btnCancel}
                 >
-                  отмена
+                  Отмена
                 </Button>
               </DialogActions>
             </Form>

@@ -142,17 +142,13 @@ export const EditReservationForm: FC<IForm> = ({
           validateOnBlur={false}
           validateOnChange={false}
           onSubmit={(values) => {
+            const dateSelected = format(selectedDate || 0, "yyyy-MM-dd");
+            const startTimeSelected = format( selectedStartTime || 0, "HH:mm:ss");
+            const endTimeSelected = format(selectedEndTime || 0, "HH:mm:ss");
+
             const editData = {
-              start_time:
-                format(selectedDate || 0, "yyyy-MM-dd") +
-                "T" +
-                format(selectedStartTime || 0, "HH:mm:ss") +
-                "Z",
-              end_time:
-                format(selectedDate || 0, "yyyy-MM-dd") +
-                "T" +
-                format(selectedEndTime || 0, "HH:mm:ss") +
-                "Z",
+              start_time: dateSelected + "T" + startTimeSelected + "Z",
+              end_time: dateSelected + "T" + endTimeSelected + "Z",
               user_id: userData.id,
               purpose: values.purpose,
               meeting_room_id: values.meeting_room_id,
@@ -259,7 +255,7 @@ export const EditReservationForm: FC<IForm> = ({
                   onClick={handleClose}
                   className={buttonClasses.btnCancel}
                 >
-                  отмена
+                  Отмена
                 </Button>
               </DialogActions>
               <If condition={Boolean(editError)}>

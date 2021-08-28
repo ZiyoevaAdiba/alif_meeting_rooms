@@ -5,6 +5,6 @@ export const ErrorPage = () => (
   <Box display="flex" alignItems="center" flexDirection="column"
   >
     <h2>Страница не существует. </h2>
-    <Button component={Link} to='/auth/login'>Перейти на страницу  Логина?</Button>
+    <Button component={Link} to='/auth/login'>Перейти на страницу логина?</Button>
   </Box>
 );

@@ -205,7 +205,7 @@ export const AddReservationForm: FC<IForm> = ({
               Забронировать
             </Button>
             <Button onClick={handleClose} className={buttonClasses.btnCancel}>
-              отмена
+              Отмена
             </Button>
           </DialogActions>
 

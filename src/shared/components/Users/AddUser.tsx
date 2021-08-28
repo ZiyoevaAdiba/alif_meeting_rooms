@@ -142,7 +142,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                     color="primary"
                     className={buttonClasses.btnCancel}
                   >
-                    отмена
+                    Отмена
                   </Button>
                 </DialogActions>
               </Form>

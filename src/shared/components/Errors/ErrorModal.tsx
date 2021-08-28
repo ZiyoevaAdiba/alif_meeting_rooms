@@ -20,7 +20,7 @@ export const ErrorModal = () => {
         <DialogTitle id="alert-dialog-title">{"Ошибка сервера"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Упс.. Что-то пошло не так.
+            Упс... Что-то пошло не так.
             Обновите страницу.
           </DialogContentText>
         </DialogContent>

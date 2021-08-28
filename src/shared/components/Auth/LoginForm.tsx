@@ -114,7 +114,7 @@ export const LoginForm = () => {
             >
               Вход
               <If condition={loading}>
-                <img src={loaderGif} alt="" />
+                <img src={loaderGif} alt="img" />
               </If>
             </Button>
             <If condition={Boolean(error)}>

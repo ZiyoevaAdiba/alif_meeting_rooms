@@ -50,7 +50,7 @@ export const requestPassword =
       dispatch(forgetReqSuccess());
       store.addNotification({
         title: "Успешно!",
-        message: "новый пароль был отправлен, проверьте почту",
+        message: "Новый пароль был отправлен, проверьте почту",
         type: "success",
         insert: "top",
         container: "top-right",

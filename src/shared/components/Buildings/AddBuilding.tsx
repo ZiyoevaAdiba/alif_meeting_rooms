@@ -113,7 +113,7 @@ export const AddBuilding = () => {
                     color="primary"
                     className={buttonClasses.btnCancel}
                   >
-                    отмена
+                    Отмена
                   </Button>
                 </DialogActions>
               </Form>
