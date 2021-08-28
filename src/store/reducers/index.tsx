@@ -25,6 +25,8 @@ import { citiesReducer } from './cities';
 import { IBuildingsReducer } from './buildings/interfaces';
 import { buildingsReducer } from './buildings';
 import { History } from 'history';
+import { IErrorReducer } from './errorHandler/interfaces';
+import { axiosErrorReducer } from './errorHandler';
 
 export interface IRootReducer {
     signUpReducer: ISignUpReducer,
@@ -39,6 +41,7 @@ export interface IRootReducer {
     reservationsReducer: IreservationsReducer,
     citiesReducer: ICityReducer,
     buildingsReducer: IBuildingsReducer,
+    axiosErrorReducer: IErrorReducer
 }
 
 export const rootReducer = (history: History) => combineReducers({
@@ -55,4 +58,5 @@ export const rootReducer = (history: History) => combineReducers({
     reservationsReducer,
     citiesReducer,
     buildingsReducer,
+    axiosErrorReducer,
 });

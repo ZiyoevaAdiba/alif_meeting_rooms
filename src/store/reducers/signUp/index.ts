@@ -1,4 +1,4 @@
-import { IUserData, signUpType } from "../../actions/signUp/interfaces";
+import { signUpType } from "../../actions/signUp/interfaces";
 import { IAction } from "../interfaces";
 import { ISignUpReducer } from "./interfaces";
 

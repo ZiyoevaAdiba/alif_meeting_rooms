@@ -1,31 +1,31 @@
-import { FC, useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import { Form, Formik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootReducer } from '../../store/reducers';
-import { ErrorDiv } from './ErrorDiv';
-import { fieldInput, userDataFields } from '../consts/userConsts';
-import { CustomInput, CustomSelect } from './CustomInput';
-import { buttonStyles } from './styles/buttonStyles';
-import { getDepartments } from '../../store/actions/departments';
-import { LoadingScreen } from './LoadingScreen';
-import { UserProfileValidation } from '../validations/ProfileValidation';
-import { requestEditProfile } from '../../store/actions/reservations/userData';
-import { useHistory } from 'react-router-dom';
-import { urls } from '../../routes/urls';
-import { getToken } from '../../store/actions/login';
+import { FC, useEffect } from "react";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootReducer } from "../../store/reducers";
+import { ErrorDiv } from "./Errors/ErrorDiv";
+import { fieldInput, userDataFields } from "../consts/userConsts";
+import { CustomInput } from "./CustomInput";
+import { buttonStyles } from "./styles/buttonStyles";
+import { getDepartments } from "../../store/actions/departments";
+import { LoadingScreen } from "./LoadingScreen";
+import { UserProfileValidation } from "../validations/ProfileValidation";
+import { requestEditProfile } from "../../store/actions/reservations/userData";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../routes/urls";
+import { getToken } from "../../store/actions/login";
+import { CustomSelect } from "./CustomSelect";
+import { If } from "./If";
 
 export const UserProfile: FC = () => {
-  const {
-    userData,
-    editError
-  } = useSelector((state: IRootReducer) => state.getUserDataReducer);
+  const { userData, editError } = useSelector(
+    (state: IRootReducer) => state.getUserDataReducer
+  );
 
-  const {
-    departments,
-    loading
-  } = useSelector((state: IRootReducer) => state.departmentsReducer);
+  const { departments, loading } = useSelector(
+    (state: IRootReducer) => state.departmentsReducer
+  );
   const history = useHistory();
   const token: string = getToken();
 
@@ -38,19 +38,19 @@ export const UserProfile: FC = () => {
   }, [userData]);
 
   const handleClose = () => {
-    history.push(urls.reservations)
+    history.push(urls.reservations);
   };
 
   const profileData = {
     ...userData,
     department_id: userData.department?.id,
-    password: '',
-    new_password: '',
-    repeat_new_password: '',
+    password: "",
+    new_password: "",
+    repeat_new_password: "",
   };
 
   if (loading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
   return (
     <Formik
@@ -63,20 +63,14 @@ export const UserProfile: FC = () => {
         dispatch(requestEditProfile(values, history, token));
       }}
     >
-      {props => (
+      {(props) => (
         <Form
           onSubmit={props.handleSubmit}
-          style={{ margin: '30px auto', width: 'max-content' }}
+          style={{ margin: "30px auto", width: "max-content" }}
         >
-          {
-            userDataFields.map(
-              item => <CustomInput
-                key={item.name}
-                fieldData={item}
-                formikProps={props}
-              />
-            )
-          }
+          {userDataFields.map((item) => (
+            <CustomInput key={item.name} fieldData={item} formikProps={props} />
+          ))}
           <CustomSelect
             itemList={departments}
             formikProps={props}
@@ -84,47 +78,37 @@ export const UserProfile: FC = () => {
             text="Отдел"
           />
           <CustomInput
-            fieldData={
-              {
-                name: 'password',
-                label: "Действующий пароль",
-                type: 'password'
-              }
-            }
+            fieldData={{
+              name: "password",
+              label: "Действующий пароль",
+              type: "password",
+            }}
             formikProps={props}
           />
           <CustomInput
-            fieldData={
-              {
-                name: 'new_password',
-                label: "Новый пароль",
-                type: 'password'
-              }
-            }
+            fieldData={{
+              name: "new_password",
+              label: "Новый пароль",
+              type: "password",
+            }}
             formikProps={props}
           />
           <CustomInput
-            fieldData={
-              {
-                name: 'repeat_new_password',
-                label: "Повторите пароль",
-                type: 'password'
-              }
-            }
+            fieldData={{
+              name: "repeat_new_password",
+              label: "Повторите пароль",
+              type: "password",
+            }}
             formikProps={props}
           />
-          {
-            (editError)
-            &&
-            <ErrorDiv
-              error={editError}
-            />
-          }
+          <If condition={Boolean(editError)}>
+            <ErrorDiv error={editError} />
+          </If>
 
           <DialogActions>
             <Button
-              type='submit'
-              variant='contained'
+              type="submit"
+              variant="contained"
               className={buttonClasses.btnReserve}
             >
               Сохранить изменения
@@ -137,9 +121,8 @@ export const UserProfile: FC = () => {
               Отмена
             </Button>
           </DialogActions>
-
         </Form>
       )}
     </Formik>
   );
-}
+};

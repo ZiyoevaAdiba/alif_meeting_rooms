@@ -2,6 +2,7 @@ import { createStyles, makeStyles } from '@material-ui/core';
 import { Routes } from './routes';
 import ReactNotification from 'react-notifications-component';
 import "react-notifications-component/dist/theme.css";
+import { ErrorModal } from './shared/components/Errors/ErrorModal';
 
 const useStyles = makeStyles(() => createStyles({
   '@global': {
@@ -40,6 +41,7 @@ export const App = () => {
     <>
       <ReactNotification />
       <Routes />
+      <ErrorModal />
     </>
   );
 }

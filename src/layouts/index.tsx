@@ -5,6 +5,7 @@ import { TopBar } from "./TopBar";
 import { IRootReducer } from "../store/reducers";
 import { useSelector } from "react-redux";
 import { Footer } from "./Footer";
+import { If } from "../shared/components/If";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flex: "1 1 auto",
     paddingTop: 70,
-    minHeight : 'calc(100vh - 73px)',
+    minHeight: "calc(100vh - 73px)",
     [theme.breakpoints.up("lg")]: {
       padding: "70px 50px 0",
     },
@@ -48,7 +49,9 @@ export const DashboardLayout = ({ children }: any) => {
       <Container className={classes.root} maxWidth="xl">
         <CssBaseline />
         <TopBar />
-        {userData.role === "admin" && <SideBar />}
+        <If condition={userData.role === "admin"}>
+          <SideBar />
+        </If>
 
         <div className={classes.wrapper}>
           <div className={classes.contentContainer}>

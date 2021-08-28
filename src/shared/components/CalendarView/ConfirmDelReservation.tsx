@@ -63,7 +63,7 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
       <CustomDelWarningDialog
         open={open}
         handleClose={handleClose}
-        dialogText="Вы уверены, что хотите удалить бронь?"
+        dialogText="Вы уверены, что хотите удалить бронь? У броней могут быть дни повторения. При удалении они все будут удалены"
         handleConfirm={handleConfirm}
       />
     </>

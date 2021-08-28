@@ -26,13 +26,15 @@ import { urls } from "../../../routes/urls";
 const useStyles = makeStyles(() => ({
   mainPageStyle: {
     marginTop: 0,
-    // gap: 40,
     marginBottom: 0,
   },
   firstColumn: {
     "& .react-calendar": {
       border: "none",
       backgroundColor: "#fafafa",
+    },
+    "& .disableEvents": {
+      pointerEvents: "none",
     },
   },
   calendarContainer: {
@@ -83,6 +85,7 @@ export const CalendarPage = () => {
 
   const [startTime, setSelectedStartTime] = useState<Date | null>(null);
   const [endTime, setSelectedEndTime] = useState<Date | null>(null);
+  const [calendarApiRef, setCalendarApiRef] = useState<any>(null);
 
   const calendarComponentRef: RefObject<any> = useRef(
     format(choosenDate, "yyyy-MM-dd")
@@ -90,16 +93,13 @@ export const CalendarPage = () => {
 
   const gotoWeek = (value: Date) => {
     setChoosenDate(value);
-    let calendarApi = calendarComponentRef.current.getApi();
-    calendarApi.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
-    window.history.pushState(
-      {},
-      "",
+    history.push(
       `${urls.reservations}?date=${format(
         value,
         "yyyy-MM-dd"
       )}&city=${selectedCity}&building=${selectedBuilding}&rooms=${roomsParam}`
     );
+    calendarApiRef && calendarApiRef?.gotoDate(format(value, "yyyy-MM-dd")); // call a method on the Calendar object
   };
 
   const getBuildingsForDropdown = (cityId: string) => {
@@ -122,17 +122,16 @@ export const CalendarPage = () => {
       roomsParam,
       dispatch
     );
-  }, [selectedCity, selectedBuilding, roomsParam, dateParam, dispatch]);
+    if (calendarComponentRef.current) {
+      setCalendarApiRef(calendarComponentRef.current.getApi());
+    }
+  }, [selectedCity, selectedBuilding, dateParam, dispatch]);
 
-  const [colors, setColors] = useState(colorList(meetingRoomsInfo));
+  const [colors, setColors] = useState({});
 
   useEffect(() => {
-    setColors(colorList(meetingRoomsInfo));
+    !meetingRoomsInfo ? setColors({}) : setColors(colorList(meetingRoomsInfo));
   }, [meetingRoomsInfo]);
-
-  if (loading && !error) {
-    return <LoadingScreen />;
-  }
 
   return (
     <Grid container spacing={5} className={classes.mainPageStyle}>
@@ -141,6 +140,7 @@ export const CalendarPage = () => {
           value={choosenDate}
           locale="ru"
           onClickDay={(value: Date) => gotoWeek(value)}
+          className={loading ? "disableEvents" : ""}
         />
         <Filters
           date={dateParam}
@@ -155,10 +155,12 @@ export const CalendarPage = () => {
         />
 
         <MRCheckBox
+          history={history}
           colors={colors}
           selectedCity={selectedCity}
           selectedBuilding={selectedBuilding}
           urlRooms={roomsParam}
+          date={dateParam}
         />
       </Grid>
 
@@ -171,6 +173,11 @@ export const CalendarPage = () => {
           calendarComponentRef={calendarComponentRef}
           setSelectedStartTime={setSelectedStartTime}
           setSelectedEndTime={setSelectedEndTime}
+          dateParam={dateParam}
+          selectedCity={selectedCity}
+          selectedBuilding={selectedBuilding}
+          roomsParam={checkedRooms.join()}
+          gotoWeek = {gotoWeek}
         />
       </Grid>
       <ReserveRoom

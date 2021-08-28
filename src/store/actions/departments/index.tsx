@@ -7,150 +7,158 @@ import { IDepartment } from "../../reducers/departments/interfaces";
 const getDepartmentsReq = () => {
   return {
     type: getDepartmentsType.GET_DEPARTMENTS,
-    payload: {}
-  }
-}
+    payload: {},
+  };
+};
 
 const getDepartmentsFail = () => {
   return {
     type: getDepartmentsType.GET_DEPARTMENTS_FAIL,
-    payload: {}
-  }
-}
+    payload: {},
+  };
+};
 
 const getDepartmentsSuccess = (data?: IDepartment[]) => {
   return {
     type: getDepartmentsType.GET_DEPARTMENTS_SUCCESS,
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const showDepartmentData = (data: IDepartment) => {
   return {
     type: getDepartmentsType.SHOW_DEPARTMENT,
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 export const resetDepartmentEditing = () => {
   return {
     type: getDepartmentsType.RESET_EDITING,
-    payload: {}
-  }
-}
+    payload: {},
+  };
+};
 
 export const departmentsWarningDelete = (rowId: string) => {
   return {
     type: getDepartmentsType.SHOW_WARNING,
-    payload: rowId
-  }
-}
+    payload: rowId,
+  };
+};
 
 export const cancelDepartmentsDelete = () => {
   return {
     type: getDepartmentsType.CANCEL_DELETE,
-    payload: {}
-  }
-}
-
+    payload: {},
+  };
+};
 
 export const addDepFail = (message: string) => {
   return {
     type: getDepartmentsType.ADD_DEP_FAIL,
-    payload: message
-  }
-}
+    payload: message,
+  };
+};
 
 export const addDepSuccess = () => {
   return {
     type: getDepartmentsType.RESET_DEPARTMENTS_ERRORS,
-    payload: {}
-  }
-}
-
+    payload: {},
+  };
+};
 
 export const editDepFail = (message: string) => {
   return {
     type: getDepartmentsType.EDIT_DEP_FAIL,
-    payload: message
-  }
-}
-
+    payload: message,
+  };
+};
 
 export const getAllDepartments = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
-    const res = await Axios.get(`${api.departments}`);
+    const res = await Axios({
+      url: `${api.departments}`,
+      method: "GET",
+    });
     dispatch(getDepartmentsSuccess(res.data.payload));
-
   } catch (error) {
     dispatch(getDepartmentsFail());
   }
-}
+};
 
 export const getDepartments = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getDepartmentsReq());
-    const res = await Axios.get(`${api.departmentsForDropdown}`);
+    const res = await Axios({
+      url: `${api.departmentsForDropdown}`,
+      method: "GET",
+    });
     dispatch(getDepartmentsSuccess(res.data.payload));
-
   } catch (error) {
     dispatch(getDepartmentsFail());
   }
-}
+};
 
+export const requestAddDepartment =
+  (depData: string, setOpen: (state: boolean) => void) =>
+  async (dispatch: Dispatch<any>) => {
+    try {
+      dispatch(getDepartmentsReq());
 
-export const requestAddDepartment = (
-  depData: string,
-  setOpen: (state: boolean) => void
-) => async (dispatch: Dispatch<any>) => {
-  try {
-    dispatch(getDepartmentsReq());
+      const data = {
+        name: depData,
+      };
 
-    const data = {
-      name: depData
-    };
+      await Axios({
+        url: `${api.departments}`,
+        method: "POST",
+        data: data,
+      });
+      dispatch(addDepSuccess());
+      setOpen(false);
+      dispatch(getAllDepartments());
+    } catch (error) {
+      dispatch(addDepFail(error.response.data.payload.message));
+    }
+  };
 
-    await Axios.post(`${api.departments}`, data);
-    dispatch(addDepSuccess())
-    setOpen(false)
-    dispatch(getAllDepartments());
+export const requestEditDepartment =
+  (
+    depData: string | undefined,
+    setOpen: (state: boolean) => void,
+    id: string | undefined
+  ) =>
+  async (dispatch: Dispatch<any>) => {
+    try {
+      const data = {
+        name: depData,
+      };
 
-  } catch (error) {
-    dispatch(addDepFail(error.response.data.payload.message));
-  }
-}
+      await Axios({
+        url: `${api.departments}/${id}`,
+        method: "PUT",
+        data: data,
+      });
+      setOpen(false);
+      dispatch(addDepSuccess());
+      dispatch(resetDepartmentEditing());
+      dispatch(getAllDepartments());
+    } catch (error) {
+      dispatch(editDepFail(error.response.data.payload.message));
+    }
+  };
 
-
-
-export const requestEditDepartment = (
-  depData: string | undefined,
-  setOpen: (state: boolean) => void,
-  id: string | undefined,
-) => async (dispatch: Dispatch<any>) => {
-  try {
-    const data = {
-      name: depData
-    };
-
-    await Axios.put(`${api.departments}/${id}`, data);
-    setOpen(false)
-    dispatch(addDepSuccess());
-    dispatch(resetDepartmentEditing());
-    dispatch(getAllDepartments());
-
-  } catch (error) {
-    dispatch(editDepFail(error.response.data.payload.message));
-  }
-}
-
-export const requestDeleteDepartment = (depId: string) => async (dispatch: Dispatch<any>) => {
-  try {
-    dispatch(getDepartmentsReq());
-    await Axios.delete(`${api.departments}/${depId}`);
-    dispatch(getAllDepartments());
-
-  } catch (error) {
-    dispatch(getDepartmentsFail());
-  }
-}
+export const requestDeleteDepartment =
+  (depId: string) => async (dispatch: Dispatch<any>) => {
+    try {
+      dispatch(getDepartmentsReq());
+      await Axios({
+        url: `${api.departments}/${depId}`,
+        method: "DELETE",
+      });
+      dispatch(getAllDepartments());
+    } catch (error) {
+      dispatch(getDepartmentsFail());
+    }
+  };

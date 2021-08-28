@@ -23,14 +23,15 @@ import {
 } from "../../../store/actions/reservations";
 import { IRootReducer } from "../../../store/reducers";
 import { ReserveSchema } from "../../validations/Reservation";
-import { CssTextField, CustomSelect } from "../CustomInput";
-import { ErrorDiv } from "../ErrorDiv";
-import { getFilteredMRs } from "./getFilteredMRs";
+import { CssTextField } from "../CustomInput";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
+import { CustomSelect } from "../CustomSelect";
+import { If } from "../If";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   content: {
     display: "flex",
     columnGap: 70,
@@ -46,6 +47,14 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     flexDirection: "column",
     width: "100%",
+  },
+  select: {
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: "rgb(57 185 127)",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: "2px solid rgb(57 185 127)",
+    },
   },
 }));
 
@@ -89,7 +98,7 @@ export const EditReservationForm: FC<IForm> = ({
   const [selectedEndTime, setSelectedEndTime] = useState<Date | null>(
     new Date()
   );
-  const [checkedDays, setCheckedDays] = useState<number[]>([]);
+  const [checkedDays, setCheckedDays] = useState<number[] | null>([]);
 
   useEffect(() => {
     setSelectedDate(addHours(new Date(booking.start_time || 0), -5));
@@ -130,25 +139,30 @@ export const EditReservationForm: FC<IForm> = ({
         <Formik
           initialValues={initBooking}
           validationSchema={ReserveSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={(values) => {
-            const EditData = {
-              start_time: format(
-                selectedStartTime || 0,
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"
-              ),
-              end_time: format(
-                selectedEndTime || 0,
-                "yyyy-MM-dd'T'HH:mm:ss'Z'"
-              ),
+            const editData = {
+              start_time:
+                format(selectedDate || 0, "yyyy-MM-dd") +
+                "T" +
+                format(selectedStartTime || 0, "HH:mm:ss") +
+                "Z",
+              end_time:
+                format(selectedDate || 0, "yyyy-MM-dd") +
+                "T" +
+                format(selectedEndTime || 0, "HH:mm:ss") +
+                "Z",
               user_id: userData.id,
               purpose: values.purpose,
               meeting_room_id: values.meeting_room_id,
               repeat_days: checkedDays,
-              repeat_id: booking.repeat_id,
+              repeat_id: booking.repeat_id || " ",
             };
+
             dispatch(
               requestEditReservation(
-                EditData,
+                editData,
                 booking.id as string,
                 setOpenEdit,
                 selectedCity,
@@ -194,6 +208,7 @@ export const EditReservationForm: FC<IForm> = ({
                     onChange={(date) => handleDate(date)}
                     autoOk
                     disablePast
+                    className={classes.select}
                   />
 
                   <TimePicker
@@ -208,6 +223,7 @@ export const EditReservationForm: FC<IForm> = ({
                     value={selectedStartTime}
                     onChange={(date) => setSelectedStartTime(date)}
                     autoOk
+                    className={classes.select}
                   />
 
                   <TimePicker
@@ -222,9 +238,10 @@ export const EditReservationForm: FC<IForm> = ({
                     )}
                     onChange={(date) => setSelectedEndTime(date)}
                     autoOk
+                    className={classes.select}
                   />
                   <ReservationRepeat
-                    checkedDays={checkedDays}
+                    checkedDays={checkedDays || []}
                     setCheckedDays={setCheckedDays}
                   />
                 </Grid>
@@ -245,7 +262,9 @@ export const EditReservationForm: FC<IForm> = ({
                   отмена
                 </Button>
               </DialogActions>
-              {editError && <ErrorDiv error={editError} />}
+              <If condition={Boolean(editError)}>
+                <ErrorDiv error={editError} />
+              </If>
             </form>
           )}
         </Formik>

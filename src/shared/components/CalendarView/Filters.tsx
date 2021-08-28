@@ -91,13 +91,11 @@ export const Filters: FC<IFilters> = ({
         displayEmpty
         style={{ marginBottom: 20 }}
       >
-        {cities.map((item) => {
-          return (
-            <MenuItem key={item.id} value={item.id}>
-              {item.name}
-            </MenuItem>
-          );
-        })}
+        {cities?.map((item) => (
+          <MenuItem key={item.id} value={item.id}>
+            {item.name}
+          </MenuItem>
+        ))}
         <MenuItem value={""}>Все города</MenuItem>
       </Select>
 
@@ -109,13 +107,11 @@ export const Filters: FC<IFilters> = ({
         fullWidth
         displayEmpty
       >
-        {buildings.map((item) => {
-          return (
-            <MenuItem key={item.id} value={item.id}>
-              {item.name}
-            </MenuItem>
-          );
-        })}
+        {buildings?.map((item) => (
+          <MenuItem key={item.id} value={item.id}>
+            {item.name}
+          </MenuItem>
+        ))}
         <MenuItem value={""}>Все здания</MenuItem>
       </Select>
     </Box>

@@ -43,7 +43,7 @@ export const addReservationFail = (message: string) => {
 
 export const editReservationFail = (message: string) => {
   return {
-    type: getReservationsType.ADD_RESERVATION_FAIL,
+    type: getReservationsType.EDIT_RESERVATION_FAIL,
     payload: message,
   };
 };
@@ -66,7 +66,11 @@ export const requestAddReservation =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
-      await Axios.post(`${api.reservations}`, reservationData);
+      await Axios({
+        url: `${api.reservations}`,
+        method: "POST",
+        data: reservationData,
+      });
       dispatch(reservationSuccess());
       setOpen(false);
       getFilteredMRs(
@@ -95,10 +99,11 @@ export const requestEditReservation =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
-      await Axios.put(
-        `${api.reservations}/${reservationId}/${editedReservation.repeat_id}`,
-        editedReservation
-      );
+      await Axios({
+        url: `${api.reservations}/${reservationId}/${editedReservation.repeat_id}`,
+        method: "PUT",
+        data: editedReservation,
+      });
       setEditOpen(false);
       store.addNotification({
         title: "Успешно!",
@@ -138,7 +143,10 @@ export const requestDeleteReservation =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
-      await Axios.delete(`${api.reservations}/${reservationId}/${repeat_id}`);
+      await Axios({
+        url: `${api.reservations}/${reservationId}/${repeat_id || " "}`,
+        method: "DELETE",
+      });
       getFilteredMRs(
         date,
         selectedCity,

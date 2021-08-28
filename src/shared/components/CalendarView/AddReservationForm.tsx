@@ -1,6 +1,6 @@
 import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
-import { Button, DialogActions, Grid } from "@material-ui/core";
+import { Button, DialogActions, Grid, makeStyles } from "@material-ui/core";
 import {
   DatePicker,
   MuiPickersUtilsProvider,
@@ -17,12 +17,24 @@ import {
 import { IRootReducer } from "../../../store/reducers";
 import { IReservation } from "../../../store/reducers/reservations/interfaces";
 import { ReserveSchema } from "../../validations/Reservation";
-import { CssTextField, CustomSelect } from "../CustomInput";
-import { ErrorDiv } from "../ErrorDiv";
+import { CssTextField } from "../CustomInput";
+import { ErrorDiv } from "../Errors/ErrorDiv";
 import { History } from "history";
 import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
+import { If } from "../If";
+import { CustomSelect } from "../CustomSelect";
 
+export const greenDateStyle = makeStyles(() => ({
+  select: {
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: "rgb(57 185 127)",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: "2px solid rgb(57 185 127)",
+    },
+  },
+}));
 interface IForm {
   date: string;
   selectedCity: string;
@@ -48,6 +60,7 @@ export const AddReservationForm: FC<IForm> = ({
 }) => {
   const dispatch = useDispatch();
   const buttonClasses = buttonStyles();
+  const classes = greenDateStyle();
 
   const { userData } = useSelector(
     (state: IRootReducer) => state.getUserDataReducer
@@ -78,8 +91,6 @@ export const AddReservationForm: FC<IForm> = ({
   };
   const handleDate = (date: Date | null) => {
     setSelectedDate(date);
-    setSelectedStartTime(date);
-    setSelectedEndTime(addHours(date || 0, 1));
   };
 
   const handleClose = () => {
@@ -91,17 +102,16 @@ export const AddReservationForm: FC<IForm> = ({
     <Formik
       initialValues={initBooking}
       validationSchema={ReserveSchema}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={(values) => {
         delete values.date;
+        const dateSelected = format(selectedDate || 0, "yyyy-MM-dd");
+        const startTimeSelected = format(selectedStartTime || 0, "HH:mm:ss");
+        const endTimeSelected = format(selectedEndTime || 0, "HH:mm:ss");
 
-        values.start_time = format(
-          selectedStartTime || 0,
-          "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        );
-        values.end_time = format(
-          selectedEndTime || 0,
-          "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        );
+        values.start_time = dateSelected + "T" + startTimeSelected + "Z";
+        values.end_time = dateSelected + "T" + endTimeSelected + "Z";
         values.user_id = userData.id;
         values.repeat_days = checkedDays;
         dispatch(
@@ -112,7 +122,7 @@ export const AddReservationForm: FC<IForm> = ({
             history,
             selectedBuilding,
             selectedRooms,
-            date,
+            date
           )
         );
       }}
@@ -149,6 +159,7 @@ export const AddReservationForm: FC<IForm> = ({
                 onChange={(date) => handleDate(date)}
                 autoOk
                 disablePast
+                className={classes.select}
               />
 
               <TimePicker
@@ -163,6 +174,7 @@ export const AddReservationForm: FC<IForm> = ({
                 value={selectedStartTime}
                 onChange={(date) => setSelectedStartTime(date)}
                 autoOk
+                className={classes.select}
               />
 
               <TimePicker
@@ -175,6 +187,7 @@ export const AddReservationForm: FC<IForm> = ({
                 error={Boolean(props.touched.end_time && props.errors.end_time)}
                 onChange={(date) => setSelectedEndTime(date)}
                 autoOk
+                className={classes.select}
               />
               <ReservationRepeat
                 checkedDays={checkedDays}
@@ -195,7 +208,10 @@ export const AddReservationForm: FC<IForm> = ({
               отмена
             </Button>
           </DialogActions>
-          {addError && <ErrorDiv error={addError} />}
+
+          <If condition={Boolean(addError)}>
+            <ErrorDiv error={addError} />
+          </If>
         </form>
       )}
     </Formik>

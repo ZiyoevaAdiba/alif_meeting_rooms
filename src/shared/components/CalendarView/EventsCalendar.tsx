@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../../store/reducers";
 import ruLocale from "@fullcalendar/core/locales/ru";
 import { IColors } from "./colorGenerator";
-import { calendarStyles } from "./Styles";
-import { addHours } from "date-fns";
+import { addHours, subWeeks } from "date-fns";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import { getCurrentReservation } from "../../../store/actions/reservations";
+import { start } from "nprogress";
+import { getFilteredMRs } from "./getFilteredMRs";
+import { useHistory } from "react-router";
 
 interface IEventsCalendar {
   setOpen: (state: boolean) => void;
@@ -21,6 +23,11 @@ interface IEventsCalendar {
   calendarComponentRef: RefObject<any>;
   setSelectedStartTime: (state: Date | null) => void;
   setSelectedEndTime: (state: Date | null) => void;
+  dateParam: string;
+  selectedCity: string;
+  selectedBuilding: string;
+  roomsParam: string;
+  gotoWeek: (value: Date) => void;
 }
 
 export const EventsCalendar: FC<IEventsCalendar> = ({
@@ -31,17 +38,19 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
   calendarComponentRef,
   setSelectedStartTime,
   setSelectedEndTime,
+  dateParam,
+  gotoWeek,
 }) => {
-  const classes = calendarStyles();
   const { checkedRooms, meetingRoomsInfo } = useSelector(
     (state: IRootReducer) => state.getMRsDataReducer
   );
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const checkedRoomInfo = meetingRoomsInfo.filter((room) =>
+  const checkedRoomInfo = meetingRoomsInfo?.filter((room) =>
     checkedRooms.includes(room.id as string)
   );
-  const reservation = checkedRoomInfo.map((room) => room.reservations || []);
+  const reservation = checkedRoomInfo?.map((room) => room.reservations || []);
 
   const info = reservation
     ?.map((item) =>
@@ -70,7 +79,7 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
         ref={calendarComponentRef}
         allDaySlot={false}
         selectable
-        contentHeight="900px"
+        contentHeight="1475px"
         plugins={[timeGridWeekPlugin, dayGridPlugin, interactionPlugin]}
         dateClick={function (info: any) {
           setSelectedStartTime(info.dateStr);
@@ -117,6 +126,31 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
         eventOverlap
         locale={ruLocale}
         events={info as EventInput[]}
+        headerToolbar={{
+          start: "title",
+          center: "",
+          end: "today prev,next",
+        }}
+        customButtons={{
+          prev: {
+            click: function () {
+              const prevWeekDate = subWeeks(new Date(dateParam), 1);
+              gotoWeek(prevWeekDate);
+            },
+          },
+          next: {
+            click: function () {
+              const nextWeekDate = subWeeks(new Date(dateParam), -1);
+              gotoWeek(nextWeekDate);
+            },
+          },
+          today: {
+            text: "Сегодня",
+            click: function () {
+              gotoWeek(new Date());
+            },
+          },
+        }}
         handleWindowResize
       />
     </div>

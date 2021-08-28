@@ -1,52 +1,47 @@
-import { InputLabel, makeStyles, MenuItem, Select, TextField, withStyles } from '@material-ui/core'
-import { FormikProps } from 'formik';
-import { FC } from 'react';
-import { IDepartment } from '../../store/reducers/departments/interfaces';
+import {
+  Box,
+  TextField,
+  withStyles,
+} from "@material-ui/core";
+import { FormikProps } from "formik";
+import { FC } from "react";
+import { If } from "./If";
 
 export const CssTextField = withStyles({
   root: {
-    '& label.Mui-focused': {
-      color: 'rgb(57 185 127)',
+    "& label.Mui-focused": {
+      color: "rgb(57 185 127)",
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'rgb(57 185 127)',
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "rgb(57 185 127)",
     },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "red",
       },
-      '&.Mui-focused fieldset': {
-        borderColor: 'rgb(57 185 127)',
+      "&.Mui-focused fieldset": {
+        borderColor: "rgb(57 185 127)",
       },
     },
   },
 })(TextField);
 
-export const greenStyle = makeStyles((theme) => ({
-  select: {
-    marginBottom: 10,
-    "&:after": {
-      borderBottomColor: "rgb(57 185 127)",
-    },
-  }
-}));
-
 interface IFieldData {
-  name: string,
-  label: string,
-  type: string,
+  name: string;
+  label: string;
+  type: string;
 }
 
 interface ICustomInput {
-  fieldData: IFieldData,
-  formikProps: FormikProps<any>
+  fieldData: IFieldData;
+  formikProps: FormikProps<any>;
 }
 
 export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
   return (
     <>
       <CssTextField
-        style={{ margin: '10px 0px' }}
+        style={{ margin: "10px 0px" }}
         name={fieldData.name}
         label={fieldData.label}
         fullWidth
@@ -55,65 +50,16 @@ export const CustomInput: FC<ICustomInput> = ({ fieldData, formikProps }) => {
         onBlur={formikProps.handleBlur}
         type={fieldData.type}
       />
-      {
-        formikProps.errors[fieldData.name]
-        &&
-        formikProps.touched[fieldData.name]
-        &&
-        <div style={{ color: '#f44335', marginTop: '0px', fontSize:"14px"}}>
-          {formikProps.errors[fieldData.name]}
-        </div>
-      }
-    </>
-  )
-}
-
-interface ICustomSelect {
-  itemList?: IDepartment[] ,
-  formikProps: FormikProps<any>,
-  fieldName: string,
-  text: string,
-}
-
-export const CustomSelect: FC<ICustomSelect> = ({ itemList, formikProps, fieldName, text }) => {
-  const classes = greenStyle();
-
-  return (
-    <>
-      <InputLabel
-        style={{ marginTop: '15px' }}
-        id="select"
-      >
-        {text}
-      </InputLabel>
-      <Select
-        className={classes.select}
-        id="select"
-        value={formikProps.values[fieldName]}
-        onChange={formikProps.handleChange}
-        name={fieldName}
-        fullWidth
-      >
-        {
-          itemList?.map(item => {
-            return <MenuItem
-              key={item.id}
-              value={item.id}
-            >
-              {item.name}
-            </MenuItem>
-          })
+      <If
+        condition={
+          Boolean((formikProps.errors[fieldData.name] &&
+          formikProps.touched[fieldData.name]))
         }
-      </Select>
-      {
-        formikProps.errors[fieldName]
-        &&
-        formikProps.touched[fieldName]
-        &&
-        <div style={{ color: '#f44335', marginTop: '0px', fontSize:"14px"}}>
-          {formikProps.errors[fieldName]}
-        </div>
-      }
+      >
+        <Box color="#f44335" marginTop="0px" fontSize="14px">
+          {formikProps.errors[fieldData.name]}
+        </Box>
+      </If>
     </>
-  )
-}
+  );
+};

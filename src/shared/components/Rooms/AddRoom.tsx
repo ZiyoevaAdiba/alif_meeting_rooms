@@ -1,25 +1,32 @@
-import React, { useEffect } from 'react';
-import { Box } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Form, Formik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { fieldRoom, room } from './MeetingRooms';
-import { addMRPhoto, resetRoomErrors, cancelImgUpload, requestAddRoom } from '../../../store/actions/rooms';
-import { RoomSchema } from '../../validations/RoomValidation';
-import { IRootReducer } from '../../../store/reducers';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { ErrorDiv } from '../ErrorDiv';
-import { CssTextField, CustomInput, CustomSelect } from '../CustomInput';
-import { addEditRoomFields } from './roomFields';
-import { getAllBuildings } from '../../../store/actions/buildings';
-import { ChangeEvent } from 'react';
-import { roomMenuItems } from '../../consts/selectConsts';
-import { buttonStyles } from '../styles/buttonStyles';
+import React, { useEffect } from "react";
+import { Box } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { fieldRoom, room } from "./MeetingRooms";
+import {
+  addMRPhoto,
+  resetRoomErrors,
+  cancelImgUpload,
+  requestAddRoom,
+} from "../../../store/actions/rooms";
+import { RoomSchema } from "../../validations/RoomValidation";
+import { IRootReducer } from "../../../store/reducers";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { ErrorDiv } from "../Errors/ErrorDiv";
+import { CssTextField, CustomInput } from "../CustomInput";
+import { addEditRoomFields } from "./roomFields";
+import { getAllBuildings } from "../../../store/actions/buildings";
+import { ChangeEvent } from "react";
+import { roomMenuItems } from "../../consts/selectConsts";
+import { buttonStyles } from "../styles/buttonStyles";
+import { If } from "../If";
+import { CustomSelect } from "../CustomSelect";
 
 export const AddRoom = () => {
   const [open, setOpen] = React.useState(false);
@@ -35,11 +42,12 @@ export const AddRoom = () => {
     dispatch(resetRoomErrors());
   };
 
-  const {
-    imgSrc,
-    addError
-  } = useSelector((state: IRootReducer) => state.roomsReducer);
-  const { buildings } = useSelector((state: IRootReducer) => state.buildingsReducer);
+  const { imgSrc, addError } = useSelector(
+    (state: IRootReducer) => state.roomsReducer
+  );
+  const { buildings } = useSelector(
+    (state: IRootReducer) => state.buildingsReducer
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,13 +55,15 @@ export const AddRoom = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleImageUpload = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleImageUpload = (
+    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const target = evt.target as HTMLInputElement;
     const photo: File = (target.files as FileList)[0];
     const fd = new FormData();
-    fd.append('image', photo);
+    fd.append("image", photo);
     dispatch(addMRPhoto(fd));
-  }
+  };
 
   return (
     <Box>
@@ -62,14 +72,21 @@ export const AddRoom = () => {
         className={buttonClasses.btnReserve}
         onClick={handleClickOpen}
       >
-        Добавить Meeting Room
+        Добавить meeting room
       </Button>
 
-      <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Добавление Meeting Room-а</DialogTitle>
+      <Dialog
+        open={open}
+        fullWidth
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          Добавление Meeting Room-а
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Чтобы добавить Meeting Room заполните форму.
+            Чтобы добавить meeting room заполните форму.
           </DialogContentText>
           <Formik
             initialValues={room}
@@ -77,30 +94,24 @@ export const AddRoom = () => {
             validateOnBlur={false}
             validateOnChange={false}
             onSubmit={(values) => {
-              values.photo = imgSrc
-              values.status = (values.status === 'true')
-                ? true
-                : false;
+              values.photo = imgSrc;
+              values.status = values.status === "true" ? true : false;
               dispatch(requestAddRoom(values, setOpen));
             }}
           >
-            {props => (
-              <Form
-                onSubmit={props.handleSubmit}
-              >
-                {
-                  addEditRoomFields.map(
-                    item => <CustomInput
-                      key={item.name}
-                      fieldData={item}
-                      formikProps={props}
-                    />
-                  )
-                }
+            {(props) => (
+              <Form onSubmit={props.handleSubmit}>
+                {addEditRoomFields.map((item) => (
+                  <CustomInput
+                    key={item.name}
+                    fieldData={item}
+                    formikProps={props}
+                  />
+                ))}
                 <CustomSelect
                   itemList={buildings}
                   formikProps={props}
-                  fieldName='building_id'
+                  fieldName="building_id"
                   text="Выбрать офис"
                 />
 
@@ -111,13 +122,12 @@ export const AddRoom = () => {
                   text="Состояние meeting room-a"
                 />
 
-
                 <CssTextField
                   name={fieldRoom.photo}
                   onChange={(evt) => handleImageUpload(evt)}
-                  type='file'
+                  type="file"
                   id="contained-button-file"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
                 <label htmlFor="contained-button-file">
                   <Button
@@ -126,32 +136,25 @@ export const AddRoom = () => {
                     color="inherit"
                     component="span"
                     startIcon={<CloudUploadIcon />}
-                    style={{ marginTop: '30px', marginBottom: '20px' }}
+                    style={{ marginTop: "30px", marginBottom: "20px" }}
                   >
                     Загрузить
                   </Button>
                 </label>
                 <img
                   src={imgSrc}
-                  alt={
-                    imgSrc
-                      ? "photo"
-                      : ""
-                  }
-                  width='250px'
-                  height='auto'
+                  alt={imgSrc ? "photo" : ""}
+                  width="250px"
+                  height="auto"
                 />
-                {
-                  addError
-                  &&
-                  <ErrorDiv
-                    error={addError}
-                  />
-                }
+                <If condition={Boolean(addError)}>
+                  <ErrorDiv error={addError} />
+                </If>
+
                 <DialogActions>
                   <Button
-                    type='submit'
-                    variant='contained'
+                    type="submit"
+                    variant="contained"
                     className={buttonClasses.btnReserve}
                   >
                     Добавить
@@ -167,8 +170,7 @@ export const AddRoom = () => {
             )}
           </Formik>
         </DialogContent>
-
       </Dialog>
     </Box>
   );
-}
+};
