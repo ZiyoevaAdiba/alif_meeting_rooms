@@ -129,9 +129,9 @@ export const requestEditCity =
         method: "PUT",
         data: data,
       });
-      setOpen(false);
       dispatch(addCitySuccess());
       dispatch(resetCityEditing());
+      setOpen(false);
       dispatch(getAllCities());
     } catch (error) {
       dispatch(editCityFail(error.response.data.payload.message));
