@@ -30,7 +30,7 @@ export const EditDepartment = () => {
 
   useEffect(() => {
     setOpen(!open);
-    setDepInput(department?.name);
+    setDepInput(department.name);
   }, [department]);
 
   const handleClose = () => {
@@ -43,7 +43,7 @@ export const EditDepartment = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(requestEditDepartment(depInput, setOpen, department?.id));
+    dispatch(requestEditDepartment(depInput, setOpen, department.id));
   };
 
   return (

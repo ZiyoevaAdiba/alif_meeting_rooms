@@ -53,13 +53,12 @@ export const Cities = () => {
 
   const commonClasses = commonStyles();
 
-  if (loading && !error) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Page title="Города">
       <Container maxWidth="xl">
+        <If condition={loading}>
+          <LoadingScreen />
+        </If>
         <If condition={!error} anotherChildren={<ErrorDiv error={error} />}>
           <Grid
             className={commonClasses.CardsContainer}

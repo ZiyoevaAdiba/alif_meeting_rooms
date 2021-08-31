@@ -49,17 +49,16 @@ export const Departments = () => {
 
   useEffect(() => {
     dispatch(getAllDepartments());
-  }, [dispatch]);
+  }, []);
 
   const commonClasses = commonStyles();
-
-  if (loading && !error) {
-    return <LoadingScreen />;
-  }
 
   return (
     <Page title="Отделы">
       <Container maxWidth="xl">
+        <If condition={loading}>
+          <LoadingScreen />
+        </If>
         <If condition={!error} anotherChildren={<ErrorDiv error={error} />}>
           <Grid
             className={commonClasses.CardsContainer}

@@ -123,7 +123,7 @@ export const EditReservationForm: FC<IForm> = ({
 
   const handleClose = () => {
     dispatch(reservationSuccess());
-    setOpenEdit(false);
+    setOpenEdit(false);    
   };
 
   return (

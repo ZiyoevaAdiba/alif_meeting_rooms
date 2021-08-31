@@ -119,6 +119,8 @@ export const requestEditCity =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
+      dispatch(getCitiesReq());
+
       const data = {
         name: depData,
       };

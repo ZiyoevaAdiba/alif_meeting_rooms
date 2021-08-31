@@ -42,7 +42,7 @@ export const AddRoom = () => {
     dispatch(resetRoomErrors());
   };
 
-  const { imgSrc, addError } = useSelector(
+  const { imgSrc, addError, loading } = useSelector(
     (state: IRootReducer) => state.roomsReducer
   );
   const { buildings } = useSelector(
@@ -156,11 +156,13 @@ export const AddRoom = () => {
                     type="submit"
                     variant="contained"
                     className={buttonClasses.btnReserve}
+                    disabled={loading}
                   >
                     Добавить
                   </Button>
                   <Button
                     onClick={handleClose}
+                    disabled={loading}
                     className={buttonClasses.btnCancel}
                   >
                     Отмена

@@ -32,6 +32,7 @@ Axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    
     if ((error.response?.status || 0) >= 500 || error.response === undefined) {
       store.dispatch(axiosErrorCatch());
     }

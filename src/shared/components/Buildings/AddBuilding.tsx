@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ErrorDiv } from "../Errors/ErrorDiv";
 import { IRootReducer } from "../../../store/reducers";
 import { CustomInput } from "../CustomInput";
-import { requestAddBuilding } from "../../../store/actions/buildings";
+import { resetBuildingError, requestAddBuilding } from "../../../store/actions/buildings";
 import { IBuilding } from "../../../store/reducers/buildings/interfaces";
 import { getAllCities } from "../../../store/actions/cities";
 import { BuildingSchema } from "../../validations/BuildingValidation";
@@ -33,6 +33,7 @@ export const AddBuilding = () => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(resetBuildingError())
   };
 
   useEffect(() => {

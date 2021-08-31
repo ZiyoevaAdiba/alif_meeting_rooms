@@ -53,9 +53,6 @@ export const UserProfile: FC = () => {
     repeat_new_password: "",
   };
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
   return (
     <Formik
       initialValues={profileData}

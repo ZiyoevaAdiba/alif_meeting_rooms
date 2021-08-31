@@ -42,17 +42,20 @@ export const citiesReducer = (
     case getCitiesType.SHOW_CITY:
       return {
         ...state,
+        loading: false,
         city: action.payload as ICity,
       };
     case getCitiesType.RESET_EDITING:
       return {
         ...state,
+        loading: false,
         city: {},
         editError: null,
       };
     case getCitiesType.EDIT_CITY_FAIL:
       return {
         ...state,
+        loading: false,
         editError: action.payload as string,
       };
     case getCitiesType.SHOW_WARNING:
@@ -63,11 +66,13 @@ export const citiesReducer = (
     case getCitiesType.CANCEL_DELETE:
       return {
         ...state,
+        loading: false,
         showAlert: '',
       }
     case getCitiesType.ADD_CITY_FAIL:
       return {
         ...state,
+        loading: false,
         addError: action.payload as string,
       };
     case getCitiesType.RESET_CITIES_ERRORS:
@@ -76,6 +81,7 @@ export const citiesReducer = (
         addError: null,
         error: null,
         editError: null,
+        loading: false,
       };
     default:
       return state;

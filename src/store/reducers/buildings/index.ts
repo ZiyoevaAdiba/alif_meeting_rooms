@@ -43,6 +43,7 @@ export const buildingsReducer = (
       const { city } = action.payload as IBuilding
       return {
         ...state,
+        loading: false,
         building: {
           ...action.payload as IBuilding,
           city_id: city?.id
@@ -53,31 +54,31 @@ export const buildingsReducer = (
         ...state,
         building: {},
         buildingsError: null,
+        loading: false,
       };
     case getBuildingsType.SHOW_WARNING:
       return {
         ...state,
         showAlert: action.payload as string,
+        loading: false,
       };
     case getBuildingsType.CANCEL_DELETE:
       return {
         ...state,
         showAlert: '',
+        loading: false,
       };
     case getBuildingsType.EDIT_BUILDING_FAIL:
       return {
         ...state,
         editBuildingError: action.payload as string,
+        loading: false,
       };
-    case getBuildingsType.EDIT_BUILDING_SUCCESS:
-      return {
-        ...state,
-        editBuildingError: null,
-        buildingsError: null,
-      };
+    
       case getBuildingsType.ADD_BUILDING_FAIL:
       return {
         ...state,
+        loading: false,
         addBuildingError: action.payload as string,
       };
     case getBuildingsType.RESET_BUILDINGS_ERRORS:
@@ -85,7 +86,8 @@ export const buildingsReducer = (
         ...state,
         buildingsError: null,
         editBuildingError: null,
-        addBuildingError: null,      
+        addBuildingError: null, 
+        loading: false,     
       };
     default:
       return state;

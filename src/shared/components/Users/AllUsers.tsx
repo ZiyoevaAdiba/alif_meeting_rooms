@@ -136,13 +136,12 @@ export const AllUsers = () => {
     dispatch(getAllUsers(page, searchInput, history));
   }, []);
 
-  if (loading && !usersError) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Page title="Пользователи">
       <Container maxWidth="xl">
+        <If condition={loading}>
+          <LoadingScreen />
+        </If>
         <If
           condition={!usersError}
           anotherChildren={<ErrorDiv error={usersError} />}

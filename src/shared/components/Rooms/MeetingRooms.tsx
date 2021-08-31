@@ -146,13 +146,13 @@ export const MeetingRooms = () => {
 
   const commonClasses = commonStyles();
 
-  if (loading && !roomsError) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Page title="Meeting-Rooms">
       <Container maxWidth="xl">
+        <If condition={loading}>
+          <LoadingScreen />
+        </If>
+
         <If
           condition={!roomsError}
           anotherChildren={<ErrorDiv error={roomsError} />}

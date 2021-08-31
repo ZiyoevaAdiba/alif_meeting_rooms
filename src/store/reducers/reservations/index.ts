@@ -57,6 +57,7 @@ export const reservationsReducer = (
         ...state,
         addError: null,
         error: null,
+        editError: null,
       };
     default:
       return state;
