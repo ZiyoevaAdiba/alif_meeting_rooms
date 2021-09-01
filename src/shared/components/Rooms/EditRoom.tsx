@@ -13,6 +13,7 @@ import {
   cancelImgUpload,
   requestEditRoom,
   resetRoomEditing,
+  resetRoomErrors,
 } from "../../../store/actions/rooms";
 import { IRootReducer } from "../../../store/reducers";
 import { RoomSchema } from "../../validations/RoomValidation";
@@ -38,6 +39,7 @@ export const EditRoom = () => {
   const handleClose = () => {
     dispatch(resetRoomEditing());
     dispatch(cancelImgUpload());
+    dispatch(resetRoomErrors());
   };
 
   const { imgSrc, editError, uploadError } = useSelector(

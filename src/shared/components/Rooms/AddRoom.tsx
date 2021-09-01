@@ -82,7 +82,7 @@ export const AddRoom = () => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          Добавление Meeting Room-а
+          Добавление meeting room-а
         </DialogTitle>
         <DialogContent>
           <DialogContentText>

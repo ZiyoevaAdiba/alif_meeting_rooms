@@ -54,7 +54,7 @@ export const AddCity = () => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Добавление Города</DialogTitle>
+        <DialogTitle id="form-dialog-title">Добавление города</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <CssTextField

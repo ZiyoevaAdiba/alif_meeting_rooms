@@ -71,8 +71,8 @@ export const buildingsReducer = (
     case getBuildingsType.EDIT_BUILDING_FAIL:
       return {
         ...state,
-        editBuildingError: action.payload as string,
         loading: false,
+        editBuildingError: action.payload as string,
       };
     
       case getBuildingsType.ADD_BUILDING_FAIL:
@@ -84,10 +84,10 @@ export const buildingsReducer = (
     case getBuildingsType.RESET_BUILDINGS_ERRORS:
       return {
         ...state,
+        loading: false,     
         buildingsError: null,
         editBuildingError: null,
         addBuildingError: null, 
-        loading: false,     
       };
     default:
       return state;

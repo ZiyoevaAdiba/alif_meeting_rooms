@@ -13,6 +13,7 @@ import { CustomInput } from "../CustomInput";
 import {
   requestEditBuilding,
   resetBuildingEditing,
+  resetBuildingError,
 } from "../../../store/actions/buildings";
 import { BuildingSchema } from "../../validations/BuildingValidation";
 import { buttonStyles } from "../styles/buttonStyles";
@@ -35,6 +36,7 @@ export const EditBuilding = () => {
 
   const handleClose = () => {
     dispatch(resetBuildingEditing());
+    dispatch(resetBuildingError());
   };
 
   return (

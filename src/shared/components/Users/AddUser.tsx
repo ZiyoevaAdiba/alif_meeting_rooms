@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Form, Formik } from "formik";
-import { requestAddUser } from "../../../store/actions/users";
+import { editUserReqSuccess, requestAddUser } from "../../../store/actions/users";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorDiv } from "../Errors/ErrorDiv";
 import { IRootReducer } from "../../../store/reducers";
@@ -20,6 +20,7 @@ import { userMenuItems } from "../../consts/selectConsts";
 import { buttonStyles } from "../styles/buttonStyles";
 import { If } from "../If";
 import { CustomSelect } from "../CustomSelect";
+import { signUpResetError } from "../../../store/actions/signUp";
 
 export interface IUserPageProps {
   page: number;
@@ -39,6 +40,8 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(editUserReqSuccess());
+    dispatch(signUpResetError());
   };
 
   useEffect(() => {

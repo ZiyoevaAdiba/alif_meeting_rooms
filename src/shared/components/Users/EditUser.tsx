@@ -9,6 +9,7 @@ import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../../store/reducers";
 import {
+  editUserReqSuccess,
   requestEditUser,
   resetUserEditing,
 } from "../../../store/actions/users";
@@ -45,6 +46,7 @@ export const EditUser: FC<IUserPageProps> = ({
 
   const handleClose = () => {
     dispatch(resetUserEditing());
+    dispatch(editUserReqSuccess());
   };
 
   return (

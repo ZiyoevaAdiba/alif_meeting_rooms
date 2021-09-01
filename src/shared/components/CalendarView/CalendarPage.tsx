@@ -130,7 +130,7 @@ export const CalendarPage = () => {
   const [colors, setColors] = useState({});
 
   useEffect(() => {
-    if(!meetingRoomsInfo) {
+    if (!meetingRoomsInfo) {
       setColors({});
     } else {
       setColors(colorList(meetingRoomsInfo));
@@ -181,7 +181,7 @@ export const CalendarPage = () => {
           selectedCity={selectedCity}
           selectedBuilding={selectedBuilding}
           roomsParam={checkedRooms.join()}
-          gotoWeek = {gotoWeek}
+          gotoWeek={gotoWeek}
         />
       </Grid>
       <ReserveRoom
