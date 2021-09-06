@@ -106,7 +106,7 @@ export const requestAddCity =
       dispatch(addCitySuccess());
       setOpen(false);
       dispatch(getAllCities());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addCityFail(error.response.data.payload.message));
     }
   };
@@ -133,7 +133,7 @@ export const requestEditCity =
       dispatch(resetCityEditing());
       setOpen(false);
       dispatch(getAllCities());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editCityFail(error.response.data.payload.message));
     }
   };

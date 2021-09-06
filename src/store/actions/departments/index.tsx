@@ -119,7 +119,7 @@ export const requestAddDepartment =
       setOpen(false);
 
       dispatch(getAllDepartments());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addDepFail(error.response.data.payload.message));
     }
   };
@@ -149,7 +149,7 @@ export const requestEditDepartment =
       dispatch(resetDepartmentEditing());
       setOpen(false);
       dispatch(getAllDepartments());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editDepFail(error.response.data.payload.message));
     }
   };

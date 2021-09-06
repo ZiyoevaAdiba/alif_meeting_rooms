@@ -131,7 +131,7 @@ export const requestAddBuilding =
         },
       });
       dispatch(getAllBuildings());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addBuildingFail(error.response.data.payload.message));
       setSubmitting(false);
     }
@@ -164,7 +164,7 @@ export const requestEditBuilding =
       dispatch(resetBuildingError());
       dispatch(resetBuildingEditing());
       dispatch(getAllBuildings());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editBuildingReqFail(error.response.data.payload.message));
     }
   };

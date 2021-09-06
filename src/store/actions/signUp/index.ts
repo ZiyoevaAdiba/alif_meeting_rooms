@@ -43,7 +43,6 @@ export const requestRegistration =
     try {
       dispatch(requestSent());
 
-      await Axios.post(`${api.signUp}`, userData);
       await Axios({
         url: `${api.signUp}`,
         method: "POST",
@@ -66,7 +65,7 @@ export const requestRegistration =
           onScreen: true,
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch(requestFail(error.response.data.payload.message));
       setSubmitting(false);
     }

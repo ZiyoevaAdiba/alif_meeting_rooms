@@ -8,6 +8,8 @@ import logo from "../assets/images/alif_logo.png";
 import { getCurrentUserInfo } from "../store/actions/reservations/userData";
 import { getToken } from "../store/actions/login";
 import { useEffect } from "react";
+import { urls } from "../routes/urls";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +45,10 @@ export const TopBar = () => {
   return (
     <AppBar color="default" position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        <img className={classes.logo} src={logo} alt="LOGO" />
+        <Link to={urls.reservations}>
+          <img className={classes.logo} src={logo} alt="LOGO" />
+        </Link>
+
         <Box ml={2}>
           <Account />
         </Box>

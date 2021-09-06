@@ -112,13 +112,12 @@ export const resetRoomErrors = () => {
 export const getAllRooms = () => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(getRoomsReq());
-    const res = await Axios.get(`${api.adminRooms}`);
-    await Axios({
+     const res = await Axios({
       url: `${api.adminRooms}`,
       method: "GET",
     });
     dispatch(getRoomsSuccess(res.data.payload));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(getRoomsFail());
   }
 };
@@ -136,21 +135,20 @@ export const requestAddRoom =
       dispatch(resetRoomErrors());
       setOpen(false);
       dispatch(getAllRooms());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addRoomReqFail(error.response.data.payload.message));
     }
   };
 export const addMRPhoto =
   (roomPhoto: FormData) => async (dispatch: Dispatch<any>) => {
     try {
-      const res = await Axios.post(api.uploadPhoto, roomPhoto);
-      await Axios({
+       const res = await Axios({
         url: api.uploadPhoto,
         method: "POST",
         data: roomPhoto,
       });
       dispatch(getRoomPicURL(res.data.payload));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(imgUploadFail());
     }
   };
@@ -165,7 +163,7 @@ export const requestDeleteRoom =
       dispatch(cancelRoomDelete());
       dispatch(resetRoomErrors());
       dispatch(getAllRooms());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(deleteRoomReqFail(error.response.data.payload.message));
     }
   };
@@ -184,7 +182,7 @@ export const requestEditRoom =
       dispatch(resetRoomEditing());
       dispatch(cancelImgUpload());
       dispatch(getAllRooms());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editRoomReqFail(error.response.data.payload.message));
     }
   };
