@@ -15,7 +15,7 @@ import { buttonStyles } from "./styles/buttonStyles";
 import { getDepartments } from "../../store/actions/departments";
 import { LoadingScreen } from "./LoadingScreen";
 import { UserProfileValidation } from "../validations/ProfileValidation";
-import { requestEditProfile } from "../../store/actions/reservations/userData";
+import { editProfileSuccess, requestEditProfile } from "../../store/actions/reservations/userData";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../routes/urls";
 import { getToken } from "../../store/actions/login";
@@ -39,10 +39,14 @@ export const UserProfile: FC = () => {
 
   useEffect(() => {
     dispatch(getDepartments());
+    dispatch(editProfileSuccess());
+
   }, [userData]);
 
   const handleClose = () => {
     history.push(urls.reservations);
+    dispatch(editProfileSuccess());
+
   };
 
   const profileData = {
