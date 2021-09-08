@@ -103,7 +103,7 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
           tippy(mouseEnterInfo.el, {
             content: `${tjTime1} - ${tjTime2}
                         ${mouseEnterInfo.event.extendedProps.fullName} 
-                        <a aria-expanded href="https:t.me/${account}" style='color:lightblue'>@${account}</a>`,
+                        <a href="https://t.me/${account}" target="_blank" style='color:lightblue'>@${account}</a>`,
             interactive: true,
             allowHTML: true,
             appendTo: document.body,

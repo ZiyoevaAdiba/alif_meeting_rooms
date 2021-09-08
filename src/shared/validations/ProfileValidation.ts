@@ -7,7 +7,7 @@ export const UserProfileValidation = Yup.object().shape({
   name: Yup.string().required('Заполните поле'),
   tg_account: Yup.string().matches(/^[\w.-.@]+$/, "Недействительный аккаунт").required('Заполните поле'),
   phone: Yup.number().required('Недействительный номер'),
-  password: Yup.string().required('Введите действующий пароль'),
+  password: Yup.string(),
   new_password: Yup.string(),
   repeat_new_password: Yup.string().when("new_password", {
     is: (val: string) => (val && val.length > 0 ? true : false),
