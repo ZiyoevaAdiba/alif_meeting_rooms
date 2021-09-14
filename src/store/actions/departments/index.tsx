@@ -103,7 +103,7 @@ export const getDepartments = () => async (dispatch: Dispatch<any>) => {
 export const requestAddDepartment =
   (depData: string, setOpen: (state: boolean) => void) =>
   async (dispatch: Dispatch<any>) => {
-    try {
+    try {      
       dispatch(getDepartmentsReq());
 
       const data = {
@@ -113,12 +113,13 @@ export const requestAddDepartment =
       await Axios({
         url: `${api.departments}`,
         method: "POST",
-        data: data,
+        data,
       });
       dispatch(addDepSuccess());
       setOpen(false);
+
       dispatch(getAllDepartments());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addDepFail(error.response.data.payload.message));
     }
   };
@@ -131,6 +132,8 @@ export const requestEditDepartment =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
+      dispatch(getDepartmentsReq());
+
       const data = {
         name: depData,
       };
@@ -138,13 +141,13 @@ export const requestEditDepartment =
       await Axios({
         url: `${api.departments}/${id}`,
         method: "PUT",
-        data: data,
-      });
-      setOpen(false);
+        data,
+      });      
       dispatch(addDepSuccess());
       dispatch(resetDepartmentEditing());
+      setOpen(false);
       dispatch(getAllDepartments());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editDepFail(error.response.data.payload.message));
     }
   };

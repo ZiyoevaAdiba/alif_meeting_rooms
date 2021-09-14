@@ -51,7 +51,7 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
         history,
         selectedBuilding,
         selectedRooms,
-        date,
+        date
       )
     );
     handleClose();

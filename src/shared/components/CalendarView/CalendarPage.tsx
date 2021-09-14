@@ -11,7 +11,6 @@ import {
 } from "../../../store/actions/buildings";
 import { getAllCities } from "../../../store/actions/cities";
 import { getFilteredMRs } from "./getFilteredMRs";
-import { LoadingScreen } from "../LoadingScreen";
 import { MRCheckBox } from "./MRCheckBox";
 import { Filters } from "./Filters";
 import { ReserveRoom } from "./ReserveRoom";
@@ -53,7 +52,7 @@ const useStyles = makeStyles(() => ({
 export const CalendarPage = () => {
   const classes = useStyles();
 
-  const { error, loading, meetingRoomsInfo, checkedRooms } = useSelector(
+  const { loading, meetingRoomsInfo, checkedRooms } = useSelector(
     (state: IRootReducer) => state.getMRsDataReducer
   );
 
@@ -130,7 +129,7 @@ export const CalendarPage = () => {
   const [colors, setColors] = useState({});
 
   useEffect(() => {
-    if(!meetingRoomsInfo) {
+    if (!meetingRoomsInfo) {
       setColors({});
     } else {
       setColors(colorList(meetingRoomsInfo));
@@ -181,7 +180,7 @@ export const CalendarPage = () => {
           selectedCity={selectedCity}
           selectedBuilding={selectedBuilding}
           roomsParam={checkedRooms.join()}
-          gotoWeek = {gotoWeek}
+          gotoWeek={gotoWeek}
         />
       </Grid>
       <ReserveRoom

@@ -49,6 +49,7 @@ export const usersReducer = (
       const { department } = action.payload as IUser;
       return {
         ...state,
+        loading: false,
         user: {
           ...action.payload as IUser,
           department_id: department?.id
@@ -57,27 +58,32 @@ export const usersReducer = (
     case getUsersType.RESET_EDITING:
       return {
         ...state,
+        loading: false,
         user: {},
         userError: null,
       };
     case getUsersType.SHOW_WARNING:
       return {
         ...state,
+        loading: false,
         showAlert: action.payload as string,
       };
     case getUsersType.CANCEL_DELETE:
       return {
         ...state,
+        loading: false,
         showAlert: '',
       };
     case getUsersType.EDIT_USER_FAIL:
       return {
         ...state,
+        loading: false,
         userError: action.payload as string,
       };
     case getUsersType.EDIT_USER_SUCCESS:
       return {
         ...state,
+        loading: false,
         userError: null,
         usersError: null,
       };

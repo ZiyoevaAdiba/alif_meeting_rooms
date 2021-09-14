@@ -143,7 +143,10 @@ export const EditReservationForm: FC<IForm> = ({
           validateOnChange={false}
           onSubmit={(values) => {
             const dateSelected = format(selectedDate || 0, "yyyy-MM-dd");
-            const startTimeSelected = format( selectedStartTime || 0, "HH:mm:ss");
+            const startTimeSelected = format(
+              selectedStartTime || 0,
+              "HH:mm:ss"
+            );
             const endTimeSelected = format(selectedEndTime || 0, "HH:mm:ss");
 
             const editData = {

@@ -101,12 +101,12 @@ export const requestAddCity =
       await Axios({
         url: `${api.adminCities}`,
         method: "POST",
-        data: data,
+        data,
       });
       dispatch(addCitySuccess());
       setOpen(false);
       dispatch(getAllCities());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addCityFail(error.response.data.payload.message));
     }
   };
@@ -119,19 +119,21 @@ export const requestEditCity =
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
+      dispatch(getCitiesReq());
+
       const data = {
         name: depData,
       };
       await Axios({
         url: `${api.adminCities}/${id}`,
         method: "PUT",
-        data: data,
+        data,
       });
-      setOpen(false);
       dispatch(addCitySuccess());
       dispatch(resetCityEditing());
+      setOpen(false);
       dispatch(getAllCities());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editCityFail(error.response.data.payload.message));
     }
   };

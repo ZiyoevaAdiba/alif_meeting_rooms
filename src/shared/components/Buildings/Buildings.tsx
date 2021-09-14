@@ -72,13 +72,12 @@ export const Buildings = () => {
     dispatch(getAllBuildings());
   }, []);
 
-  if (loading && !buildingsError) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Page title="Офисы">
       <Container maxWidth="xl">
+        <If condition={loading}>
+          <LoadingScreen />
+        </If>
         <If
           condition={!buildingsError}
           anotherChildren={<ErrorDiv error={buildingsError} />}

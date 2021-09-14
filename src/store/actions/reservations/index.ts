@@ -81,7 +81,7 @@ export const requestAddReservation =
         selectedRooms,
         dispatch
       );
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addReservationFail(error.response.data.payload.message));
     }
   };
@@ -126,7 +126,7 @@ export const requestEditReservation =
         selectedRooms,
         dispatch
       );
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editReservationFail(error.response.data.payload.message));
     }
   };

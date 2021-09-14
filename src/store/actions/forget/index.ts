@@ -62,7 +62,7 @@ export const requestPassword =
         },
       });
       history.push(urls.login);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(forgetReqFail(error.response.data.payload.message));
       setSubmitting(false);
     }

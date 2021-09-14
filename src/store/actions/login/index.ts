@@ -61,7 +61,7 @@ export const requestLogin =
       dispatch(loginReqSuccess(res.data.payload.user_role));
       setToken(res.data.payload.token);
       history.push(urls.reservations);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(loginReqFail(error.response));
       setSubmitting(false);
     }

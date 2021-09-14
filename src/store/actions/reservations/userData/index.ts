@@ -60,7 +60,10 @@ export const getCurrentUserInfo =
   (token: string) => async (dispatch: Dispatch<any>) => {
     try {
       dispatch(getUserInfoReq());
-      const res = await Axios.get(`${api.loggedUserData}/${token}`);
+      const res = await Axios({
+        url: `${api.loggedUserData}/${token}`,
+        method: "GET",
+      })
       dispatch(getUserInfoSuccess(res.data.payload));
     } catch (error) {
       dispatch(getUserInfoFail());
@@ -93,7 +96,7 @@ export const requestEditProfile =
       });
       dispatch(resetProfileEditing());
       history.push(urls.reservations);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editProfileFail(error.response.data.payload.message));
     }
   };

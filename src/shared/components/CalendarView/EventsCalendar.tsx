@@ -11,9 +11,6 @@ import { addHours, subWeeks } from "date-fns";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import { getCurrentReservation } from "../../../store/actions/reservations";
-import { start } from "nprogress";
-import { getFilteredMRs } from "./getFilteredMRs";
-import { useHistory } from "react-router";
 
 interface IEventsCalendar {
   setOpen: (state: boolean) => void;
@@ -45,7 +42,6 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
     (state: IRootReducer) => state.getMRsDataReducer
   );
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const checkedRoomInfo = meetingRoomsInfo?.filter((room) =>
     checkedRooms.includes(room.id as string)
@@ -103,7 +99,7 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
           tippy(mouseEnterInfo.el, {
             content: `${tjTime1} - ${tjTime2}
                         ${mouseEnterInfo.event.extendedProps.fullName} 
-                        <a aria-expanded href="https:t.me/${account}" style='color:lightblue'>@${account}</a>`,
+                        <a href="https://t.me/${account}" target="_blank" style='color:lightblue'>@${account}</a>`,
             interactive: true,
             allowHTML: true,
             appendTo: document.body,

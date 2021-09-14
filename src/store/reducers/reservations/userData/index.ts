@@ -29,12 +29,11 @@ export const getUserDataReducer = (
         error: 'Данные пользователя не найдены. Попробуйте снова.',
       };
     case getUserDataType.GET_USERS_INFO_SUCCESS:
-      const payload = action.payload
       return {
         ...state,
         loading: false,
         error: null,
-        userData: payload,
+        userData: action.payload,
         editError: null,
       };
     case getUserDataType.DATA_DELETE:
@@ -56,6 +55,7 @@ export const getUserDataReducer = (
       return {
         ...state,
         error: null,
+        editError: null,
         loading: false,
       };
     case getUserDataType.RESET_EDITING:

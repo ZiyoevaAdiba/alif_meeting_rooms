@@ -61,12 +61,6 @@ export const editBuildingReqFail = (message: string) => {
   };
 };
 
-export const editBuildingReqSuccess = () => {
-  return {
-    type: getBuildingsType.EDIT_BUILDING_SUCCESS,
-    payload: {},
-  };
-};
 export const addBuildingFail = (message: string) => {
   return {
     type: getBuildingsType.ADD_BUILDING_FAIL,
@@ -74,7 +68,7 @@ export const addBuildingFail = (message: string) => {
   };
 };
 
-export const addBuildingSuccess = () => {
+export const resetBuildingError = () => {
   return {
     type: getBuildingsType.RESET_BUILDINGS_ERRORS,
     payload: {},
@@ -121,7 +115,7 @@ export const requestAddBuilding =
         method: "POST",
         data: buildingData,
       });
-      dispatch(addBuildingSuccess());
+      dispatch(resetBuildingError());
       setOpen(false);
       store.addNotification({
         title: "Отлично!",
@@ -137,7 +131,7 @@ export const requestAddBuilding =
         },
       });
       dispatch(getAllBuildings());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(addBuildingFail(error.response.data.payload.message));
       setSubmitting(false);
     }
@@ -167,10 +161,10 @@ export const requestEditBuilding =
         method: "PUT",
         data: buildingData,
       });
-      dispatch(editBuildingReqSuccess());
+      dispatch(resetBuildingError());
       dispatch(resetBuildingEditing());
       dispatch(getAllBuildings());
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editBuildingReqFail(error.response.data.payload.message));
     }
   };
