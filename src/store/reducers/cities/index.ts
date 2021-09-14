@@ -32,12 +32,11 @@ export const citiesReducer = (
         error: 'Проверьте доступ. Попробуйте снова.',
       };
     case getCitiesType.GET_CITIES_SUCCESS:
-      const payload = action.payload as ICity[]
       return {
         ...state,
         loading: false,
         error: null,
-        cities: payload,
+        cities: action.payload as ICity[],
       };
     case getCitiesType.SHOW_CITY:
       return {

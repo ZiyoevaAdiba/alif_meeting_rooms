@@ -31,12 +31,11 @@ export const departmentsReducer = (
         error: "Проверьте доступ. Попробуйте снова.",
       };
     case getDepartmentsType.GET_DEPARTMENTS_SUCCESS:
-      const payload = action.payload as IDepartment[];
       return {
         ...state,
         loading: false,
         error: null,
-        departments: payload,
+        departments: action.payload as IDepartment[],
       };
     case getDepartmentsType.SHOW_DEPARTMENT:
       return {
