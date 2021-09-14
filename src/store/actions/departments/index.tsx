@@ -113,7 +113,7 @@ export const requestAddDepartment =
       await Axios({
         url: `${api.departments}`,
         method: "POST",
-        data: data,
+        data,
       });
       dispatch(addDepSuccess());
       setOpen(false);
@@ -141,10 +141,8 @@ export const requestEditDepartment =
       await Axios({
         url: `${api.departments}/${id}`,
         method: "PUT",
-        data: data,
-      });
-      console.log(12);
-      
+        data,
+      });      
       dispatch(addDepSuccess());
       dispatch(resetDepartmentEditing());
       setOpen(false);

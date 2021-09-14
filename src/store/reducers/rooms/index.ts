@@ -37,12 +37,11 @@ export const roomsReducer = (
         roomsError: "Проверьте доступ. Попробуйте снова",
       };
     case getRoomsType.GET_ROOMS_SUCCESS:
-      const payload = action.payload as IRoom[];
       return {
         ...state,
         loading: false,
         roomsError: null,
-        rooms: payload,
+        rooms: action.payload as IRoom[],
         editError: null,
         addError: null,
       };

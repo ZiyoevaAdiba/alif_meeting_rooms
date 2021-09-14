@@ -28,12 +28,11 @@ export const getMRsDataReducer = (
         error: 'Проверьте доступ. Попробуйте снова.',
       };
     case getMeetingRoomsDataType.GET_MEETING_ROOMS_INFO_SUCCESS:
-      const payload = action.payload
       return {
         ...state,
         loading: false,
         error: null,
-        meetingRoomsInfo: payload as IMeetingRoomsInfo[],
+        meetingRoomsInfo: action.payload as IMeetingRoomsInfo[],
       };
     case getMeetingRoomsDataType.GET_CHECKED_MRS_ID:
       return {

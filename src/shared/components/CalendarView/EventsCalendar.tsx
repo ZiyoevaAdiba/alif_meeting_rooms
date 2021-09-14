@@ -11,9 +11,6 @@ import { addHours, subWeeks } from "date-fns";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import { getCurrentReservation } from "../../../store/actions/reservations";
-import { start } from "nprogress";
-import { getFilteredMRs } from "./getFilteredMRs";
-import { useHistory } from "react-router";
 
 interface IEventsCalendar {
   setOpen: (state: boolean) => void;
@@ -45,7 +42,6 @@ export const EventsCalendar: FC<IEventsCalendar> = ({
     (state: IRootReducer) => state.getMRsDataReducer
   );
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const checkedRoomInfo = meetingRoomsInfo?.filter((room) =>
     checkedRooms.includes(room.id as string)

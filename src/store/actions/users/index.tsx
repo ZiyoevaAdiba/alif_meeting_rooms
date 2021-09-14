@@ -120,7 +120,7 @@ export const requestAddUser =
         },
       });
       dispatch(getAllUsers(page, search, history));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(requestFail(error.response.data.payload.message));
       setSubmitting(false);
     }
@@ -155,7 +155,7 @@ export const requestEditUser =
       dispatch(editUserReqSuccess());
       dispatch(resetUserEditing());
       dispatch(getAllUsers(page, search, history));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(editUserReqFail(error.response.data.payload.message));
     }
   };

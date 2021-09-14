@@ -101,7 +101,7 @@ export const requestAddCity =
       await Axios({
         url: `${api.adminCities}`,
         method: "POST",
-        data: data,
+        data,
       });
       dispatch(addCitySuccess());
       setOpen(false);
@@ -127,7 +127,7 @@ export const requestEditCity =
       await Axios({
         url: `${api.adminCities}/${id}`,
         method: "PUT",
-        data: data,
+        data,
       });
       dispatch(addCitySuccess());
       dispatch(resetCityEditing());
