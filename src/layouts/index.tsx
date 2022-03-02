@@ -15,17 +15,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     "& .MuiPaper-elevation4": {
       boxShadow: "none",
+      
       borderBottom: "2px solid #EBEBEB",
-      height: "65px",
+      height: "55px",
     },
   },
   wrapper: {
     display: "flex",
     flex: "1 1 auto",
     paddingTop: 70,
-    minHeight: "calc(100vh - 73px)",
+    minHeight: "calc(100vh - 60px)",
     [theme.breakpoints.up("lg")]: {
-      padding: "70px 50px 0",
+      padding: "60px 50px 0",
     },
   },
   contentContainer: {

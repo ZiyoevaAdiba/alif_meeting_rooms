@@ -7,6 +7,12 @@ import { History } from "history";
 import { getFilteredMRs } from "../../../shared/components/CalendarView/getFilteredMRs";
 import { store } from "react-notifications-component";
 
+const getReservations = () => {
+  return {
+    type: getReservationsType.GET_RESERVATIONS,
+    payload: {},
+  };
+};
 const getReservationsFail = () => {
   return {
     type: getReservationsType.GET_RESERVATIONS_FAIL,
@@ -41,6 +47,19 @@ export const addReservationFail = (message: string) => {
   };
 };
 
+export const addReservationReq = () => {
+  return {
+    type: getReservationsType.ADD_RESERVATION_REQ,
+    payload: {},
+  };
+};
+
+export const editReservationReq = () => {
+  return {
+    type: getReservationsType.EDIT_RESERVATION_REQ,
+    payload: {},
+  };
+};
 export const editReservationFail = (message: string) => {
   return {
     type: getReservationsType.EDIT_RESERVATION_FAIL,
@@ -65,6 +84,8 @@ export const requestAddReservation =
     date: string
   ) =>
   async (dispatch: Dispatch<any>) => {
+    dispatch(getReservations());
+    dispatch(addReservationReq());
     try {
       await Axios({
         url: `${api.reservations}`,
@@ -95,14 +116,17 @@ export const requestEditReservation =
     history: History,
     selectedBuilding: string,
     selectedRooms: string,
-    date: string
+    date: string,
+    all: boolean
   ) =>
   async (dispatch: Dispatch<any>) => {
+    dispatch(editReservationReq());
     try {
       await Axios({
         url: `${api.reservations}/${reservationId}/${editedReservation.repeat_id}`,
         method: "PUT",
         data: editedReservation,
+        params: { all },
       });
       setEditOpen(false);
       store.addNotification({
@@ -139,13 +163,15 @@ export const requestDeleteReservation =
     history: History,
     selectedBuilding: string,
     selectedRooms: string,
-    date: string
+    date: string,
+    all: boolean
   ) =>
   async (dispatch: Dispatch<any>) => {
     try {
       await Axios({
         url: `${api.reservations}/${reservationId}/${repeat_id || " "}`,
         method: "DELETE",
+        params: { all },
       });
       getFilteredMRs(
         date,

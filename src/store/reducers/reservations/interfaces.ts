@@ -31,6 +31,7 @@ export interface IReservationEmpty {
 
 export interface IreservationsReducer {
   loading: boolean;
+  spinner: boolean;
   error: null | string;
   addError: null | string;
   editError: null | string;

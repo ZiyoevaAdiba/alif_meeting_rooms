@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   createStyles,
   Theme,
@@ -13,10 +13,14 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { ButtonDelete, ButtonEdit } from "../ButtonIcons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootReducer } from "../../../store/reducers";
-import { Button } from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import { If } from "../If";
+import {
+  resetChoosenMode,
+  setChoosenMode,
+} from "../../../store/actions/reservations/setEditOption";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -87,7 +91,11 @@ export const ActionsDialogs: FC<IActionsDialogs> = ({
 
   const handleClose = () => {
     setOpenActions(false);
+    dispatch(resetChoosenMode());
   };
+  
+  const dispatch = useDispatch();
+  const { all } = useSelector((state: IRootReducer) => state.optionReducer);
 
   const DialogMessage = (
     <DialogContent dividers>
@@ -97,6 +105,10 @@ export const ActionsDialogs: FC<IActionsDialogs> = ({
       </Typography>
     </DialogContent>
   );
+
+  useEffect(() => {
+    dispatch(resetChoosenMode());
+  }, []);
 
   return (
     <div>
@@ -116,8 +128,22 @@ export const ActionsDialogs: FC<IActionsDialogs> = ({
           <>
             <DialogContent dividers>
               <Typography gutterBottom>
-                Вы можете отредактировать либо удалить свою бронь
+                Вы можете отредактировать либо удалить свою бронь. Если
+                выбранная бронь имеет повторящиеся дни и вы хотите
+                отредактировать либо удалить все, выберите опцию "Для всех
+                броней с повторениями", иначе изменения будут применены только
+                для текущей брони.
               </Typography>
+              <FormControlLabel
+                control={<Checkbox />}
+                label="Для всех броней с повторениями"
+                onClick={() => [
+                  all
+                    ? dispatch(resetChoosenMode())
+                    : dispatch(setChoosenMode()),
+                ]}
+                checked={all}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={() => [handleClose(), setOpenEdit(true)]}>

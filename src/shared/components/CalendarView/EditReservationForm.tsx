@@ -30,6 +30,7 @@ import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
 import { CustomSelect } from "../CustomSelect";
 import { If } from "../If";
+import { resetChoosenMode } from "../../../store/actions/reservations/setEditOption";
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -87,9 +88,10 @@ export const EditReservationForm: FC<IForm> = ({
   const { meetingRoomsInfo } = useSelector(
     (state: IRootReducer) => state.getMRsDataReducer
   );
-  const { booking, editError } = useSelector(
+  const { booking, editError, spinner } = useSelector(
     (state: IRootReducer) => state.reservationsReducer
   );
+  const { all } = useSelector((state: IRootReducer) => state.optionReducer);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState<Date | null>(
@@ -124,6 +126,7 @@ export const EditReservationForm: FC<IForm> = ({
   const handleClose = () => {
     dispatch(reservationSuccess());
     setOpenEdit(false);
+    dispatch(resetChoosenMode());
   };
 
   return (
@@ -168,7 +171,8 @@ export const EditReservationForm: FC<IForm> = ({
                 history,
                 selectedBuilding,
                 selectedRooms,
-                date
+                date,
+                all
               )
             );
           }}
@@ -251,6 +255,7 @@ export const EditReservationForm: FC<IForm> = ({
                   type="submit"
                   variant="contained"
                   className={buttonClasses.btnReserve}
+                  disabled={spinner}
                 >
                   Забронировать
                 </Button>

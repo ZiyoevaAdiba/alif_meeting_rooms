@@ -24,6 +24,7 @@ import { buttonStyles } from "../styles/buttonStyles";
 import { ReservationRepeat } from "./ReservationRepeat";
 import { If } from "../If";
 import { CustomSelect } from "../CustomSelect";
+import { resetChoosenMode } from "../../../store/actions/reservations/setEditOption";
 
 export const greenDateStyle = makeStyles(() => ({
   select: {
@@ -68,6 +69,9 @@ export const AddReservationForm: FC<IForm> = ({
   const { meetingRoomsInfo } = useSelector(
     (state: IRootReducer) => state.getMRsDataReducer
   );
+  const { spinner } = useSelector(
+    (state: IRootReducer) => state.reservationsReducer
+  );
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(startTime || 0)
@@ -96,6 +100,7 @@ export const AddReservationForm: FC<IForm> = ({
   const handleClose = () => {
     dispatch(reservationSuccess());
     setOpen(false);
+    dispatch(resetChoosenMode());
   };
 
   return (
@@ -201,6 +206,7 @@ export const AddReservationForm: FC<IForm> = ({
               type="submit"
               variant="contained"
               className={buttonClasses.btnReserve}
+              disabled={spinner}
             >
               Забронировать
             </Button>

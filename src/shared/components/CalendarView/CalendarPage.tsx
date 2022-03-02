@@ -38,7 +38,8 @@ const useStyles = makeStyles(() => ({
   },
   calendarContainer: {
     "& .fc .fc-toolbar.fc-header-toolbar": {
-      marginBottom: ".8em",
+      marginBottom: ".6em",
+      fontSize: ".75em",
     },
     "& .fc-scrollgrid": {
       border: "none !important",

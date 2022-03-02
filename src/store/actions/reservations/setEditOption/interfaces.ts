@@ -1,0 +1,5 @@
+export enum getOptionType {
+  SET_CHOOSEN_MODE = "SET_CHOOSEN_MODE",
+  RESET_CHOOSEN_MODE = "RESET_CHOOSEN_MODE",
+}
+

@@ -7,7 +7,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Form, Formik } from "formik";
-import { editUserReqSuccess, requestAddUser } from "../../../store/actions/users";
+import {
+  editUserReqSuccess,
+  requestAddUser,
+} from "../../../store/actions/users";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorDiv } from "../Errors/ErrorDiv";
 import { IRootReducer } from "../../../store/reducers";
@@ -32,7 +35,9 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
   const [open, setOpen] = useState(false);
   const buttonClasses = buttonStyles();
 
-  const { error } = useSelector((state: IRootReducer) => state.signUpReducer);
+  const { error, loading } = useSelector(
+    (state: IRootReducer) => state.signUpReducer
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -137,6 +142,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                     type="submit"
                     variant="contained"
                     className={buttonClasses.btnReserve}
+                    disabled={loading}
                   >
                     Добавить
                   </Button>
@@ -144,6 +150,7 @@ export const AddUser: FC<IUserPageProps> = ({ page, searchInput, history }) => {
                     onClick={handleClose}
                     color="primary"
                     className={buttonClasses.btnCancel}
+                    disabled={loading}
                   >
                     Отмена
                   </Button>

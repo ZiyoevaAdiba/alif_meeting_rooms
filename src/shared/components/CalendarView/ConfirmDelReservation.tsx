@@ -6,8 +6,9 @@ import {
   requestDeleteReservation,
 } from "../../../store/actions/reservations";
 import { useState } from "react";
-import { CustomDelWarningDialog } from "../CustomDelWarningDialog";
 import { History } from "history";
+import { CustomDelWarningDialog } from "../CustomDelWarningDialog";
+import { resetChoosenMode } from "../../../store/actions/reservations/setEditOption";
 
 interface IConfirmDelReservation {
   date: string;
@@ -40,7 +41,9 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
   const handleClose = () => {
     dispatch(cancelReservationDelete());
     setOpenActions(false);
+    dispatch(resetChoosenMode());
   };
+  const { all } = useSelector((state: IRootReducer) => state.optionReducer);
 
   const handleConfirm = () => {
     dispatch(
@@ -51,7 +54,8 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
         history,
         selectedBuilding,
         selectedRooms,
-        date
+        date,
+        all
       )
     );
     handleClose();
@@ -63,7 +67,7 @@ export const ConfirmDelReservation: FC<IConfirmDelReservation> = ({
       <CustomDelWarningDialog
         open={open}
         handleClose={handleClose}
-        dialogText="Вы уверены, что хотите удалить бронь? У броней могут быть дни повторения. При удалении они все будут удалены"
+        dialogText="Вы уверены, что хотите удалить?"
         handleConfirm={handleConfirm}
       />
     </>

@@ -42,7 +42,6 @@ export const requestRegistration =
   async (dispatch: Dispatch<any>) => {
     try {
       dispatch(requestSent());
-
       await Axios({
         url: `${api.signUp}`,
         method: "POST",

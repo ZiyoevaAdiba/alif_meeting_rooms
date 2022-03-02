@@ -145,8 +145,8 @@ export const requestEditUser =
   (page: number, search: string, history: History, userData: IUser) =>
   async (dispatch: Dispatch<any>) => {
     try {
+      dispatch(getUsersReq());
       const userId = userData.id;
-      delete userData.id;
       await Axios({
         url: `${api.users}/${userId}`,
         method: "PUT",

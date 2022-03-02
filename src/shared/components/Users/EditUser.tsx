@@ -28,7 +28,7 @@ export const EditUser: FC<IUserPageProps> = ({
   history,
   searchInput,
 }) => {
-  const { user, userError } = useSelector(
+  const { user, userError, loading } = useSelector(
     (state: IRootReducer) => state.usersReducer
   );
   const { departments } = useSelector(
@@ -107,6 +107,7 @@ export const EditUser: FC<IUserPageProps> = ({
                   type="submit"
                   variant="contained"
                   className={buttonClasses.btnReserve}
+                  disabled={loading}
                 >
                   Сохранить изменения
                 </Button>
@@ -114,6 +115,7 @@ export const EditUser: FC<IUserPageProps> = ({
                   onClick={handleClose}
                   color="primary"
                   className={buttonClasses.btnCancel}
+                  disabled={loading}
                 >
                   Отмена
                 </Button>

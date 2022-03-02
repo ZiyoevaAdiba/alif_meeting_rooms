@@ -4,9 +4,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import TelegramIcon from "@material-ui/icons/Telegram";
-import PhoneIcon from "@material-ui/icons/Phone";
-import MapIcon from "@material-ui/icons/Map";
-import Instructions from "../assets/Instructions.docx";
 
 const useStyles = makeStyles(() => ({
   footer: {
@@ -15,7 +12,7 @@ const useStyles = makeStyles(() => ({
     position: "relative",
     bottom: 0,
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     fontSize: "16px",
     background: "#f5f5f5",
     borderTop: "2px solid #EBEBEB",
@@ -25,7 +22,7 @@ const useStyles = makeStyles(() => ({
   companyName: {
     fontSize: "18px",
     fontFamily: "Montserrat",
-    padding: 0,
+    padding: "10px 50px",
     color: "black",
   },
   links: {
@@ -40,16 +37,7 @@ export const Footer = () => {
     <footer>
       <Box className={classes.footer}>
         <Box className={classes.companyName}>{" © alif tech "}</Box>
-        <Box display="flex" gridGap="10px">
-          <MapIcon />
-
-          <Link color="inherit" href={Instructions} download='карта сайта'>
-            Скачать карту сайта
-          </Link>
-        </Box>
-        <Box>
-          Контакты
-          <Box display="flex" gridGap="10px">
+        <Box display="flex" padding="10px 50px">
             <TelegramIcon />
             <Link
               className={classes.links}
@@ -58,17 +46,6 @@ export const Footer = () => {
             >
               Телеграм бот HR
             </Link>
-          </Box>
-          <Box display="flex" gridGap="10px">
-            <PhoneIcon />
-            <Link
-              className={classes.links}
-              href={"tel:+992488881111"}
-              target="_blank"
-            >
-              +992 488 88 11 11
-            </Link>
-          </Box>
         </Box>
       </Box>
     </footer>

@@ -1,4 +1,10 @@
-import { Box, InputLabel, makeStyles, MenuItem, Select } from "@material-ui/core";
+import {
+  Box,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { FormikProps } from "formik";
 import { FC } from "react";
 import { IDepartment } from "../../store/reducers/departments/interfaces";
@@ -49,9 +55,9 @@ export const CustomSelect: FC<ICustomSelect> = ({
       </Select>
 
       <If
-        condition={
-          Boolean(formikProps.errors[fieldName] && formikProps.touched[fieldName])
-        }
+        condition={Boolean(
+          formikProps.errors[fieldName] && formikProps.touched[fieldName]
+        )}
       >
         <Box color="#f44335" marginTop="0px" fontSize="14px">
           {formikProps.errors[fieldName]}
